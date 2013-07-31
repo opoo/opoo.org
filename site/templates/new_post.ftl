@@ -9,5 +9,6 @@ description:
 excerpt: 
 categories: 
 tags: 
+url: '/${name}/'
 ---
 
