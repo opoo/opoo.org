@@ -1,0 +1,251 @@
+---
+layout: post
+title: 'Octopress 博客系统 —— A blogging framework for hackers'
+comments: true
+published: true
+date: '2012-07-25 19:17:00'
+link: http://opoo.org/octopress/
+post_id: 232
+url: '/octopress/'
+excerpt: "<p>本文主要讲述如何独立的安装、运行、发布 Octopress 博客。所谓“独立”，是指在不安装 git，也不需要 Github Pages 来作为发布环境的情况下如何使用 Octopress。<p>许多介绍 Octopress 的文章总是讲如何发布在 Github Pages 上，可能会让部分读者误以为 Octopress 必须和 Github 结合使用。事实并非如此，笔者就把 Octopress 发布到了 SourceForge.net 主机，访问地址：<a href='http://opoo.org/o/' target='_blank'>http://opoo.org/o/</a>。<p>本文主要以 <strong>Windows 环境</strong>为例，介绍 Octopress 安装、使用过程，Linux 环境下请参考<a href='http://octopress.org/docs/setup/' target='_blank'>官方文档</a>即可。<h2>一、概述</h2>1、<a href='http://octopress.org/' target='_blank'>Octopress</a> 是一个博客系统，同时也是一个强大的静态网站生成系统。<p>2、Octopress 的原理是在本地安装一个 ruby 运行环境，并在本地撰写博客文章，然后执行 Octopress 提供的简单的命令生成静态页面，再通过命令或者手动将静态网站发布在远程主机上。<p>由于 Octopress 的发布形式是静态网页，所以可以发布在任意主机上（并不仅仅是github pages）。当然也不一定非得是发布在远程主机上，安装 Octopress 运行环境的机器也可以和发布博客的主机是同一台，这个在后面介绍。<p>3、Octopress 可以离线撰写博客文章，并且可以使用任意文本编辑器工具(例如 vim)来编辑，默认使用 <a title='Markdown' href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a> 语法。<p>4、可从现有的 WordPress 迁移。<p>5、不存在备份问题，因为是在本地撰写文章后再发布在远程的。"
+categories: [uncategorized]
+tags: [Github, Octopress, SourceForge, 博客]
+keywords: "博客系统, Octopress, SourceForge, Jekyll, Github"
+description: "本文主要讲述如何独立的安装、运行、发布 Octopress 博客。所谓“独立”，是指在不安装 git，也不需要 Github Pages 来作为发布环境的情况下如何使用 Octopress。"
+---
+<p>本文主要讲述如何独立的安装、运行、发布 Octopress 博客。所谓“独立”，是指在不安装 git，也不需要 Github Pages 来作为发布环境的情况下如何使用 Octopress。
+
+<p>许多介绍 Octopress 的文章总是讲如何发布在 Github Pages 上，可能会让部分读者误以为 Octopress 必须和 Github 结合使用。事实并非如此，笔者就把 Octopress 发布到了 SourceForge.net 主机，<strike>访问地址：http://opoo.org/o/</strike>。
+
+<p>本文主要以 <strong>Windows 环境</strong>为例，介绍 Octopress 安装、使用过程，Linux 环境下请参考<a href="http://octopress.org/docs/setup/" target="_blank">官方文档</a>即可。
+<h2>一、概述</h2>
+1、<a href="http://octopress.org/" target="_blank">Octopress</a> 是一个博客系统，同时也是一个强大的静态网站生成系统。
+
+<p>2、Octopress 的原理是在本地安装一个 ruby 运行环境，并在本地撰写博客文章，然后执行 Octopress 提供的简单的命令生成静态页面，再通过命令或者手动将静态网站发布在远程主机上。
+
+<p>由于 Octopress 的发布形式是静态网页，所以可以发布在任意主机上（并不仅仅是github pages）。当然也不一定非得是发布在远程主机上，安装 Octopress 运行环境的机器也可以和发布博客的主机是同一台，这个在后面介绍。
+
+<p>3、Octopress 可以离线撰写博客文章，并且可以使用任意文本编辑器工具(例如 vim)来编辑，默认使用 <a title="Markdown" href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a> 语法。
+
+<p>4、可从现有的 WordPress 迁移。
+
+<p>5、不存在备份问题，因为是在本地撰写文章后再发布在远程的。<!--more-->
+<h2>二、安装</h2>
+<h3>1. 安装 Ruby 运行环境。</h3>
+1) 下载并安装 <a href="http://rubyinstaller.org/downloads/" target="_blank">RubyInstaller for Windows</a>。
+
+<p>注意<a href="http://octopress.org/docs/setup/" target="_blank"> Octopress 官方文档</a>中指定的 Ruby 版本是 1.9.2，所以我们选择 Ruby 1.9.2-p290，下载地址是 <a href="http://rubyforge.org/frs/download.php/75127/rubyinstaller-1.9.2-p290.exe">http://rubyforge.org/frs/download.php/75127/rubyinstaller-1.9.2-p290.exe</a> 。双击安装，安装时选中“Add Ruby executables to your PATH”前的框。
+
+<p>在 Windows 命令行窗口中执行以下命令，检查ruby是否已经加到PATH中：
+<pre>ruby --version</pre>
+2) 安装 <a href="https://github.com/oneclick/rubyinstaller/wiki/Development-Kit" target="_blank">DevKit </a>。
+
+<p>DevKit 主页上描述“For RubyInstaller versions 1.8.7, 1.9.2, and 1.9.3 use the DevKit 4.5.2 from our main downloads page.”，因此选择下载 4.5.2 版本，下载地址 <a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a>。
+
+<p>直接解压到没有空格的路径（例如 E:\DevKit-tdm-32-4.5.2-20111229-1559-sfx)，然后在Windows的命令行窗口中执行以下命令：
+<pre>E:
+cd E:\DevKit-tdm-32-4.5.2-20111229-1559-sfx
+ruby dk.rb init
+ruby dk.rb install</pre>
+<h3>2. 下载安装 Octopress。</h3>
+不使用 git 工具下载时，可以直接在 <a href="https://github.com/imathis/octopress" target="_blank">Octopress Github 库</a>中下载 octopress 的 zip 包。下载地址 <a href="https://nodeload.github.com/imathis/octopress/zipball/master" target="_blank">https://nodeload.github.com/imathis/octopress/zipball/master</a>，下载后的文件名类似于 imathis-octopress-v2.0-11-xxxxxx.zip。
+
+<p>将压缩包解压到E盘根目录，然后解压zip文件，修改解压后的文件夹名称为 octopress。注意，解压时可能 octopress 还包含了一层目录。
+
+<p>1) 更改gem的更新源
+
+<p>通过以下命令更改默认的更新源
+<pre>gem sources -a http://ruby.taobao.org/
+gem sources -r http://rubygems.org/
+gem sources -l</pre>
+最后一个命令可查看更该后的更新源列表。
+
+<p>然后更改 Octopress 的gem更新源：进到 E:octopress 目录，用文本编辑器（例如记事本）打开文件 <code>Gemfile</code> ，将里面 <code>source "http://rubygems.org/"</code> 改为 <code>source "http://ruby.taobao.org/"</code>。
+
+<p>2) 安装依赖：
+
+<p>在Windows命令行窗口中执行：
+<pre>E:
+cd octopress
+gem install bundler
+bundle install(执行这个命令时需要DevKit)</pre>
+执行最后一行时需要DevKit，所以在前面进行了安装。
+
+<p>3) 安装默认的 Octopress 主题
+<pre>rake install</pre>
+到现在为止，Octopress 已经可以使用了，可以运行以下两个指令来检验
+<pre>rake generate 生成静态页面
+rake preview 启动本地预览</pre>
+然后打开浏览器，输入 <a href="http://localhost:4000/" target="_blank">http://localhost:4000/</a> 就可以看到如下的界面了。
+
+<p><img alt="Octopress Preview" src="//www.opoo.org/wp-content/uploads/2012/octopress.preview.jpg" />
+<h2>三、配置</h2>
+通过上述的步骤安装 Octopress 后，还需要做一些基本的配置，官方参考文档 <a href="http://octopress.org/docs/configuring/" target="_blank">http://octopress.org/docs/configuring/</a>。主要的配置文件有两个：博客主配置文件<strong>_config.yml</strong> 和发布配置文件<strong>Rakefile</strong>。
+
+<p>这里主要讲主配置文件，发布配置在后面讲。
+
+<p>主配置文件 <strong>_config.yml</strong> (如果包含中文，要将文件保存为UTF-8格式)
+<pre class="brush:text">url: http://opoo.org            # 博客地址
+title: O博客			# 博客标题
+subtitle: 博，是一种态度        # 副标题
+author: Alex			# 你的姓名、网名
+simple_search: http://www.google.com.hk/search		# 搜索引擎
+description:			# 博客默认的描述，出现在HTML页面中的 meta 中的 description
+subscribe_rss:			# Url for your blog's feed, defauts to /atom.xml
+subscribe_email:		# Url to subscribe by email (service required)
+email:				# Email address for the RSS feed if you want it.
+
+root: /				# 博客路径，默认是“/“，如果你打算在子目录中，记得修改这个路径
+permalink: /:title/	        # 文章的持久链接形式，例如在 WordPress 中的/%post_name%/，则使用/:title。 参考文档 https://github.com/mojombo/jekyll/wiki/Permalinks
+source:	source			# Directory for site source files，默认即可
+destination: public		# Directory for generated site files，默认即可
+plugins: plugins		# Directory for Jekyll plugins，默认即可
+code_dir: downloads/code        # Directory for code snippets (for include_code plugin)，默认即可
+category_dir: blog/categories   # Directory for generated blog category pages，默认即可
+
+pygments:           # Toggle python pygments syntax highlighting
+paginate:           # Posts per page on the blog index
+pagination_dir:     # Directory base for pagination URLs eg. /blog/page/2/
+recent_posts:       # Number of recent posts to appear in the sidebar
+
+default_asides:     # Configure what shows up in the sidebar and in what order
+blog_index_asides:  # Optional sidebar config for blog index page
+post_asides:        # Optional sidebar config for post layout
+page_asides:        # Optional sidebar config for page layout</pre>
+除了以上主要内容，还有一些第三方的配置，请参考<a href="http://octopress.org/docs/configuring/" target="_blank">官方文档</a>。
+<h2>四、撰写文章</h2>
+在初步配置完成博客之后，就可以撰写博客文章了。官方参考文档是 <a href="http://octopress.org/docs/blogging/" target="_blank">http://octopress.org/docs/blogging/</a>。
+
+<p>简单的说就是通过 <strong>rake new_post["title"]</strong> 创建一个文章，通过 <strong>rake new_page[super-awesome]</strong> 来创建页面。
+
+<p>之后就可以在 <em>source/_posts</em> 目录中找到创建的空白文章文件，这个文件以.markdown 为后缀，此时可以通过文本编辑工具打开该文件进行编辑。markdown 语法参考见 <a href="http://wowubuntu.com/markdown/" target="_blank">http://wowubuntu.com/markdown/</a>。
+
+<p>前面提到的2个命令主要在这里用，使用“<strong>rake generate</strong>”生成静态页面，使用“<strong>rake preview”</strong>启动本地预览，在浏览器中打开 <a href="http://localhost:4000/" target="_blank">http://localhost:4000/</a> 进行预览。
+
+<p><span style="color: #ff6600;"><strong>特别提示</strong></span>：
+
+<p>a) 在撰写过程，可以一直运行“<strong>rake preview</strong>”，当编写的文章保存时，会自动重新生成静态页面，只需要在浏览器中刷新就可以看到最新的内容了。
+
+<p>b) 包含中文的文章一定要将文件保存为 <strong>UTF-8</strong> 格式。
+
+<p>c) 要完全支持中文，还需要设置以下 Windows 环境变量，否则执行 <strong>rake generate</strong> 时可能出错。
+<pre>LANG=zh_CN.UTF-8
+LC_ALL=zh_CN.UTF-8</pre>
+<h2>五、发布</h2>
+<h3>1、手动发布</h3>
+运行“<strong>rake generate</strong>”生成静态页面后，可以手动复制/上传文件到目标目录/主机即可。手动发布可以将 Octopress 发布到任意主机（目前还没有不支持静态页面的主机吧）。
+
+<p>1) 发布到本机：
+
+<p>直接将 <em>octopress/public</em> 目录中的内容复制到web服务器根目录。
+
+<p>例如使用Apache 2.2作为Web服务器时，将文件复制到 Apache 2.2 的 <em>DocumentRoot</em> 目录（C:/Program Files/Apache Software Foundation/Apache2.2/htdocs），或者直接修改 Apache 配置文件<em> httpd.conf</em> 中的 <em>DocumentRoot</em> 指向<em>octopress/public</em>目录即可。
+<pre>	    DocumentRoot "E:/octopress/public"
+	    Options Indexes FollowSymLinks
+	    AllowOverride None
+	    Order allow,deny
+	    Allow from all</pre>
+2) 发布到远程主机：
+
+<p>使用 ftp、sftp、ssh 等文件传输协议将 <em>octopress/public</em> 目录中的内容复制到远程主机的网站目录即可。
+
+<p>例如要发布到 SourceForge.net 的 Project Web 免费空间中，可以通过 ssh 连接 web.sourceforge.net，然后将 E:\octopress\public 中的所有内容上传到 /home/project-web/PROJECT_NAME/htdocs 目录中即可。例如我的项目名称是 joqs，则我的project web的目录就是 /home/project-web/joqs/htdocs。
+
+<p>也可发布到子目录，参考第六点。
+<h3>2. 自动发布</h3>
+这部分可以参考官方文档 <a href="http://octopress.org/docs/deploying/" target="_blank">http://octopress.org/docs/deploying/</a>。
+
+<p>自动发布需要先配置 <strong>Rakefile</strong>，然后执行 <strong>rake deploy</strong> 即可发布整个网站。
+
+<p>下面简要介绍一下官方网站所述的几种方式。
+
+<p>1) 发布到 Github Pages
+
+<p>本文不详细介绍这部分。网上关于 Octopress 发布到 Githubs 的资料非常多，这里不细述。可参<a href="http://octopress.org/docs/deploying/github/" target="_blank">官方文档</a>和<a href="http://www.freehao123.com/github-pages/" target="_blank">这篇文章</a> 。
+
+<p>2) 发布到 Heroku
+
+<p>请参考官方文档 <a href="http://octopress.org/docs/deploying/heroku/" target="_blank">http://octopress.org/docs/deploying/heroku/</a>。
+
+<p>3) 通过 Rsync 发布（<strong>重点介绍</strong>）
+
+<p>参考官方文档 <a href="http://octopress.org/docs/deploying/rsync/" target="_blank">http://octopress.org/docs/deploying/rsync/</a>。
+
+<p>首先，你的 web 主机必须支持 rsync（基本上所有的linux主机都支持）。其次，本地也必须安装 rsync 客户端。
+
+<p>如果是本机是 Linux 系统并安装了rsync，则通过 rsync 发布 Octopress 相当简单，配置 <code>Rakefile</code> 中以下属性
+<pre>	ssh_user       = "user@domain.com"
+	document_root  = "~/website.com/"
+	rsync_delete   = true
+	deploy_default = "rsync"</pre>
+然后运行一下命令即可发布
+<pre>	rake generate   # If you haven't generated your blog yet
+	rake deploy     # Syncs your blog via ssh</pre>
+这里重点讲一下如何在 Windows 环境下，通过 rsync 发布 Octopress 博客。
+
+<p>安装 cwrsync
+
+<p>a) 下载 cwrsync <a href="https://sourceforge.net/projects/sereds/files/cwRsync/4.0.3/" target="_blank">https://sourceforge.net/projects/sereds/files/cwRsync/4.0.3/</a>
+
+<p>b) 双击安装，安装路径如 <code>C:\Program Files\cwRsync</code>
+
+<p>c) 设置Windows环境变量
+<pre>	PATH=%PATH%;C:\Program Files\cwRsync\bin	#PATH中增加cwRsync的bin目录
+	HOME=C:					#这个变量在调用SSH命令时用到，在本文的最后进行了说明，必须设置一个已经存在的目录</pre>
+现在可以打开windows命令行窗口，输入 <code>rsync</code>，如果输出不是找不到命令，则表示安装且配置成功。
+
+<p>然后配置 <code>Rakefile</code> 文件，与linux下配置方法相同。
+
+<p>以发布到 SourceForge.net 的 Project Web 空间为例，配置如下：
+<pre>        ssh_user       = "USERNAME@web.sourceforge.net"
+	document_root  = "/home/project-web/PROJECT_NAME/htdocs"
+	rsync_delete   = true
+	deploy_default = "rsync"</pre>
+<pre>然后运行 rake deploy 命令进行发布。</pre>
+在通过 Windows 下的 rsync 客户端发布 Octopress 到远程 Linux 主机时，在远程主机上，被上传的目录的权限和所有者都可能是不对的，所以需要通过 SSH 或 telnet 等工具登录到远程主机，修正以下目录权限。否则访问时出现 403 错误。前文所述的cwRsync中已经包含了一个 ssh 客户端。修正的指令如下：
+<pre>	chown -R root.root /var/www/html/blog
+	chmod -R +rx /var/www/html/blog</pre>
+SourceForge.net主机不必执行第一句。SSH 登录 SourceForge.net 主机的个命令如下：
+<pre>	ssh -t USERNAME,PROJECT_NAME@shell.sourceforge.net create
+	chmod -R +rx /home/project-web/PROJECT_NAME/htdocs</pre>
+如果通过 Windows 下的 rsync 客户端发布 Octopress 到远程 Windows 主机，则需要在远程主机上安装 Windows 版的 rsync 服务端。可自行查阅相关资料。
+<h2>六、其它</h2>
+1. 要部署到子目录，可参考文档 <a href="http://octopress.org/docs/deploying/subdir/" target="_blank">http://octopress.org/docs/deploying/subdir/</a>，例如可以部署到 SouceForge 主机的 /home/project-web/PROJECT_NAME/htdocs/blog 目录，然后通过 http://PROJECT_NAME.sourceforge.net/blog/ 的形式就可以访问了。
+
+<p>2. 评论必须使用外挂式的，默认支持 <strong>Disqus</strong>，可在 _config.yml 中进行配置。评论的内容将保存在Disqus。如果用户浏览器禁止了第三方 Cookie（Google Chrome就有这功能），则Disqus的登录功能会失效。
+
+<p>3. SSH 的问题
+
+<p>如果执行 <strong>rake deploy</strong> 时出现“Could not create directory '/home/Administrator/.ssh”，则需要设置环境变量 <strong>HOME</strong>，如前文所述。SSH 需要一个目录来保存 known_hosts 文件，在 Windows 下默认是/home/Administrator/.ssh，但“/home/Administrator”不存在，所以会出错。指定环境变量 <strong>HOME</strong> 为一个存在的目录即可，系统将创建 .ssh 子目录，并在其中创建 known_hosts 文件。
+<h2>七、体验</h2>
+使用 EditPlus 之类的编辑工具编写 Octopress 的文章还是很方便的，另外本地预览也比 WordPress 预览要快得多。
+
+<p>发布到远程后访问速度不错，静态网页的加载速度的确要好些。
+
+<p>在手机上浏览 Octopress 的文章时格式良好，比笔者的 WordPress 下要好些，这个可能跟 WordPress 选用的主题有关。
+
+<p>不便之处在于，预览、发布博客时需要安装这样一个环境（撰写文章时其实不依赖这个环境），换台机器还得安装这套东东，这点不如 WordPress。WordPress 甚至有手机客户端可方便使用。
+
+<p>能发布到子目录也是不错的功能。笔者搭建并发布 Octopress 博客到了SourceForge.net 主机，通过以下地址访问： <a href="http://opoo.org/o/" target="_blank">http://opoo.org/o/</a>。这是笔者在 SourceForge 的 User Web 下的一个子目录。
+<h2>八、链接</h2>
+文中链接较多，这里整理一下。
+
+<p>软件下载
+<ul>
+	<li>Octopress(zip):    <a href="https://nodeload.github.com/imathis/octopress/zipball/master">https://nodeload.github.com/imathis/octopress/zipball/master</a></li>
+	<li>RubyInstaller:    <a href="http://rubyforge.org/frs/download.php/75127/rubyinstaller-1.9.2-p290.exe">http://rubyforge.org/frs/download.php/75127/rubyinstaller-1.9.2-p290.exe</a></li>
+	<li>DevKit:     <a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a></li>
+	<li>cwRsync:   <a href="https://sourceforge.net/projects/sereds/files/cwRsync/4.0.3/" target="_blank">https://sourceforge.net/projects/sereds/files/cwRsync/4.0.3/</a></li>
+</ul>
+参考资料：
+<ul>
+	<li>Octopress官网:   <a href="http://octopress.org/" target="_blank">http://octopress.org/</a></li>
+	<li>Octopress永久链接:  <a href="https://github.com/mojombo/jekyll/wiki/Permalinks" target="_blank">https://github.com/mojombo/jekyll/wiki/Permalinks</a></li>
+	<li>Ruby for Windows :    <a href="http://rubyinstaller.org/downloads/" target="_blank">http://rubyinstaller.org/downloads/</a></li>
+	<li>Markdown:    <a href="http://daringfireball.net/projects/markdown/" target="_blank">http://daringfireball.net/projects/markdown/</a></li>
+	<li>Github Pages:   <a href="http://www.freehao123.com/github-pages/" target="_blank">http://www.freehao123.com/github-pages/</a></li>
+</ul>
+&nbsp;
+
+<p><strong>PS（2012-08-06）:</strong>
+由于 SourceForge.net 目前的访问问题，可能使你的博客发布不成功，可选择其他主机试试。

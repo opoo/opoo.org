@@ -1,0 +1,142 @@
+---
+layout: post
+title: 'WordPress 邮件配置：解决在 SourceForge 空间安装 WordPress 无法发送邮件的问题'
+comments: true
+published: true
+date: '2012-05-08 18:14:46'
+link: http://opoo.org/sourceforge-wordpress-email-configuration/
+post_id: 119
+url: '/sourceforge-wordpress-email-configuration/'
+excerpt: "<p><strong>插件已发布在 <a title='SourceForge Project Web Email Configuration for WordPress plugin' href='http://wordpress.org/extend/plugins/sourceforge-project-web-email-configuration/' target='_blank'>WordPress.org 官方网站</a>，欢迎试用。</strong><p>在 SourceForge 的 <a href='http://sourceforge.net/apps/trac/sourceforge/wiki/Project%20web'>Project Web</a> 或 User Web 中安装 WordPress 时，无法通过 WordPress 默认的方法发送邮件，但可以通过 SourceForge 提供的方法发送邮件（<a href='http://sourceforge.net/apps/trac/sourceforge/wiki/Project%20Web%20Email%20Configuration'>Project Web Email Configuration</a>），示例代码如下："
+categories: [tech]
+tags: [SourceForge, WordPress, 插件]
+keywords: "SourceForge, WordPress, Plugin, SMTP, email, Project Web"
+description: "在SourceForge的Project Web或User Web中安装WordPress时，无法通过WordPress默认的方法发送邮件，但可以通过SourceForge提供的方法发送邮件。本文提供一种解决这个问题的办法，并提供相应的WordPress插件。"
+---
+<p><strong>插件已发布在 <a title="SourceForge Project Web Email Configuration for WordPress plugin" href="http://wordpress.org/extend/plugins/sourceforge-project-web-email-configuration/" target="_blank">WordPress.org 官方网站</a>，欢迎试用。</strong>
+
+<p>在 SourceForge 的 <a href="http://sourceforge.net/apps/trac/sourceforge/wiki/Project%20web">Project Web</a> 或 User Web 中安装 WordPress 时，无法通过 WordPress 默认的方法发送邮件，但可以通过 SourceForge 提供的方法发送邮件（<a href="http://sourceforge.net/apps/trac/sourceforge/wiki/Project%20Web%20Email%20Configuration">Project Web Email Configuration</a>），示例代码如下：
+
+<!--more-->
+<pre class="brush:php">&lt;?php
+
+include('Mail.php');
+
+${'$'}recipients = array( 'someone@example.com' ); # Can be one or more emails
+
+${'$'}headers = array (
+  'From' =&gt; 'someone@example.com',
+  'To' =&gt; join(', ', ${'$'}recipients),
+  'Subject' =&gt; 'Testing email from project web',
+);
+
+${'$'}body = "This was sent via php from project web!n";
+
+${'$'}mail_object =&amp; Mail::factory('smtp',
+ array(
+  'host' =&gt; 'prwebmail',
+  'auth' =&gt; true,
+  'username' =&gt; 'YOUR_PROJECT_NAME',
+  'password' =&gt; 'PASSWORD', # As set on your project's config page
+  #'debug' =&gt; true, # uncomment to enable debugging
+));
+
+<p>${'$'}mail_object-&gt;send(${'$'}recipients, ${'$'}headers, ${'$'}body);</pre>
+要解决 SourceForge 空间下 WordPress 发送邮件的主要思路就是用上面代码替换掉 WordPress 发送邮件的原始代码。
+
+<p><strong>方法一：修改源代码</strong>
+
+<p>分析源代码，发现 WordPress 使用 PHPMailer 来发送邮件，发送邮件的代码位于<code>wp-includes/pluggable.php</code>文件，函数为
+<pre class="brush:php">function wp_mail( ${'$'}to, ${'$'}subject, ${'$'}message, ${'$'}headers = '', ${'$'}attachments = array())</pre>
+在该函数中找到代码
+<pre class="brush:php">do_action_ref_array( 'phpmailer_init', array( &amp;${'$'}phpmailer ) );</pre>
+在后面添加 SourceForge 提供的邮件配置参数即可，如下：
+<pre class="brush:php">do_action_ref_array( 'phpmailer_init', array( &amp;${'$'}phpmailer ) );
+//${'$'}phpmailer-&gt;FromName = 'WordPress';
+${'$'}phpmailer-&gt;Host = 'prwebmail'; //host: prwebmail (or ssl://prwebmail)
+//${'$'}phpmailer-&gt;Port = 25; //port: 25 (or 465 for ssl)
+${'$'}phpmailer-&gt;Username = 'YOUR_PROJECT_NAME'; //user: YOUR_PROJECT_NAME
+${'$'}phpmailer-&gt;Password = 'PASSWORD'; //password: THE_PASSWORD_YOU_CONFIGURED_FOR_YOUR_PROJECT, As set on your project's config page;
+${'$'}phpmailer-&gt;From = 'someone@example.com'; //eg. yourname@users.sourceforge.net
+${'$'}phpmailer-&gt;SMTPAuth = true;
+${'$'}phpmailer-&gt;SMTPSecure = 'tls'; //tls or ssl
+${'$'}phpmailer-&gt;IsSMTP();</pre>
+<em>注意修改 Username、Password、From等信息</em>，参数含义参考 <a href="http://sourceforge.net/apps/trac/sourceforge/wiki/Project%20Web%20Email%20Configuration">SourceForge Project Web Email Configuration</a>。
+
+<p>修改完 pluggable.php 后，通过 SSH 将文件上传到服务器上相应路径覆盖原文件（作为一个好习惯，应该在覆盖前备份原文件），修改 pluggable.php 文件的权限为 other 不可读（因为文件中有账号密码等敏感信息），MOD 值640。
+
+<p><code>chmod o-r pluggable.php</code>
+
+<p>此时，WordPress 应该可以外发邮件了。可在登录页面使用找回密码功能进行测试。
+
+<p><strong>方法二：使用插件</strong>
+
+<p>目前已经有一些插件可以解决 SourceForge 空间下 WordPress 发送邮件的问题，比如 Configure SMTP。
+
+<p>本站写了第一个 WordPress 插件，虽然功能没有 Configure SMTP 那么强大，但其专门为解决这个问题而设计，插件就一个文件，代码只有短短几行，足够简单高效。
+
+<p>该插件的原理就是将 SourceForge 提供的 Email 配置 HOOK 到 WordPress 的 wp_mail() 函数里，使得邮件功能在 SourceForge 空间下也可以正常工作。
+
+<p>WordPress 发送邮件的函数 wp_mail() 中调用了do_action_ref_array( 'phpmailer_init', array( &amp;${'$'}phpmailer ) ) 函数，插件通过 add_action() 注册一个 phpmailer_init 函数，该函数将 SourceForge Email 配置传递给 phpmailer 对象，这样系统每次调用 wp_mail() 函数时都能使用 SourceForge 的Email 配置。
+
+<p>手动创建插件过程如下：
+
+<p>创建文件 sourceforge-email-config.php，内容如下：
+<pre class="brush:php">&lt;?php
+/**
+* @package sourceforge-email-config
+* @version 1.0-RC1
+*/
+/*
+Plugin Name: SourceForge Project Web Email Configuration
+Plugin URI: http://opoo.org/sourceforge-wordpress-email-configuration/
+Description: 在SourceForge的&lt;a href="http://sourceforge.net/apps/trac/sourceforge/wiki/Project%20web"&gt;Project Web&lt;/a&gt;或User Web中安装WordPress时，无法通过WordPress默认的方法发送邮件，但可以通过SourceForge提供的方法发送邮件（&lt;a href="http://sourceforge.net/apps/trac/sourceforge/wiki/Project%20Web%20Email%20Configuration"&gt;Project Web Email Configuration&lt;/a&gt;）。插件将SourceForge提供的Email配置HOOK到WordPress的wp_mail()函数里，使得邮件功能在SourceForge空间下也可以正常工作。&lt;b&gt;在启用插件前，需要手动修改插件源文件中有关SourceForge的配置。&lt;/b&gt;
+Author: Alex Lin
+Version: 1.0-RC1
+Author URI: http://opoo.org/about/
+*/
+
+//使用SourceForge的Email配置来初始化PHPMailer对象
+function phpmailer_init_sourceforge(${'$'}phpmailer) {
+//${'$'}phpmailer-&gt;FromName = 'WordPress';
+${'$'}phpmailer-&gt;Host = 'prwebmail'; //host: prwebmail (or ssl://prwebmail)
+//${'$'}phpmailer-&gt;Port = 25; //port: 25 (or 465 for ssl)
+${'$'}phpmailer-&gt;Username = 'YOUR_PROJECT_NAME'; //user: YOUR_PROJECT_NAME
+${'$'}phpmailer-&gt;Password = 'PASSWORD'; //password: THE_PASSWORD_YOU_CONFIGURED_FOR_YOUR_PROJECT, As set on your project's config page;
+${'$'}phpmailer-&gt;From = 'someone@example.com'; //eg. yourname@users.sourceforge.net
+${'$'}phpmailer-&gt;SMTPAuth = true;
+${'$'}phpmailer-&gt;SMTPSecure = 'tls'; //tls or ssl
+${'$'}phpmailer-&gt;IsSMTP();
+}
+
+//参考wp_mail()函数中的代码: do_action_ref_array( 'phpmailer_init', array( &amp;${'$'}phpmailer ) );
+add_action( 'phpmailer_init', 'phpmailer_init_sourceforge');
+?&gt;</pre>
+<em>注意修改 Username、Password、From等信息</em>，参数含义参考 <a href="http://sourceforge.net/apps/trac/sourceforge/wiki/Project%20Web%20Email%20Configuration">SourceForge Project Web Email Configuration</a>。
+
+<p>将文件保存成 UTF-8 编码（最好使用 EditPlus 之类的编辑工具），然后上传到你的 SourceForge 下WordPress 的插件目录（<code>wp-content/plugins</code>），然后在插件管理里启用该插件即可（插件名称：SourceForge Project Web Email Configuration）。然后可使用找回密码功能进行测试。
+
+<p>该插件当前版本尚不支持在 WordPress 后台管理界面中配置 SourceForge Email 参数，而是将参数直接写在插件源文件里，这样减少了查询提高了效率。<del>如果不知道如何修改源代码，请选用其它插件</del>。（<em>正式版本已经推出，带有配置界面，欢迎使用</em>）
+
+<p>总结一下：
+如果担心过多的插件会影响 WordPress 的效率，可以选用方法一直接修改源代码；如果要保持WordPress 源代码不变又兼顾效率，可以选用方法二；如果要使用其它 SMTP 服务器，可以考虑类似Configure SMTP 的插件。
+<p style="padding-left: 30px;"><strong><a href="http://www.opoo.org/wp-content/uploads/sourceforge-email-configure-1.0-RC1.zip">SourceForge Project Web Email Configuration(RC版)插件下载
+</a></strong>（极简版，需要修改插件代码手动配置，适合高手，个人推荐使用）</p>
+<p style="padding-left: 30px;"><strong><a href="http://wordpress.org/extend/plugins/sourceforge-project-web-email-configuration/">SourceForge Project Web Email Configuration(正式版)插件下载
+</a></strong>（正式版，带有简单后台配置界面，适合大众。从 WordPress.org 下载）</p>
+<strong>PS：</strong>
+
+<p>1. 要测试本插件是否运行，请在登录界面使用忘记密码找回密码功能进行测试，能收到邮件即表示插件正常工作。勿以是否收到评论回复邮件为判断标准，因为 WordPress 的本身或者您的主题可能不支持回复评论时发送邮件。
+
+<p>2. 要在<strong>旧版 SourceForge.net </strong>设置 SMTP 密码，其步骤是：登录您的项目管理界面，在“Project Admin” -&gt; “Features” -&gt; “Manage” 中设置。
+<blockquote>Configure your project's email password.
+<ul>
+	<li>Use the Project Admin / Features menu choice and choose "Manage" from the "Project Web" line.</li>
+	<li>Set the password you want to use in the provided text entry and press the "Set Passwords" button.</li>
+</ul>
+</blockquote>
+3. 要在<strong>新版SourceForge.net </strong>设置 SMTP 密码，其步骤是：登录您的项目管理界面，点“Admin”按钮，打开“Tools”菜单，在待选工具“Click to install”里点击“Project Web Outgoing Email”，然后在下面已安装的工具里找到“PRWebEmail”，点击菜单“Admin Project Web Outgoing Email”，然后在出来的界面里填写“SMTP Password”。新版里已经明确把这个密码叫做“SMTP Password”了。
+
+<p><strong>UPDATE：</strong>
+
+<p>插件 1.0.1 版本已经发布，可以在 <a href="http://wordpress.org/extend/plugins/sourceforge-project-web-email-configuration/">WordPress.org 官网下载</a>。这个版本可以使用SSL协议发送邮件了，之前的版本由于一个 BUG 导致 SSL 协议发送邮件失败。

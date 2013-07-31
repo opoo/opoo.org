@@ -1,0 +1,71 @@
+---
+layout: post
+title: 'Spring+ActiveMQ: 嵌入式和独立运行ActiveMQ的配置示例'
+comments: true
+published: true
+date: '2012-05-24 22:42:41'
+link: http://opoo.org/spring-activemq-sample/
+post_id: 177
+url: '/spring-activemq-sample/'
+excerpt: "<p>ActiveMQ 服务可以嵌入在其它应用内部运行，也可以作为独立的JMS服务器启动运行。<p>在 ActiveMQ 启动后，我们就可以利用 Spring 的 JmsTemplate 作为 JMS 客户端，很方便的生产和消费 JMS 消息了。<p>这个简单的示例用于演示嵌入式启动 ActiveMQ，和独立运行 ActiveMQ 的 Spring 配置，<strong><a title='示例包下载' href='https://sourceforge.net/projects/opoo/files/samples/spring-activemq-sample.zip/download' target='_blank'>请点击这里下载示例包</a></strong>。"
+categories: [Java]
+tags: [ActiveMQ, JMS, Maven, Spring]
+description: "本文简单介绍通过Spring集成ActiveMQ时嵌入式启动和独立启动ActiveMQ的配置方法，提供示例下载，并说明实例运行步骤。"
+keywords: "ActiveMQ, Spring, JMS, Maven, Java"
+---
+<p>ActiveMQ 服务可以嵌入在其它应用内部运行，也可以作为独立的JMS服务器启动运行。
+
+<p>在 ActiveMQ 启动后，我们就可以利用 Spring 的 JmsTemplate 作为 JMS 客户端，很方便的生产和消费 JMS 消息了。
+
+<p>这个简单的示例用于演示嵌入式启动 ActiveMQ，和独立运行 ActiveMQ 的 Spring 配置，<strong><a title="示例包下载" href="https://sourceforge.net/projects/opoo/files/samples/spring-activemq-sample.zip/download" target="_blank">请点击这里下载示例包</a></strong>。
+
+<!--more-->
+
+<p><span style="font-size: 14px; color: #ff6600;"><strong>示例运行步骤：</strong></span>
+
+<p><strong>0. 前提</strong>
+
+<p>安装 Maven。[<a title="用Google搜索如何安装Maven" href="http://www.google.com.hk/search?ix=sea&amp;sourceid=chrome&amp;ie=UTF-8&amp;q=%E5%AE%89%E8%A3%85+Maven" target="_blank">搜索</a>]
+
+<p>下载实例包，解压，打开命令行（或 Linux 终端），进入 pom.xml 所在目录（后面称这个目录为“示例根目录”）。
+
+<p><strong>1.  嵌入式启动 ActiveMQ 运行示例</strong>
+
+<p>在示例根目录执行 <code>mvn exec:java</code> 即可运行示例程序，对应配置文件为 <code>spring-jms.xml</code>。
+如果你的电脑没有 D: 盘或者你在 Linux 下运行该示例，请执行
+<pre>mvn exec:java -Dmsg.data.home.dir=C:/jmsDataDir</pre>
+或者
+<pre>mvn exec:java -Dmsg.data.home.dir=/var/jmsDataDir</pre>
+属性 <code>msg.data.home.dir</code> 指定了ActiveMQ本地的数据目录。
+
+<p><strong>2.  独立启动 ActiveMQ 后运行示例</strong>
+下载 ActiveMQ 发行包（<a href="http://activemq.apache.org/download.html" target="_blank">http://activemq.apache.org/download.html</a>），选zip即可。解压后进入 bin 目录，执行 activemq.bat 启动 ActiveMQ 服务。
+
+<p>然后在示例根目录执行 <code>mvn exec:java -Dremote=true</code> 即可运行示例程序，对应配置文件为<code>spring-jms-remote.xml</code>。
+如果 ActiveMQ 服务和示例的不在同一台机器上运行，则需要在运行时指定 ActiveMQ 的 brokerURL ，例如：
+<pre>mvn exec:java -Dremote=true -Dbroker.url=tcp://192.168.1.99:61666</pre>
+<em>提示：在独立启动ActiveMQ的模式下，可以从pom.xml去掉对包<code>org.apache.activemq:activemq-ra</code>的依赖，使得应用更精炼。</em>
+
+<p><a href="http://www.opoo.org/wp-content/uploads/2012/05/activemq-jms-console-screenshot.jpg"><img class="alignnone  wp-image-186" title="activemq-jms-console-screenshot" alt="" src="//www.opoo.org/wp-content/uploads/2012/05/activemq-jms-console-screenshot.jpg" width="600" height="40" /></a>
+
+<p>&nbsp;
+
+<p>相关链接：
+<ul>
+	<li><strong style="line-height: 1.714285714; font-size: 1rem;">示例下载</strong><span style="line-height: 1.714285714; font-size: 1rem;">: </span><a style="line-height: 1.714285714; font-size: 1rem;" title="示例包下载" href="https://sourceforge.net/projects/opoo/files/samples/spring-activemq-sample.zip/download" target="_blank">https://sourceforge.net/projects/opoo/files/samples/spring-activemq-sample.zip/download</a></li>
+	<li><span style="line-height: 1.714285714; font-size: 1rem;">Apache ActiveMQ: </span><a style="line-height: 1.714285714; font-size: 1rem;" title="Apache ActiveMQ" href="http://activemq.apache.org" target="_blank">http://activemq.apache.org</a></li>
+	<li>Spring + ActiveMQ: <a title="ActiveMQ Spring Support" href="http://activemq.apache.org/spring-support.html" target="_blank">http://activemq.apache.org/spring-support.html</a></li>
+	<li>内嵌ActiveMQ: <a title="How to embed a broker inside a connection" href="http://activemq.apache.org/how-do-i-embed-a-broker-inside-a-connection.html" target="_blank">http://activemq.apache.org/how-do-i-embed-a-broker-inside-a-connection.html</a></li>
+</ul>
+<strong>Update(2012-05-28):</strong>
+
+<p>由于 License 限制，示例所需的包 javax:jms:1.1:jar 在 Maven 中心库并不存在，需要<a title="JMS" href="http://www.oracle.com/technetwork/java/jms/index.html" target="_blank">在这里下载</a>。
+
+<p>或者添加本站 Maven 库配置到你的 pom.xml 文件:
+<pre class="brush:xml">&lt;repositories&gt;
+  &lt;repository&gt;
+   &lt;id&gt;opoo.org&lt;/id&gt;
+   &lt;name&gt;opoo.org repository&lt;/name&gt;
+   &lt;url&gt;http://opoo.org/maven/releases&lt;/url&gt;
+  &lt;/repository&gt;
+&lt;/repositories&gt;</pre>

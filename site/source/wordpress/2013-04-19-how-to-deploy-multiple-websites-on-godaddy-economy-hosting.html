@@ -1,0 +1,97 @@
+---
+layout: post
+title: '在 Godaddy Economy 型主机部署多个站点的方法'
+comments: true
+published: true
+date: '2013-04-19 00:09:37'
+link: http://opoo.org/how-to-deploy-multiple-websites-on-godaddy-economy-hosting/
+post_id: 248
+url: '/how-to-deploy-multiple-websites-on-godaddy-economy-hosting/'
+excerpt: "<p>Economy 型主机是 Godaddy 最便宜的主机，最近的优惠价格是首年 12 美金，送一个免费域名。<p><span style='line-height: 1.714285714; font-size: 1rem;'>这个类型的基本配置是无限带宽，100GB空间，10个数据库，1个站点。</span><p>这篇文章将主要讨论这<strong>1个站点</strong>有关的内容。"
+categories: [others]
+tags: [economy, Godaddy, web host]
+description: "本文主要描述 Godaddy Economy 型主机如何通过 htaccess 文件实现部署多个站点。"
+keywords: "Godaddy Economy, Web Hosting, htaccess, Apache Rewrite"
+---
+<p>Economy 型主机是 Godaddy 最便宜的主机，最近的优惠价格是首年 12 美金，送一个免费域名。
+
+<p><span style="line-height: 1.714285714; font-size: 1rem;">这个类型的基本配置是无限带宽，100GB空间，10个数据库，1个站点。</span>
+
+<p>这篇文章将主要讨论这<strong>1个站点</strong>有关的内容。
+
+<!--more-->
+<h2>一、Godaddy Economy 型空间特点</h2>
+经过测试，这型空间可以绑定多个域名，包括子域名，有以下特点：
+<ol>
+	<li>根域名只能绑定到空间的根目录，这样多个不同的根域名都只能指向同一个网站，即所谓的只能建一个站点。例如 a.com 和 b.com 都只能指向一个网站。</li>
+	<li>子域名可以指向子目录，例如 blog.a.com 可指向目录 /bloga/，blog.b.com 可指向目录 /blogb/，但 www.a.com 不可以作为子域名。</li>
+	<li>该类型空间支持 .htaccess，并支持 rewrite</li>
+</ol>
+<h2>二、部署多个站点的方法</h2>
+我们希望 a.com 和 b.com 能够指向不同的目录，以达到部署多个站点的目的。如：
+<ul>
+	<li>a.com -&gt; /a/ (包括子域名 www.a.com -&gt; /a/)</li>
+	<li>b.com -&gt; /b/</li>
+</ul>
+我们可以利用在 <code>.htaccess</code> 文件中使用 rewrite 指令达到这个目的。
+<ol>
+	<li><span style="line-height: 1.714285714; font-size: 1rem;">在主机管理界面中选择 Hosted D</span><span style="line-height: 1.714285714; font-size: 1rem;">omains，添加 a.com, b.com 都指向空间的根目录（实际上也只能指向根目录）。</span></li>
+	<li><span style="line-height: 1.714285714; font-size: 1rem;">在您自己的域名管理中，将 a.com, b.com 的 A 记录都指向空间提供的 IP 地址（在 Hosting 管理页面的右边栏 “Server Details” 可以看到这个 “IP ADDRESS”）。如果还要绑定子域名，在这里一块儿都添加了吧。可以设置 www.a.com 的 CNAME 到 a.com。</span></li>
+	<li>在网站的根目录下创建 <code>.htaccess</code> 文件，内容如下：
+<pre class="brush:text">&lt;IfModule mod_rewrite.c&gt;
+   RewriteEngine on
+
+   RewriteCond %{HTTP_HOST} ^(www.)?a.com${'$'}
+   RewriteCond %{REQUEST_URI} !^/a/
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteRule (.*) /a/${'$'}1 [L]
+
+   RewriteCond %{HTTP_HOST} ^b.com${'$'}
+   RewriteCond %{REQUEST_URI} !^/b/
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteRule (.*) /b/${'$'}1 [L]
+&lt;/IfModule&gt;</pre>
+</li>
+</ol>
+在 /a/, /b/ 目录放置两个不同的文件，我们就可以测试了。如果你的域名解析还没有生效，那么打开你 的 hosts 文件（Windows）添加几个域名的解析。
+
+<p>至于子域名，Godaddy 主机管理的 Hosted Domains 界面中就可以管理，创建子域名是可以指定到特定的子目录。当然这些要在空间中使用的子域名都必须在您的域名解析添加 A 记录。如果您的域名是在 Godaddy 购买的或者是 Godaddy 赠送的免费域名，则省去了设置域名解析的步骤，Hosted Domains 里添加子域名后，域名解析也自动做好了。
+
+<p>博主在 Godaddy Economy 空间的演示站点：
+<pre>博  客： <a href="http://www.alexcn.com/" target="_blank">http://www.alexcn.com/</a> <a href="http://blog.alexcn.com/" target="_blank">http://blog.alexcn.com/</a>
+短网址： <a href="http://ssi.pw/" target="_blank">http://ssi.pw/</a></pre>
+<h2>三、遗留问题</h2>
+1.<strong> 性能问题</strong>
+
+<p>对于有强迫症的人来说，可能这种方式不是一个好主意，因为目录级的 rewrite （.htaccess）不是一种特别高效的方式，当部署的站点越多，<code style="line-height: 24px;">.htaccess</code> 文件会越长，rewrite 引擎遍历的时间会越长。当然这点时间对于计算机来说算不了什么，特别是当你安装 WordPress 等产品时，都已经使用了 .htaccess 文件。
+
+<p>2. <strong>URL 整洁问题</strong>
+
+<p>对于有“洁癖”的人来说不是一个好消息，就拿我们的例子来说，假设存在文件 /a/index.txt，那么我们希望的访问方式是 http://a.com/index.txt，这没有问题，但实际上通过 http://a.com/a/index.txt 也能访问同一个文件。
+
+<p>这是因为 http://a.com/ 实际上是指向 WEB 根目录（/）的，而 a/ 是 WEB 根目录中的一个子目录，从重新规则 <code style="line-height: 1.714285714;">RewriteCond %{REQUEST_URI} !^/a/</code><span style="line-height: 1.714285714; font-size: 1rem;">可以看出重写时排出了这个目录，所以上述的 URL 是可访问的。</span>
+
+<p>为什么在重新规则中必须排出对 /a/ 目录的重写呢？因为 .htaccess 对当前目录及其所有下级目录都是有效的，如果 /a/ 进行了重写，那么在访问 /a/index.txt 时，根据 /a/ 上级目录 / 中的 .htaccess 的规则，重写 (.*) 到 /a/${'$'}1 即 /a/index.txt -&gt; /a/a/index.txt，然后依次类推  /a/a/index.txt  -&gt; /a/a/a/index.txt -&gt; ... ，将形成一个嵌套死循环。
+
+<p>本博主也是一个有小小洁癖的人，曾试图通过类似 RewriteRule a/(.*) - [F] 的方式禁止外部直接访问 /a/ 这样的目录，而只允许重写引擎内部访问，但无奈 Apache Rewrite 知识有限，没有成功。
+
+<p>有路过的高人还望不吝赐教！
+
+<p><strong>更新（2013-04-26）</strong>
+
+<p>至于文中最后提到的第二点中涉及的循环重写问题，主要还是自己理解不够深刻，发现只要在被转发到的目录中放置<code>.htaccess</code>文件，并加上 <code>RewriteBase /当前目录名/</code> 即可解决，都不用使用规则 <code>RewriteCond %{REQUEST_URI} !^/a/</code> 来排除。
+
+<p>仍以文中的例子，根目录的 <code>.htaccess</code> 如下
+<pre class="brush:text">&lt;IfModule mod_rewrite.c&gt;
+   RewriteEngine on
+
+   RewriteCond %{HTTP_HOST} ^(www.)?a.com${'$'}
+   RewriteRule (.*) /a/${'$'}1 [L]
+&lt;/IfModule&gt;</pre>
+<code>/a</code> 目录的 <code>.htaccess</code> 如下
+<pre class="brush:text">&lt;IfModule mod_rewrite.c&gt;
+   RewriteEngine on
+   RewriteBase /a/
+&lt;/IfModule&gt;</pre>

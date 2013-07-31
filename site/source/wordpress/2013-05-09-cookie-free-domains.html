@@ -1,0 +1,83 @@
+---
+layout: post
+title: '关于 cookie-free domains'
+comments: true
+published: true
+date: '2013-05-09 12:43:09'
+link: http://opoo.org/cookie-free-domains/
+post_id: 308
+url: '/cookie-free-domains/'
+excerpt: "<p>本文主要描述使用裸域名做网站主域名时，如何用子域名做 cookie-free domains。<p>看站点优化的文章，很多建议将站点的静态文件（如图片、js、css 等）放在一个专门的域名下访问，由于该域名与主站域名不同，所以浏览器就不会把主域名下的 Cookie 传给该域，减少了网络开销，一定程度提高了页面加载速度，特别是细碎静态文件特别多的情况下效果显著。大概这个域就叫着 cookie-free domain 吧。<p><a href='http://developer.yahoo.com/yslow/' target='_blank'>Yahoo yslow</a> 可以对网页性能进行评级，其中一个指标就是 “Use cookie-free domains”，描述如下：<pre>When the browser requests a static image and sends cookies with the request, the server ignores the cookies. These cookies are unnecessary network traffic. To workaround this problem, make sure that static components are requested with cookie-free requests by creating a subdomain and hosting them there.</pre>大意是当浏览器请求一个静态图片并发送 Cookie 时，服务器会忽略 Cookie。Cookie 根本就没必要通过网络传输。为了解决这个问题，应当创建一个子域并将静态内存放在上面，以确保静态内容都是通过 cookie-free 的方式访问的。"
+categories: [tech]
+tags: [cookie-free]
+description: "本文主要描述使用裸域名做网站主域名时，如果使用子域名做 cookie-free domains。"
+keywords: "cookie-free domains, rootdomain, subdomain, Cookie污染"
+---
+<p>本文主要描述使用裸域名做网站主域名时，如何用子域名做 cookie-free domains。
+
+<p>看站点优化的文章，很多建议将站点的静态文件（如图片、js、css 等）放在一个专门的域名下访问，由于该域名与主站域名不同，所以浏览器就不会把主域名下的 Cookie 传给该域，减少了网络开销，一定程度提高了页面加载速度，特别是细碎静态文件特别多的情况下效果显著。大概这个域就叫着 cookie-free domain 吧。
+
+<p><a href="http://developer.yahoo.com/yslow/" target="_blank">Yahoo yslow</a> 可以对网页性能进行评级，其中一个指标就是 “Use cookie-free domains”，描述如下：
+<pre>When the browser requests a static image and sends cookies with the request, the server ignores the cookies. These cookies are unnecessary network traffic. To workaround this problem, make sure that static components are requested with cookie-free requests by creating a subdomain and hosting them there.</pre>
+大意是当浏览器请求一个静态图片并发送 Cookie 时，服务器会忽略 Cookie。Cookie 根本就没必要通过网络传输。为了解决这个问题，应当创建一个子域并将静态内存放在上面，以确保静态内容都是通过 cookie-free 的方式访问的。
+
+<!--more-->
+
+<p>有文章指出，如果主域名使用裸域名（根域名，例如 opoo.org）而静态内存使用子域名（例如 static.opoo.org）是无法达到 cookie-free 的。因为裸域的 cookie 会被传递给子域。即如果在 opoo.org 设置了cookie，那么访问子域 static.opoo.org 浏览器也会发送这个 Cookie，根本达不到 cookie-free 的目的。----笔者则认为这种说法不完全正确。
+
+<p>Cookie 有两个重要的属性：domain 和 path。当浏览器访问一个网站时，只有 domain 和 path 都满足条件时，才会发送相应的 Cookie 到这个网站的服务器。而服务器在要求浏览器设置 Cookie 时，也只能设置与当前网站匹配的 domain 属性。
+
+<p>Cookie domain 属性的匹配方法，简单示例如下：
+<ul>
+	<li>cookie.domain = "opoo.org" 该 Cookie 只能发给域 opoo.org，不能发到子域 www.opoo.org, static.opoo.org 等</li>
+	<li>cookie.domain = ".opoo.org" 该 Cookie 可以发给域 opoo.org 及其下所有子域，包括 www.opoo.org, static.opoo.org 等</li>
+	<li>cookie.domain = "www.opoo.org" 该 Cookie 只能发给域 www.opoo.org, 不能发给域 opoo.org 及 static.opoo.org 等</li>
+</ul>
+由此可以看出，裸域的 Cookie 会不会污染到子域，主要就在于设置 Cookie 的 domain 属性值前面的那个“.”。前缀点（leading dot, leading period, dot prefix, whatever..）大致相当于泛域名匹配吧。
+
+<p>关于这个“点”，<a href="http://tools.ietf.org/html/rfc6265" target="_blank">RFC 6265</a> 和 <a href="http://tools.ietf.org/html/rfc2109" target="_blank">RFC 2109</a> 描述不完全一致，有兴趣的读者可以翻看原文。
+
+<p>RFC 6265 4.1.2.3 章节
+<pre>4.1.2.3.  The Domain Attribute
+
+   The Domain attribute specifies those hosts to which the cookie will
+   be sent.  For example, if the value of the Domain attribute is
+   "example.com", the user agent will include the cookie in the Cookie
+   header when making HTTP requests to example.com, www.example.com, and
+   www.corp.example.com.  (Note that a leading %x2E ("."), if present,
+   is ignored even though that character is not permitted, but a
+   trailing %x2E ("."), if present, will cause the user agent to ignore
+   the attribute.)  If the server omits the Domain attribute, the user
+   agent will return the cookie only to the origin server.
+
+   The user agent will reject cookies unless the Domain attribute
+   specifies a scope for the cookie that would include the origin
+   server.  For example, the user agent will accept a cookie with a
+   Domain attribute of "example.com" or of "foo.example.com" from
+   foo.example.com, but the user agent will not accept a cookie with a
+   Domain attribute of "bar.example.com" or of "baz.foo.example.com".</pre>
+看这意思难道是说有没有前缀“点”，Cookie 都会传给子域？没太读懂。
+
+<p>但实际测试的效果跟我前面描述是一致的，即不带“点”的只能传给本域，不能传给子域。
+
+<p>读者可以自行检验：用 Chrome 开发人员工具或者 Firebug 观察 Github.com 和SourceForge.net 网站及其子网站的请求/响应头信息中的 Cookie 信息。这两个网站就是伺服在裸域名上的。
+
+<p>关于网站是否使用裸域，个人觉得，.com 的域名要 www 比较好，还可以利用浏览器快捷键；而 .org, .net 等域名用裸域挺不错的，简洁方便。
+
+<p>在基本搞清楚 cookie-free domains，笔者将本站域名换回到裸域，并设置了通过子域名访问图片等静态内容。
+
+<p><strong>WordPress</strong>
+
+<p><strong></strong>WordPress 设置的 Cookie domain 本来就是以不带点的域名开头的，不需要额外设置。如果伺服在 www.opoo.org 则要修改 wp-config.php 设置 COOKIE_DOMAIN 属性。
+
+<p><strong>Google 分析</strong>
+
+<p>在裸域名使用 Google 分析，需要在 js 代码中设置 cookieDomain 属性为 none，否则生成的 Cookie 域将带前缀点。
+<pre class="brush:js">_gaq.push(['_setDomainName', 'none']);</pre>
+<strong>百度统计</strong>
+
+<p><strong></strong>很不幸，暂时没有发现百度统计代码中有设置 cookieDomain 的地方，其生成的 Cookie 是带前缀点的，会引起 Cookie 污染，所以笔者直接删除了百度统计代码。
+
+<p><strong>PS: 本站 Yslow 评级</strong>
+
+<p><a href="http://www.opoo.org/wp-content/uploads/2013/05/yslow.grade_.for_.opoo_.org_.png"><img class="alignnone size-full wp-image-317" alt="yslow.grade.for.opoo.org" src="//www.opoo.org/wp-content/uploads/2013/05/yslow.grade_.for_.opoo_.org_.png" width="673" height="109" /></a>

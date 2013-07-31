@@ -1,0 +1,101 @@
+---
+layout: post
+title: 'Google App Engine(GAE)账号注册、应用部署及域名绑定注意事项'
+comments: true
+published: true
+date: '2012-05-06 23:29:29'
+link: http://opoo.org/google-app-engine/
+post_id: 95
+url: '/google-app-engine/'
+excerpt: "<p><strong>声明：本文不是教程，教程请参考本文末尾链接。</strong><p>在研究 SourceForge Project Web 时，看到<a href='http://www.freehao123.com/google-app-engine/' target='_blank'>免费资源部落有关Google App Engine免费空间的文章</a>，于是很有兴致的去折腾了一番，具体过程跟那篇文章差不多。<p>之所以用“折腾”二字，是因为要使用 Google 的各项服务还真不容易——基于一些众所周知的原因，Google 的有些服务无法直接访问（如appspot, blogspot, groups等），还有些服务则时常突然中断一分钟或更久，包括主营的搜索业务和 Google Code 等。"
+categories: [tech]
+tags: [Google App Engine]
+description: "本文主要介绍Google App Engine(GAE)账号注册、应用部署及域名绑定等过程中可能遇到的问题和要注意的事项，并附有实例和各种资源链接。"
+keywords: "Google App Engine, GAE, Google Apps"
+---
+<p><strong>声明：本文不是教程，教程请参考本文末尾链接。</strong>
+
+<p>在研究 SourceForge Project Web 时，看到<a href="http://www.freehao123.com/google-app-engine/" target="_blank">免费资源部落有关Google App Engine免费空间的文章</a>，于是很有兴致的去折腾了一番，具体过程跟那篇文章差不多。
+
+<p>之所以用“折腾”二字，是因为要使用 Google 的各项服务还真不容易——基于一些众所周知的原因，Google 的有些服务无法直接访问（如appspot, blogspot, groups等），还有些服务则时常突然中断一分钟或更久，包括主营的搜索业务和 Google Code 等。
+
+<!--more-->
+
+<p>所以使 用Google App Engine 得做好心理准备：
+<ol>
+	<li>打开 hosts 文件，随时准备添加新条目；</li>
+	<li> 打开搜索引擎（Google 首选、抽风时百度），随时准备查找第一条所需的内容。</li>
+</ol>
+下面开始介绍使用 Google App Engine 可能会遇到问题和要注意的事项。
+
+<p><strong>一、账号注册</strong>
+<ol>
+	<li> Google App Engine 的开发文档页面已经“Google Code”移到“<a href="https://developers.google.com/appengine/?hl=zh-CN">Google 开发人员</a>”，在首页有注册地址。</li>
+	<li>注册时需要使用手机接收 Auth Code，手机号码格式“+86XXXXXXXXXXX”，“+86”不能少。以个人感受，似乎全球通号码比其它号码更容易收到短信。</li>
+	<li>创建应用后，无法通过 Google 提供的二级域名 &lt;your-application-id&gt;.appspot.com 访问，你懂的。</li>
+</ol>
+<strong>二、应用部署</strong>
+
+<p>不得不说，目前能运行在 Google App Engine 下的开源或者免费的应用还真不多，比如很难找到一款能匹敌 WordPress 的博客系统。可自行搜索 Google App Engine 应用大全或<a href="http://www.lylzone.info/2011/04/17/all-google-app.html" target="_blank">参考这里</a>。
+<ol>
+	<li>关于部署：
+无论部署 Python 应用还是 Java 应用，都需要先设置 applicaiton-id 和版本信息，这些配置Python 应用在 app.yaml 文件中，Java 应用在 WEB-INF/appengine-web.xml 文件中。</li>
+	<li>关于版本：
+部署 Google App Engine 应用时，可为每一次上传指定一个版本（Version），也可为相同的应用指定相同的版本不同的应用指定不同的版本。各个版本可同时运行，但只能设置其中一个版本为默认版本。版本并不要求一定是数字，例如您可以设置版本为“1”，“2”，“3”，也可以设置博客应用版本为“blog”，相册应用的版本为“pic”等，如<a href="#p1">图1</a>：
+<a id="p1" name="p1"></a><a href="http://www.opoo.org/wp-content/uploads/2012/05/wondor.gae_.versions.png"><img class="alignnone size-full wp-image-98" title="Wondor.com GAE Application Versions" alt="" src="//www.opoo.org/wp-content/uploads/2012/05/wondor.gae_.versions.png" width="526" height="149" /></a><center><strong>图1</strong></center>如果应用有版本1、2、3，其中版本3是默认版本，则通过1.&lt;your-application-id&gt;.appspot.com和2.&lt;your-application-id&gt;.appspot.com可分别访问版本1和版本2，通过3.&lt;your-application-id&gt;.appspot.com和&lt;your-application-id&gt;.appspot.com都可以访问版本3。</li>
+	<li>关于Java应用
+Java应用可以使用插件 <a href="http://code.google.com/p/maven-gae-plugin/" target="_blank">maven-gae-plugin</a> 和 <a href="https://developers.google.com/appengine/docs/java/tools/eclipse?hl=zh-CN">Eclipse插件</a>。
+上传Java应用时可能会遇到jar包太大（&gt;10M）无法上传的问题，如下：
+<pre>java.lang.IllegalStateException: Found a jar file too large to upload:
+"D:\temp\appcfg2349572107442465681.tmp\WEB-INF\lib\appengine-tools-sdk-1.6.5.jar".</pre>
+解决途径有2个：一是上传时使用参数--enable_jar_splitting（%GAE_SDK_HOME%\bin\appcfg.cmd --enable_jar_splitting update &lt;javaappwardir&gt;）；二是压缩或者分拆大的jar文件。第一种未亲自测试，网上有人说无效（<a href="http://code.google.com/p/googleappengine/issues/detail?id=5805" target="_blank">参考1</a>，<a href="http://code.google.com/p/maven-gae-plugin/issues/detail?id=148" target="_blank">参考2</a>）。本人采用第二种，将大的jar包解压，然后通过 7zip 重新压缩成 zip，改后缀名为jar，文件大小基本上小于 10M 了，再次上传，没有出现问题。</li>
+</ol>
+<strong>三、域名绑定</strong>
+
+<p>基于本文开头所说，*.appspot.com 是无法直接访问的，即使自己通过 hosts 解决了这个问题，别人还是无法访问到你的 GAE 应用，比如在 Google App Engine 上安装一个博客，你可能需要更多的人能够看到而不仅仅是自己能访问，这个时候就需要绑定自己的域名了。
+
+<p>绑定域名的过程请<a href="https://developers.google.com/appengine/docs/domain?hl=zh-CN" target="_blank">参考Google的这篇文章</a>和<a href="http://www.freehao123.com/google-app-engine/" target="_blank">免费资源部落的这篇文章</a>，要注意几点：
+<ol>
+	<li> 要绑定在 Google App Engine 应用上的域名必须先开通<a href="http://www.google.com/apps/intl/zh-CN/group/index.html" target="_blank">Google Apps服务</a>。Google Apps 和Google App Engine 是不同的服务，绑定域名的操作是在 Google Apps 里操作的。理论上讲可以在 Google Apps 将域名绑定到他人的 Google App Engine 应用上，只要他也在自己的 Google App Engine 应用中添加了你的域名。开通 Google Apps 服务时选择免费版即可，地区可选择美国或香港，对应的电话号码格式为“XXX-XXX-XXXX”或“XXXX-XXXX”。</li>
+	<li>可以绑定通配符子域名（泛域名），前提是你的DNS服务支持泛域名解析。Google 的文档中介绍了个大概，但我感兴趣的却是绑定通配符子域名后能不能自动和 Google App Engine 应用中的各个版本对应？
+——实践证明，是可以的！
+<strong>示例如下</strong>：
+1) 在 Google Apps 中的添加 Google App Engine 应用，并在 Google Apps 管理的设置里添加网址 blog.wondor.com 和 *.web.wondor.com（见<a href="#p2">图2</a>）； 2)在域名的DNS服务商处设置了这两个域名的CNAME解析；3)在Google App Engine应用中设置各个版本如<a href="#p1">图1</a>，其中版本“blog”设置成默认。
+此时可以通过以下网址访问各版本：
+<ul>
+	<li>博客系统：<a title="博客" href="http://blog.wondor.com/" target="_blank"> http://blog.wondor.com/</a> 或者<a href="http://blog.web.wondor.com/" target="_blank"> http://blog.web.wondor.com/</a></li>
+	<li>相册：<a title="相册" href="http://pic.web.wondor.com/" target="_blank">http://pic.web.wondor.com/</a></li>
+	<li style="text-align: left;">Java应用：<a title="Java应用" href="http://java.web.wondor.com/" target="_blank"> http://java.web.wondor.com/</a> [<a title="GAE Java系统属性" href="http://java.web.wondor.com/s1.jsp" target="_blank">Java JVM系统属性</a>]
+<a id="p2" name="p2"></a><a href="http://www.opoo.org/wp-content/uploads/2012/05/wondor.domain.for_.gae_.png"><img class="alignnone  wp-image-100" title="Wondor.com Domain Settings for Google Apps" alt="" src="//www.opoo.org/wp-content/uploads/2012/05/wondor.domain.for_.gae_.png" width="625" height="248" />
+</a><center><strong>图2</strong></center></li>
+</ul>
+以后在Google App Engine应用中每多增加一个版本，都不必再调整Google Apps的域名设置，也不必增加DNS服务的解析地址了，通过 &lt;version&gt;.web.wondor.com 即可访问。
+
+<p>以上可以看出“<em>DNS泛域名解析+Google Apps通配符子域设置+Google App Engine应用多版本</em>”的功能是非常强大的。
+另外，Google支持绑定裸域名和www域名。如果要在Google上发布您的网站，可以将www域和裸域名绑定在Google App Engine应用的默认版本上或者Google Apps的Sites上（Google Sites是Google Apps中的又一个产品）。</li>
+</ol>
+<strong>四、总结</strong>
+<ol>
+	<li>优点：
+<ul>
+	<li>a) 速度快、稳定、免费（有限的免费、通常小网站小应用够用了）；</li>
+	<li>b) 支持Java和Python，尤其是Java，这在免费空间里是不多见的。</li>
+</ul>
+</li>
+	<li>缺点：
+<ul>
+	<li><span style="font-size: 1rem; line-height: 1.714285714;">a) 整体概念、程序编写、应用发布、后台管理、域名绑定（还涉及到域名解析）等都显得有一定难度，不适合新手；</span></li>
+	<li><span style="font-size: 1rem; line-height: 1.714285714;">b) 参考其优点，免费是有限的，不是无限的；</span></li>
+	<li><span style="font-size: 1rem; line-height: 1.714285714;">c) 可能会有移植问题。如果需要的带宽或者空间超出了 GAE 免费应用的限制，此时要么升级成收费服务，要么遗憾地关闭应用，要么迁移到其它主机。如果使用了 GAE 的数据存储（Datasore）服务，迁移可能就是一个问题，一个设想就是在应用中使用嵌入式数据库存储，而不使用 Google 的存储，例如可以在 Java 应用中使用嵌入式 H2 数据库，这样可或许能解决迁移问题，本人没有测过。</span></li>
+</ul>
+</li>
+</ol>
+<strong>五、相关链接</strong>（部分链接文中已经提到）：
+<ol>
+	<li> 谷歌10GB免费空间Google App Engine注册绑域名安装博客程序（<a href="http://www.freehao123.com/google-app-engine/">http://www.freehao123.com/google-app-engine/</a>）</li>
+	<li>Google App Engine主站（<a href="http://appengine.google.com">http://appengine.google.com</a>）</li>
+	<li>Google App Engine开发者文档 （<a href="https://developers.google.com/appengine/?hl=zh-CN">https://developers.google.com/appengine/?hl=zh-CN</a>） 含注册地址</li>
+	<li>Google Apps免费版（<a href="http://www.google.com/apps/intl/zh-CN/group/index.html">http://www.google.com/apps/intl/zh-CN/group/index.html</a>）</li>
+	<li>maven-gae-plugin GAE Maven插件 （<a href="http://code.google.com/p/maven-gae-plugin/">http://code.google.com/p/maven-gae-plugin/</a>） （<a href="http://www.kindleit.net/maven_gae_plugin/maven-gae-plugin/plugin-info.html">http://www.kindleit.net/maven_gae_plugin/maven-gae-plugin/plugin-info.html</a>）</li>
+	<li> 使用Google Eclipse插件 （<a href="https://developers.google.com/appengine/docs/java/tools/eclipse?hl=zh-CN">https://developers.google.com/appengine/docs/java/tools/eclipse?hl=zh-CN</a>）</li>
+</ol>

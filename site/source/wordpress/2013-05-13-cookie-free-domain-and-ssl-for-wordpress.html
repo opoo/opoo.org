@@ -1,0 +1,268 @@
+---
+layout: post
+title: '为 WordPress 配置 cookie-free domain 和 SSL'
+comments: true
+published: true
+date: '2013-05-13 00:15:54'
+link: http://opoo.org/cookie-free-domain-and-ssl-for-wordpress/
+post_id: 323
+url: '/cookie-free-domain-and-ssl-for-wordpress/'
+excerpt: "<p>最近在配置 WordPress 的过程中，笔者希望可以做到以下几点：<ol>	<li><span style='line-height: 14px;'>使用 cookie-free 域来访问静态文件，主要是 css，js，图片等，大多位于 wp-content 目录。</span></li>	<li><span style='line-height: 14px;'>给网站配置 SSL 证书，使得网站既可以通过 HTTP 访问，也可以通过 HTTPS 访问。</span></li>	<li><span style='line-height: 14px;'>在通过 HTTPS   访问网站时，不应该出现网页中既包含安全内容也包含不安全内容（及混合内容）的警告，即此时所有引用资源都应该是 HTTPS 协议访问的。</span></li>	<li>不希望通过目录级配置文件 .htaccess 文件来实现 WordPress 的固定链接，因为启用 .htaccess 会降低 Apache 的性能。</li></ol>下面具体说明如何达到这些目标。<h1>一、cookie-free 域的选择</h1><a title='关于 cookie-free domains' href='http://opoo.org/cookie-free-domains/'>有关 cookie-free domains, 请参考上一篇文章</a>。<p>要达到第一点要求，必须在主域之外，使用第二个域作为 cookie-free 域。<p>要达到第二点和第三点要求，该 cookie-free 域：a）必须能通过 HTTPS 访问；b）不能直接修改 WordPress 源文件中静态资源为 http://cookie-free.domain/...，写死之后在 HTTPS 访问时会出现混合内容警告。"
+categories: [tech]
+tags: [Apache, cookie-free, SSL, WordPress]
+description: "本文重要介绍：为 WordPress 配置 cookie-free 域；为 WordPress 配置 SSL 证书；修改相应的配置文件使得 WordPress 可以同时通过 HTTP 和 HTTPS 访问，并且在 HTTPS 访问时不出现混合内容的警告。"
+keywords: "WordPress, SSL, cookie-free domains, Apache"
+---
+<p>最近在配置 WordPress 的过程中，笔者希望可以做到以下几点：
+<ol>
+	<li><span style="line-height: 14px;">使用 cookie-free 域来访问静态文件，主要是 css，js，图片等，大多位于 wp-content 目录。</span></li>
+	<li><span style="line-height: 14px;">给网站配置 SSL 证书，使得网站既可以通过 HTTP 访问，也可以通过 HTTPS 访问。</span></li>
+	<li><span style="line-height: 14px;">在通过 HTTPS   访问网站时，不应该出现网页中既包含安全内容也包含不安全内容（及混合内容）的警告，即此时所有引用资源都应该是 HTTPS 协议访问的。</span></li>
+	<li>不希望通过目录级配置文件 .htaccess 文件来实现 WordPress 的固定链接，因为启用 .htaccess 会降低 Apache 的性能。</li>
+</ol>
+下面具体说明如何达到这些目标。
+<h1>一、cookie-free 域的选择</h1>
+<a title="关于 cookie-free domains" href="http://opoo.org/cookie-free-domains/">有关 cookie-free domains, 请参考上一篇文章</a>。
+
+<p>要达到第一点要求，必须在主域之外，使用第二个域作为 cookie-free 域。
+
+<p>要达到第二点和第三点要求，该 cookie-free 域：a）必须能通过 HTTPS 访问；b）不能直接修改 WordPress 源文件中静态资源为 http://cookie-free.domain/...，写死之后在 HTTPS 访问时会出现混合内容警告。
+<!--more-->
+关于a)：笔者选择 opoo.org 作为主域，www.opoo.org 作为 cookie-free 域，因为笔者申请的 StartSSL 的证书只支持这两个域，如果读者有其它支持 HTTPS 的域，也可以选择来做 cookie-free 的域。
+
+<p>关于b)：笔者主要对 wp-content 目录下的内容做 cookie-free 处理。<span style="line-height: 1.714285714; font-size: 1rem;">修改 </span><code style="line-height: 1.714285714;">wp-config.php</code><span style="line-height: 1.714285714; font-size: 1rem;"> 文件，添加以下一行</span>
+<pre class="brush:php">define('WP_CONTENT_URL', 'http://www.opoo.org/wp-content');</pre>
+<strong>好处：</strong>
+<ol>
+	<li><span style="line-height: 14px;">在通过 HTTPS 协议访问主域时，WordPress 会自动将 WP_CONTENT_URL 也变成 https 协议，即变成 <code><strong>https</strong>://www.opoo.org/wp-content</code>;</span></li>
+	<li>WordPress 大部分的静态内容都在这个目录下，包括文章上传的图片、主题、插件等。这样，一个 WordPress 的大部分静态资源都已经 cookie-free 了。</li>
+</ol>
+<strong>坏处：</strong>
+
+<p>可能会导致部分主题或插件工作不正常。
+
+<p>主题、插件目录中除了静态文件，还有部分 php 文件。这些 php 文件在调用时 url 也变成了 http://www.opoo.org/wp-content/.../x.php 的形式，如果 php 文件运行时需要主域的 cookie，就会出错。
+
+<p>笔者目前发现<span style="line-height: 14px;">语法高亮插件 Syntax Highlighter ComPress 就有这个问题，它在后台管理时通过 cookie-free 域访问了一个 php 文件，由于拿不到 Cookie 信息，该 php 直接返回一个错误信息。</span>
+
+<p>解决这个问题的办法是通过 Rewrite 规则重写，将所有的 <strong>php 文件</strong>或者 <strong>非 wp-content 目录</strong>下的文件的访问都转发回主域。
+<pre class="brush:plain"># cookie-free 域下所有的 php 访问转发回主域
+RewriteCond %{HTTP_HOST} ^www.opoo.org${'$'} [NC]
+RewriteCond %{REQUEST_URI} (.*).php${'$'} [NC]
+RewriteRule ^(.*)${'$'} http://opoo.org${'$'}1 [L,R=301]
+
+# 除了 wp-content 开头的 url，cookie-free 域下其它访问转发回主域
+RewriteCond %{HTTP_HOST} ^www.opoo.org${'$'} [NC]
+RewriteCond %{REQUEST_URI} !^/wp-content/
+RewriteRule ^(.*)${'$'} http://opoo.org${'$'}1 [L,R=301]</pre>
+另外也需要在 ssl.conf 中配置，将以上内容中的 http 换成 https 即可。
+
+<p>如果读者是超级完美主义者，想将 wp-includes 目录下的静态文件也 cookie-free，那么就要修改 WordPress 源文件。建议修改时判断一下，以保证能同时在 HTTP 和 HTTPS 下访问。
+<pre class="brush:php">${'$'}url = (is_ssl() ? "https" : "http") . "://www.opoo.org/wp-includes/.../css.css"</pre>
+最后，将已有文章中的图片的 url 替换成 cookie-free domain，执行以下 SQL 语句
+<pre class="brush:sql">update wp_posts set post_content=replace(post_content, 'http://opoo.org/wp-content/uploads', 'http://www.opoo.org/wp-content/uploads') where post_content like '%http://opoo.org/wp-content/uploads%';</pre>
+这样修改后文章中的所有文章都指向了 http 开头的 cookie-free 域，在 HTTPS 访问主域会出现混合内容警告信息，可建一个插件解决这个问题。插件主要代码如下：
+<pre class="brush:php">function my_content_manipulator(${'$'}content){
+	if( is_ssl() ){
+		${'$'}content = str_replace('http://www.opoo.org/wp-content/uploads', 'https://www.opoo.org/wp-content/uploads', ${'$'}content);
+	}
+	return ${'$'}content;
+}
+add_filter('the_content', 'my_content_manipulator');</pre>
+通过 HTTPS 访问时，文章在显示之前会被插件替换其中图片 url 的协议。
+<h1>二、配置 SSL</h1>
+<h2>1. 申请 SSL 证书</h2>
+要实现通过 HTTPS 访问网站，需要购买一个用于 WEB 服务器的 SSL 证书，也可在 StartSSL 免费申请。
+
+<p>如果仅用于测试，也可以通过 openssl 之类的软件生成一个自签名的证书。自签名的证书在访问时会显示网站不受信任，在谷歌浏览器地址栏里有显示一个叉，别的浏览器也会有相应提示。
+
+<p>如果用于正式的生产环境，非常不建议使用自签名证书，不要像某道部的网站一样瞎搞。
+<h2>2. 安装证书</h2>
+以 Apache 服务器和从 StartSSL 申请的免费 SSL 证书为例来说明如何安装和配置。
+
+<p>在 StartSSL 证书申请过程中，先是保存的密匙文件 <code>ssl.key</code>，后来又保存了颁发的证书文件 <code>ssl.crt</code>，在 StartSSL 的安装指引里要求下载文件 <code>ca.pem</code> 和 <code>sub.class1.server.ca.pem</code>，将这 4 个文件上传到服务器上（如目录 /etc/pki/ssl/），然后修改 Apache 的配置文件（也可以在 conf.d 目录下新建文件 ssl.conf），增加以下内容：
+<pre class="brush:plain">LoadModule ssl_module modules/mod_ssl.so
+Listen 443
+
+&lt;VirtualHost _default_:443&gt;
+    DocumentRoot /var/www/wordpress_root
+    ErrorLog logs/error_log
+    TransferLog logs/access_log
+    SSLEngine on
+    SSLProtocol all -SSLv2
+    SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM
+
+    SSLCertificateFile /etc/pki/ssl/ssl.crt
+    SSLCertificateKeyFile /etc/pki/ssl/ssl.key
+    SSLCertificateChainFile /etc/pki/ssl/sub.class1.server.ca.pem
+    SSLCACertificateFile /etc/pki/ssl/ca.pem
+    CustomLog logs/ssl_request_log \
+        "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+&lt;/VirtualHost&gt;</pre>
+这是为 Apache 配置 SSL 最核心的部分。
+
+<p>必须为 Apache 安装 mod_ssl 模块。CentOS 通过 <code>yum install mod_ssl</code> 即可安装该模块，并在 <code>/etc/httpd/conf.d/</code> 下生成配置文件 ssl.conf，修改其内容即可。
+
+<p>在 StartSSL 创建的私匙是加密的，启动 Apache 服务器时，可能提示输入的密码，输入申请过程中填写的密码即可。
+
+<p>如果要去除这个提示，可对私匙进行解密，执行以下命令
+<pre class="brush:shell">#openssl rsa -in ssl.key -out ssl.key
+#chmod 400 ssl.key</pre>
+<h2>3. HTTPS 访问时的混合内容警告及其它</h2>
+a) 混合内容警告
+
+<p>如果网站是通过 HTTPS 访问的，而网页中引用了其它 HTTP 协议访问的资源时，就会出现混合内容的警告，在谷歌浏览器下显示成这样：<a href="http://www.opoo.org/wp-content/uploads/2013/05/ssl.mixed_.content.png"><img class="alignnone size-full wp-image-335" alt="ssl.mixed.content" src="//www.opoo.org/wp-content/uploads/2013/05/ssl.mixed_.content.png" width="135" height="23" /></a>，点开小三角可以看见一段描述“但是，此网页中包含其他不安全的资源”。而引用资源也全部是 https 时，则显示成这样：<a href="http://www.opoo.org/wp-content/uploads/2013/05/ssl.good_.png"><img class="alignnone size-full wp-image-336" alt="ssl.good" src="//www.opoo.org/wp-content/uploads/2013/05/ssl.good_.png" width="128" height="23" /></a>。
+
+<p>混合内容在 IE 下会导致浏览器直接弹出一个警告框“本页不但包含安全的内容，也包含不安全的内容。是否显示不安全的内容？”，必须选择是才能访问。
+
+<p>b) 如果 HTTPS 页面引用了 HTTP 协议访问的 JavaScript 脚本，那么该脚本会被屏蔽，直接不执行（至少在谷歌浏览器里的表现是这样的）。打开谷歌浏览器的控制台 console 看以看到警告信息，以及被 blocked 的脚本。
+
+<p>基于以上两点，应该尽量确保页面中所有引用资源和页面本身使用同一种访问协议（http 或者 https），起码保证 HTTPS 协议下时应该一致。
+
+<p>HTTP 协议下引用 HTTPS 资源是不会出现警告的，直接将 cookie-free 域下所有资源都改为 https 访问倒是相当省事的做法。但 HTTPS 是一种加密传输的协议，理论上会降低访问速度。所在既然主域使用 HTTP 协议了，cookie-free 域也尽量使用 HTTP 协议。
+
+<p>（完美主义强迫症患者 - -! ）
+<h1>三、不使用 .htaccess 文件</h1>
+Apache 目录级的配置文件 .htaccess 会降低 Apache 的性能，尽管很小。
+
+<p>Apache 配置 <code>AllowOverride None</code> 时会忽略目录级的配置文件。
+
+<p>WordPress 使用固定链接时，需要 htaccess 的支持，如果不启用 .htaccess， 可以将配置写进 Apache 主配置文件。如下：
+<pre class="brush:plain">&lt;Directory "/var/www/wordpress_root"&gt;
+		&lt;IfModule mod_rewrite.c&gt;
+			RewriteEngine On
+			RewriteBase /
+
+			RewriteCond %{REQUEST_FILENAME} !-f
+			RewriteCond %{REQUEST_FILENAME} !-d
+			RewriteRule . /index.php [L]
+		&lt;/IfModule&gt;
+
+		&lt;Files "wp-config.php"&gt;
+			Order allow,deny
+			Deny from all
+		&lt;/Files&gt;
+&lt;/Directory&gt;</pre>
+<h1>四、总结</h1>
+以下几个配置综合了上文中所讲的各个需求
+<h2>1. Apache 配置 wordpress.conf</h2>
+<pre class="brush:plain">DocumentRoot /var/www/wordpress_root
+ServerName opoo.org
+ServerAlias www.opoo.org
+
+RewriteEngine On
+
+RewriteCond %{HTTP_HOST} ^www.opoo.org${'$'} [NC]
+RewriteCond %{REQUEST_URI} (.*).php${'$'} [NC]
+RewriteRule ^(.*)${'$'} http://opoo.org${'$'}1 [L,R=301]
+
+RewriteCond %{HTTP_HOST} ^www.opoo.org${'$'} [NC]
+RewriteCond %{REQUEST_URI} !^/wp-content/ [NC]
+RewriteRule ^(.*)${'$'} http://opoo.org${'$'}1 [L,R=301]
+
+&lt;Directory "/var/www/wordpress_root"&gt;
+	Options -Indexes FollowSymLinks
+	AllowOverride None
+	Order allow,deny
+	Allow from all
+
+	&lt;IfModule mod_rewrite.c&gt;
+		RewriteEngine On
+		RewriteBase /
+
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteCond %{REQUEST_FILENAME} !-d
+		RewriteRule . /index.php [L]
+
+		RewriteRule ^wp-admin/includes/ - [F,L]
+		RewriteRule !^wp-includes/ - [S=3]
+		RewriteRule ^wp-includes/[^/]+\.php${'$'} - [F,L]
+		RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L]
+		RewriteRule ^wp-includes/theme-compat/ - [F,L]
+	&lt;/IfModule&gt;
+
+	&lt;Files "wp-config.php"&gt;
+		Order allow,deny
+		Deny from all
+	&lt;/Files&gt;
+&lt;/Directory&gt;</pre>
+<h2>2. Apache 配置 wordpress_ssl.conf</h2>
+<pre class="brush:plain">LoadModule ssl_module modules/mod_ssl.so
+Listen 443
+
+&lt;VirtualHost _default_:443&gt;
+	DocumentRoot /var/www/wordpress_root
+	ServerName opoo.org
+	ServerAlias www.opoo.org
+	ErrorLog /usr/local/apache/logs/ssl-error_log
+	TransferLog /usr/local/apache/logs/ssl-transfer_log
+	CustomLog /usr/local/apache/logs/ssl-access_log \
+		 "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+
+	SSLEngine on
+	SSLProtocol all -SSLv2
+	SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM
+	SSLCertificateFile /etc/pki/ssl/ssl.crt
+	SSLCertificateKeyFile /etc/pki/ssl/ssl.key
+	SSLCertificateChainFile /etc/pki/ssl/sub.class1.server.ca.pem
+	SSLCACertificateFile /etc/pki/ssl/ca.pem
+
+	SetEnvIf User-Agent ".*MSIE.*" \
+		 nokeepalive ssl-unclean-shutdown \
+		 downgrade-1.0 force-response-1.0
+
+	RewriteEngine On
+
+	RewriteCond %{HTTP_HOST} ^www.opoo.org${'$'} [NC]
+	RewriteCond %{REQUEST_URI} (.*).php${'$'} [NC]
+	RewriteRule ^(.*)${'$'} https://opoo.org${'$'}1 [L,R=301]
+
+	RewriteCond %{HTTP_HOST} ^www.opoo.org${'$'} [NC]
+	RewriteCond %{REQUEST_URI} !^/wp-content/ [NC]
+	RewriteRule ^(.*)${'$'} https://opoo.org${'$'}1 [L,R=301]
+
+	&lt;Directory "/var/www/wordpress_root"&gt;
+		Options -Indexes FollowSymLinks
+		AllowOverride None
+		Order allow,deny
+		Allow from all
+
+		&lt;IfModule mod_rewrite.c&gt;
+			RewriteEngine On
+			RewriteBase /
+
+			RewriteCond %{REQUEST_FILENAME} !-f
+			RewriteCond %{REQUEST_FILENAME} !-d
+			RewriteRule . /index.php [L]
+
+			RewriteRule ^wp-admin/includes/ - [F,L]
+			RewriteRule !^wp-includes/ - [S=3]
+			RewriteRule ^wp-includes/[^/]+\.php${'$'} - [F,L]
+			RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L]
+			RewriteRule ^wp-includes/theme-compat/ - [F,L]
+		&lt;/IfModule&gt;
+
+		&lt;Files "wp-config.php"&gt;
+			Order allow,deny
+			Deny from all
+		&lt;/Files&gt;
+	&lt;/Directory&gt;
+&lt;/VirtualHost&gt;</pre>
+<h2>3. WordPress 配置 wp-config.php 增加</h2>
+<pre class="brush:php">/** 
+ * 在管理页面全部使用 HTTPS
+ */
+define('FORCE_SSL_ADMIN', true);
+
+/**
+ * For cookie-free
+ */
+define('WP_CONTENT_URL', 'http://www.opoo.org/wp-content');</pre>
+<h2>4. 自定义 WordPress 插件用于过滤文章内容</h2>
+<pre class="brush:php">function my_content_manipulator(${'$'}content){
+	if( is_ssl() ){
+		${'$'}content = str_replace('http://www.opoo.org/wp-content/uploads', 'https://www.opoo.org/wp-content/uploads', ${'$'}content);
+	}
+	return ${'$'}content;
+}
+add_filter('the_content', 'my_content_manipulator');</pre>

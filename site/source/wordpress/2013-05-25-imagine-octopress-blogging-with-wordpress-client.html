@@ -1,0 +1,148 @@
+---
+layout: post
+title: '构想：利用 WordPress 客户端发布 Octopress 博客'
+comments: true
+published: true
+date: '2013-05-25 00:39:50'
+link: http://opoo.org/imagine-octopress-blogging-with-wordpress-client/
+post_id: 342
+url: '/imagine-octopress-blogging-with-wordpress-client/'
+excerpt: "<p>本文只是一种构想，笔者认为是可行的，只是没有时间，也没有精力去实现它。<p>标题所提到的两个博客系统，代表着两类博客系统：<p>1. WordPress： 即 <a href='http://wordpress.org/' target='_blank'>WordPress</a> 博客系统，动态博客系统的代表。<p>2. Octopress： 通过静态博客生成器（Static blog generator）生成静态博客的典型代表，博客文章、页面等最终以静态页面的形式输出。还有许多其它的静态博客生成器，例如：<a href='http://jekyllrb.com/' target='_blank'>Jekyll</a> (Ruby)，<a href='http://ruhoh.com/' target='_blank'>ruhoh</a> (Ruby)，<a href='http://pelican.readthedocs.org/' target='_blank'>Pelican</a> (Python)，<a href='http://jbake.org/' target='_blank'>JBake</a> (Java)等。"
+categories: [tech]
+tags: [Octopress, WordPress]
+description: "本文构想利用 WordPress 客户端发布和管理 Octopress 博客及其它静态博客系统。"
+keywords: "WordPress, Octopress, WordPress XML-RPC, Jekyll, ruhoh, Pelican, JBake"
+---
+<p>本文只是一种构想，笔者认为是可行的，只是没有时间，也没有精力去实现它。
+
+<p>标题所提到的两个博客系统，代表着两类博客系统：
+
+<p>1. WordPress： 即 <a href="http://wordpress.org/" target="_blank">WordPress</a> 博客系统，动态博客系统的代表。
+
+<p>2. Octopress： 通过静态博客生成器（Static blog generator）生成静态博客的典型代表，博客文章、页面等最终以静态页面的形式输出。还有许多其它的静态博客生成器，例如：<a href="http://jekyllrb.com/" target="_blank">Jekyll</a> (Ruby)，<a href="http://ruhoh.com/" target="_blank">ruhoh</a> (Ruby)，<a href="http://pelican.readthedocs.org/" target="_blank">Pelican</a> (Python)，<a href="http://jbake.org/" target="_blank">JBake</a> (Java)等。
+
+<!--more-->
+<h1>一、WordPress or Octopress</h1>
+<h2>1. 客户端</h2>
+WordPress 的优点很多，我特别喜欢就是其丰富的客户端，在 Windows 下可以使用 Windows Live Writer 来发布文章，在手机上也可以使用基于 Android 或者 iOS 的 WordPress 客户端，可以方便的管理文章、评论等。
+
+<p>这点上静态博客生成器（如Octopress）就比较劣势了。这些系统都需要安装一个构建环境，来将博客源文件转化成静态博客文件。通常，这个构建环境需要安装在本地，显然这在手机上暂时是很难实现的，这就限制了发布文章的终端。当然，经过笔者的摸索，也的确实现了<a title="多终端远程发布 Octopress 博客" href="http://opoo.org/octopress-remote-blogging/">一种可以通过多种终端发布 Octopress 的方式</a>，但过程是比较复杂的，需要极好的耐心和一定的技术。
+<h2>2. 运行效率</h2>
+WordPress 运行时需要 Web 服务器、PHP 运行环境、MySQL 数据库，内容动态解析。而 Octopress 之类的博客运行时仅仅需要 Web 服务器处理静态内容，因此具有更好的运行效率。
+
+<p>静态博客生成器主要的消耗在发布文章时“页面生成”过程，而这个过程每次发布仅仅是“一次性”的。
+
+<p>按照<a href="http://analysisandreview.com/wordpress/how-to-identify-wordpress-mysql-queries-per-page-load/" target="_blank">这篇文章</a>介绍的方法，笔者查看了一下一个刚刚安装好的 WordPress 的查询语句统计情况。结果相当惊人：在独立“文章”每次执行约 27 个 SQL 语句，在“页面”每次执行约 30 个 SQL 语句。
+
+<p>可能正是基于效率上的考虑，一些极客们才会选择静态博客吧。
+<h1>二、利用 WordPress 客户端发布 Octopress 博客（静态博客）</h1>
+如果能结合 WordPress 操作上的简单方便和静态博客的高效，我们就能得到一个比较完美的博客解决方案。
+
+<p>笔者的构想就是直接利用 WordPress 的客户端来发布静态博客。
+
+<p><span style="line-height: 1.714285714; font-size: 1rem;">WordPress 使用了 </span><a style="line-height: 1.714285714; font-size: 1rem;" title="http://www.xmlrpc.com/" href="http://www.xmlrpc.com/" target="_blank">XML-RPC</a><span style="line-height: 1.714285714; font-size: 1rem;"> （XML远程过程调用）接口，目前支持 </span><a style="line-height: 1.714285714; font-size: 1rem;" title="http://www.blogger.com/developers/api/" href="http://www.blogger.com/developers/api/">Blogger API</a><span style="line-height: 1.714285714; font-size: 1rem;">，</span><a style="line-height: 1.714285714; font-size: 1rem;" title="http://www.xmlrpc.com/metaWeblogApi" href="http://www.xmlrpc.com/metaWeblogApi">metaWeblog API</a><span style="line-height: 1.714285714; font-size: 1rem;">，以及 </span><a style="line-height: 1.714285714; font-size: 1rem;" title="http://www.sixapart.com/developers/xmlrpc/movable_type_api/" href="http://www.sixapart.com/developers/xmlrpc/movable_type_api/">Movable Type API</a><span style="line-height: 1.714285714; font-size: 1rem;">.。并且在 Movable Type API 的基础上做了一些扩展，形成了一个新的 API，叫着 </span><a title="http://codex.wordpress.org/XML-RPC_WordPress_API" href="http://codex.wordpress.org/XML-RPC_WordPress_API">WordPress API</a>。
+
+<p>WordPress 的客户端（PC，Android版，iOS版）基本都是根据这些 API 规范来开发的，所有的调用都通过 XML-RPC 进行的，其服务端文件是 xmlrpc.php。在浏览器中直接调用会返回
+<pre>XML-RPC server accepts POST requests only.</pre>
+说明这是一个 XML-RPC server。
+
+<p>这里我们将思路反过来。
+
+<p>如果要利用现成的 WordPress 客户端来发布文章，只需要写一个实现了 WordPress API 的 XML-RPC 服务端即可。也就是说我们需要仿造一个 WordPress 的 XML-RPC Server，实现 WordPress API 里定义的每个方法，这样客户端就可以像操作 WordPress 一样操作我们编写的 XML-RPC Server，XML-RPC Server 再执行静态博客生成器里的各种指令。
+
+<p>拿 Octopress 博客来举几个例子：
+
+<p><strong>1. <a href="http://codex.wordpress.org/XML-RPC_WordPress_API/Posts#wp.newPost" target="_blank">wp.newPost</a></strong> : WordPress 将通过 xmlrpc 调用 wp.newPost 方法来发布新文章，参数如下。
+<pre>int blog_id
+string username
+string password
+struct content
+    string post_type
+    string post_status
+    string post_title
+    int post_author
+    string post_excerpt
+    string post_content
+    datetime post_date_gmt | post_date
+    string post_format
+    string post_name
+    string post_password
+    string comment_status
+    string ping_status
+    bool sticky
+    int post_thumbnail
+    int post_parent
+    array custom_fields
+        struct
+            string key
+            string value
+    struct terms: Taxonomy names as keys, array of term IDs as values.
+    struct terms_names: Taxonomy names as keys, array of term names as values.
+    struct enclosure
+        string url
+        int length
+        string type</pre>
+在 XML-RPC Server 中，wp.newPost 方法的大致处理流程如下：
+<ul>
+	<li><span style="line-height: 14px;">保存参数中与 Octopress 兼容的属性到新文件 ${'$'}OCTOPRESS_HOME/source/_posts/${'$'}{post_date}-${'$'}{post-name}.markdown</span></li>
+	<li>生成 post_id</li>
+	<li>将 post_id 和其它不兼容的属性持久化存储到文件或者数据库中</li>
+	<li>调用 <code>Octopress</code> 的 rake deploy 指令生成静态博客内容并发布</li>
+	<li>返回 post_id 给 WordPress 客户端</li>
+</ul>
+文章 markdown 文件的示意如下：
+<pre>---
+layout: post
+title: "${'$'}{post_title}"
+date: ${'$'}{post_date}
+comments: false
+categories: custom_fields['tags']
+---
+${'$'}{post_content}</pre>
+<strong> 2. <a href="http://codex.wordpress.org/XML-RPC_WordPress_API/Posts#wp.getPost" target="_blank">wp.getPost</a></strong> : WordPress 将通过 xmlrpc 调用 wp.getPost 方法来读取执行文章，参数如下：
+<pre>int blog_id
+string username
+string password
+int post_id
+array fields: Optional. List of field or meta-field names to include in response.</pre>
+在 XML-RPC Server 中，wp.getPost 方法的大致处理流程如下
+<ul>
+	<li><span style="line-height: 14px;">根据 post_id 从持久化对象（文件或者数据库）中查找文章信息</span></li>
+	<li>根据文章信息定位到文章的 markdown 文件</li>
+	<li>组合文章信息和 markdown 文件的内容，生成 WordPress 客户端所需格式的数据，返回给客户端。</li>
+</ul>
+暂且写到这里，仅仅是个构想，有兴趣的读者可以一起研究研究。
+
+<p><strong>更新（2013-05-29）：</strong>
+
+<p>使用 <a href="http://ws.apache.org/xmlrpc/" target="_blank">Apache XML-RPC</a> 简单的写了几个方法，通过 Android 版的 WordPress 客户端已经可以登录了。
+
+<p><a href="http://android.wordpress.org/" target="_blank">WordPress for Android</a> 添加博客的工作流程：
+<ol>
+	<li>用户在客户端输入博客 url， 用户名，密码</li>
+	<li>客户端首先访问首页查找页面中的 RSD 的 URL
+<pre class="brush:html">&lt;link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://domain.com/xmlrpc.php?rsd" /&gt;</pre>
+</li>
+	<li> WordPress 服务端返回 RSD 信息，这是一个 XML 文件，记录了服务器支持的各种 API 的信息
+<pre class="brush:xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;rsd version="1.0" xmlns="http://archipelago.phrasewise.com/rsd"&gt;
+&lt;service&gt;
+  &lt;engineName&gt;WordPress&lt;/engineName&gt;
+  &lt;engineLink&gt;http://wordpress.org/&lt;/engineLink&gt;
+  &lt;homePageLink&gt;http://domain.com&lt;/homePageLink&gt;
+  &lt;apis&gt;
+    &lt;api name="WordPress" blogID="1" preferred="true" apiLink="http://domain.com/xmlrpc.php" /&gt;
+    &lt;api name="Movable Type" blogID="1" preferred="false" apiLink="http://domain.com/xmlrpc.php" /&gt;
+    &lt;api name="MetaWeblog" blogID="1" preferred="false" apiLink="http://domain.com/xmlrpc.php" /&gt;
+    &lt;api name="Blogger" blogID="1" preferred="false" apiLink="http://domain.com/xmlrpc.php" /&gt;
+  &lt;/apis&gt;
+&lt;/service&gt;
+&lt;/rsd&gt;</pre>
+</li>
+	<li>客户端调用 XML-RPC 方法 <code>wp.getUsersBlogs</code>，获取当前用户的博客列表</li>
+	<li>客户端调用 XML-RPC 方法 <code>wp.getOptions</code>，获取指定博客的指定选项</li>
+	<li>客户端调用 XML-RPC 方法 <code>wp.getPostFormats</code>，获取指定博客所支持的文章格式</li>
+	<li>客户端调用 XML-RPC 方法 <code>wp.getComments</code>，获取指定博客的评论</li>
+	<li>客户端即进入了博客的管理界面</li>
+	<li>(待续)</li>
+</ol>
+<p style="text-align: center;"><a href="http://www.opoo.org/wp-content/uploads/2013/05/wordpress.for_.android.mainui.png"><img class="aligncenter size-full wp-image-343" alt="wordpress.for.android.mainui" src="//www.opoo.org/wp-content/uploads/2013/05/wordpress.for_.android.mainui.png" width="485" height="760" /></a></p>

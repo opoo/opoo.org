@@ -1,0 +1,97 @@
+---
+layout: post
+title: 'Git 和 Gradle 初体验'
+comments: true
+published: true
+date: '2012-06-17 18:34:21'
+link: http://opoo.org/git-and-gradle/
+post_id: 211
+url: '/git-and-gradle/'
+excerpt: "<p>现在越来越多的开源软件使用了 git 作为版本控制系统，并使用 gradle 作为构建工具，从而取代了原来的 SVN + Maven 模式，使得我们有必要初步了解一下 git 和 gradle 究竟是什么。<h2>一、Git</h2>Git 是一个分布式的版本控制系统，官方网站是 http://git-scm.com/ <a id='ref-1' href='#note-1'>[1]</a>，学习git的最好的书籍是《Pro Git》(<a title='ProGit中文版PDF下载' href='http://ishare.iask.sina.com.cn/f/24456537.html' target='_blank'>中文版PDF下载</a>)。 Git 有非常多的可视化客户端<a id='ref-2' href='#note-2'>[2]</a>，可用于 Windows、Mac 和 Linux。<p>Windows 下 <a href='http://windows.github.com/' target='_blank'>GitHub for Windows</a> 是个不错 的选择，简单的 <a href='http://msysgit.github.com/' target='_blank'>Git for Windows</a> 也不错。 提到Git就有必要说说 <a href='http://github.com/' target='_blank'>GitHub</a> ，简单的说 GitHub 就是一个 git 库托管服务，可以托管开源库（免费）和私有库（收费），功能有点类似于 SourceForge.net 和 Google Code，其主要特色是“Social Coding”，这使得代码分享变得更容易，其功能已经远远超越了源代码管理的范畴。GitHub 也推出了<a href='https://github.com/blog/978-introducing-github-enterprise' target='_blank'>GitHub Enterprise</a> <a id='ref-3' href='#note-3'>[3]</a>，类似于当年的 <a title='软件项目管理工具 TeamForge 简介' href='http://opoo.org/teamforge/' target='_blank'>SourceForge Enterprise (当今的TeamForge)</a>。"
+categories: [tech]
+tags: [git, gradle]
+description: "现在越来越多的开源软件使用了git作为版本控制系统，并使用gradle作为构建工具，从而取代了原来的SVN + Maven模式，使得我们有必要初步了解一下git和gradle究竟是什么。"
+keywords: "git, gradle, subversion, svn, maven, github"
+---
+<p>现在越来越多的开源软件使用了 git 作为版本控制系统，并使用 gradle 作为构建工具，从而取代了原来的 SVN + Maven 模式，使得我们有必要初步了解一下 git 和 gradle 究竟是什么。
+<h2>一、Git</h2>
+Git 是一个分布式的版本控制系统，官方网站是 http://git-scm.com/ <a id="ref-1" href="#note-1">[1]</a>，学习git的最好的书籍是《Pro Git》(<a title="ProGit中文版PDF下载" href="http://ishare.iask.sina.com.cn/f/24456537.html" target="_blank">中文版PDF下载</a>)。 Git 有非常多的可视化客户端<a id="ref-2" href="#note-2">[2]</a>，可用于 Windows、Mac 和 Linux。
+
+<p>Windows 下 <a href="http://windows.github.com/" target="_blank">GitHub for Windows</a> 是个不错 的选择，简单的 <a href="http://msysgit.github.com/" target="_blank">Git for Windows</a> 也不错。 提到Git就有必要说说 <a href="http://github.com/" target="_blank">GitHub</a> ，简单的说 GitHub 就是一个 git 库托管服务，可以托管开源库（免费）和私有库（收费），功能有点类似于 SourceForge.net 和 Google Code，其主要特色是“Social Coding”，这使得代码分享变得更容易，其功能已经远远超越了源代码管理的范畴。GitHub 也推出了<a href="https://github.com/blog/978-introducing-github-enterprise" target="_blank">GitHub Enterprise</a> <a id="ref-3" href="#note-3">[3]</a>，类似于当年的 <a title="软件项目管理工具 TeamForge 简介" href="http://opoo.org/teamforge/" target="_blank">SourceForge Enterprise (当今的TeamForge)</a>。<!--more-->
+
+<p>GitHub for Windows 就是 github 提供的 git 客户端。界面挺漂亮，如图： <a href="http://www.opoo.org/wp-content/uploads/2012/06/github-windows1.png"><img class="alignnone size-full wp-image-214" title="github-windows" alt="" src="//www.opoo.org/wp-content/uploads/2012/06/github-windows1.png" width="650" height="203" /></a> Git 和其它版本控制工具（例如 Subversion，CVS 等）在原理上是完全不同。笔者大致浏览了一下《Pro Git》，自建了一个 git 库进行了尝试，个人体会如下：
+
+<p><strong>非常不错特性</strong>
+<ol>
+	<li>可离线提交。</li>
+	<li>操作的确比较快，即使有远程库，大部分操作仍然是在本地进行的。</li>
+	<li>分支、合并功能绝对是git的超级利器，相当方便，足以改变团队的开发模式。</li>
+	<li>可以修改历史提交信息。</li>
+</ol>
+<strong>觉得不爽的地方</strong>
+<ol>
+	<li>.git目录太大，首次clone时太慢，从远程库拉取了完整的库，包括完整的历史记录。Git 采用的是记录每个文件的每个版本，然后使用类似指针指向当前版本的文件的形式，而不是像 SVN 一样记录每个文件的每次变更的形式，注定其记录文件（存储在.git目录）要比 svn 要大得多。拿项目 hibenate-core 来说的，.git目录就占了&gt;90M 的空间。</li>
+	<li>需要进行复杂的权限控制时不那么容易，最起码跟 Visual SVN Server 这样的 Subversion 服务器授权比起来没那么简单。参考第一点，如果整个库都 clone 到本地了，那么细化的权限如何控制呢？</li>
+	<li>没有版本号的概念（还是我没找到？），每次提交都以一个 SHA-1 的 hash 值标示，对笔者而言，有点不习惯。</li>
+	<li>与其它版本控制系统原理不同，有一定的学习理解难度。</li>
+</ol>
+<h2>二、Gradle</h2>
+Gradle 是一个基于 Groovy 的构建工具，吸取了 Maven 的一些有点，还可以直接使用 Maven 库，所有大有取代 Maven 的架势<a id="ref-4" href="#note-4">[4]</a>。 Gradle 的官方网站是 <a href="http://www.gradle.org/" target="_blank">http://www.gradle.org/</a>，在<a href="http://www.gradle.org/downloads" target="_blank">这里下载</a> zip 包，解压，设置环境变量 GRADLE_HOME 并加到 path 中即可。详情请阅读 <a title="Gradle User Guide" href="http://gradle.org/docs/current/userguide/userguide_single.html" target="_blank">用户手册</a> 。 Gradle 的主要配置文件是 <code>build.gradle</code>，如果要使用 Maven 库，可以如下配置：
+<pre class="brush:groovy">repositories {
+    //Maven中心库(http://repo1.maven.org/maven2)
+    mavenCentral()
+
+    //本地库，local repository(${'$'}{user.home}/.m2/repository)
+    mavenLocal()
+
+    //指定库
+    maven {
+        url "http://repo.mycompany.com/maven2"
+    }
+
+    //指定库
+    mavenRepo name: reponame', url: "http://repo.mycompany.com/maven2"
+
+    //指定库
+    maven {
+        // Look for POMs and artifacts, such as JARs, here
+        url "http://repo2.mycompany.com/maven2"
+        // Look for artifacts here if not found at the above location
+        artifactUrls "http://repo.mycompany.com/jars"
+        artifactUrls "http://repo.mycompany.com/jars2"
+    }
+
+    //带认证的库
+    maven {
+        credentials {
+            username 'user'
+            password 'password'
+        }
+        url "http://repo.mycompany.com/maven2"
+    }
+}</pre>
+其中有必要说说 mavenLocal()，能不能用 Maven 本地库也是笔者最关心的特性之一。 经实践，发现直接使用 mavenLocal() 时，gradle 会查找 Maven 配置文件 ${'$'}{user.home}/.m2/settings.xml 来定位本地 Maven 库的路径，如果没有找到该文件，则默认本地库路径为 ${'$'}{user.home}/.m2/repository，而笔者的 Maven 配置文件在 ${'$'}M2_HOME/conf/settings.xml ，gradle 竟然不能读取到这个配置文件。 这个问题已经作为一个 Improvement（<a href="http://issues.gradle.org/browse/GRADLE-1900" target="_blank">#GRADLE-1900</a>  <a id="ref-5" href="#note-5">[5]</a>）被提出，并显示在 1.0-milestone-9 版本中已经修正，而使用的1.0正式版时，竟然还有这个问题，真是相当诡异。 既然不能直接使用 mavenLocal()，就必须做一些变通，笔者最终测试用的 <code>build.gradle</code> 文件如下：
+<pre class="brush:groovy">apply plugin: 'java'
+
+version: '1.0-SNAPSHOT'
+group: 'org.opoo'
+
+repositories {
+	mavenRepo urls: "file:///D:/m2.repo"
+	//mavenLocal()
+	//mavenCentral()
+}
+
+dependencies {
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.1'
+    compile group: 'commons-logging', name: 'commons-logging', version: '1.0.4'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}</pre>
+<strong>相关说明</strong>
+<ul>
+	<li><span id="note-1" style="line-height: 1.714285714; font-size: 1rem;"><a href="#ref-1">[1]</a></span><span style="line-height: 1.714285714; font-size: 1rem;"> 由于某些你懂的原因导致不能访问 git-scm.com，所以《Pro Git》的在线阅读（</span><a style="line-height: 1.714285714; font-size: 1rem;" title="ProGit Online Book" href="http://git-scm.com/book" target="_blank">英文版</a><span style="line-height: 1.714285714; font-size: 1rem;">、</span><a style="line-height: 1.714285714; font-size: 1rem;" title="ProGit中文版在线阅读" href="http://git-scm.com/book/zh" target="_blank">中文版</a><span style="line-height: 1.714285714; font-size: 1rem;">）无法使用。请下载PDF版（</span><a style="line-height: 1.714285714; font-size: 1rem;" href="https://github.s3.amazonaws.com/media/progit.en.pdf">英文版</a><span style="line-height: 1.714285714; font-size: 1rem;">、</span><a style="line-height: 1.714285714; font-size: 1rem;" title="ProGit中文版PDF下载" href="http://ishare.iask.sina.com.cn/f/24456537.html" target="_blank">中文版</a><span style="line-height: 1.714285714; font-size: 1rem;">）。</span></li>
+	<li><span id="note-2" style="line-height: 1.714285714; font-size: 1rem;">[<a href="#ref-2">2]</a></span><span style="line-height: 1.714285714; font-size: 1rem;"> Git 可视化客户端 </span><a style="line-height: 1.714285714; font-size: 1rem;" href="http://git-scm.com/downloads/guis" target="_blank">http://git-scm.com/downloads/guis</a><span style="line-height: 1.714285714; font-size: 1rem;">  （无法直接访问，参考第一点）</span></li>
+	<li><span id="note-3" style="line-height: 1.714285714; font-size: 1rem;"><a href="#ref-3">[3]</a></span><span style="line-height: 1.714285714; font-size: 1rem;"> GitHub 推出 Enterprise 服务 </span><a style="line-height: 1.714285714; font-size: 1rem;" href="http://www.iteye.com/news/23229" target="_blank">http://www.iteye.com/news/23229</a></li>
+	<li><span id="note-4" style="line-height: 1.714285714; font-size: 1rem;"><a href="#ref-4">[4]</a></span><span style="line-height: 1.714285714; font-size: 1rem;"> InfoQ: Gradle，构建工具的未来？</span><a style="line-height: 1.714285714; font-size: 1rem;" href="http://www.infoq.com/cn/news/2011/04/xxb-maven-6-gradle" target="_blank">http://www.infoq.com/cn/news/2011/04/xxb-maven-6-gradle</a></li>
+	<li><span id="note-5" style="line-height: 1.714285714; font-size: 1rem;"><a href="#ref-5">[5]</a> Gradle 使用 Maven 本地库 <a title="#GRADLE-1900" href="http://issues.gradle.org/browse/GRADLE-1900" target="_blank">http://issues.gradle.org/browse/GRADLE-1900</a></span></li>
+</ul>

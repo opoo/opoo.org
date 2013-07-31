@@ -1,0 +1,113 @@
+---
+layout: post
+title: OpooPress 1.0 RC1 发布
+date: '2013-07-06 00:52'
+comments: true
+published: true
+keywords: "OpooPress, Blog, static site/blog generator"
+description: "OpooPress 1.0 RC1 版本发布。这是第一个预发行版本，只包含一个 standalone 的包，功能基本完整，唯文档不全。"
+url: /opoopress-1.0-rc1-released/
+categories: ['others']
+tags: ['opoopress']
+---
+
+OpooPress RC1 版本发布。这是第一个预发行版本，只包含一个 standalone 的包，功能基本完整，唯文档不全。
+
+&rarr; [转到 OpooPress.com 开始下载](http://www.opoopress.com/zh/download/)
+
+要快速体验 OpooPress，请下载精简包。精简包自带一个已经编译好的 CSS 样式单，不包含编译 SASS 所需要的 Jar 文件，`op sass` 命令无法执行。如果要修改 SASS 样式单，请下载完整包。
+
+
+# 〇、先决条件
+
+First of first，你需要安装 [Java](/category/tech/java/) 运行环境，因为 [OpooPress](http://www.opoopress.com/) 是一个基于 Java 的静态博客生成器。
+
+OpooPress 只能在 JDK 1.6/JRE 6 以上版本 Java 环境中运行。在 Windows 下的 Sun JDK 1.6 和 Linux 下的 OpenJDK 1.7 都经过测试，可以正常运行。
+
+要在 Windows 下安装 Java，请在 [Oracle 官网下载 JDK](http://www.oracle.com/technetwork/cn/java/javase/downloads/jdk7-downloads-1880260-zhs.html)，双击运行安装即可。
+
+要在 Linux 下安装 Java，以 CentOS 为例，运行命令 `yum install java-1.7.0-openjdk java-1.7.0-openjdk-devel` 即可。
+
+# 一、快速开始
+
+1. 下载 OpooPress Standalone 包。
+
+2. 解压到适当的目录，例如: `/root/opoopress/`
+
+	```bash
+	# tar -xzvf opoopress-1.0-RC1.tar.gz
+	```
+3. 进入到 OpooPress 目录，执行 op 命令（Windows 下是 `op.cmd`，Linux 下是 `op`，以 Linux 为例）
+	```bash
+	# ./op install
+	# ./op preview
+	```
+   打开浏览器输入地址 http://localhost:8080/ 即可显示 OpooPress 博客界面。
+
+**注意**：Linux 下如果显示 `op: Permission denied`，则需要运行 `chmod +x op`，赋给可执行权限。  
+
+<!--more-->
+
+# 二、快速使用
+
+1. 修改配置文件：打开 /path/to/opoopress/site/config.yml，按需要修改各项参数。
+
+2. 创建新文章：
+	```bash
+	# ./op newpost -t 文章的标题 -n my-new-post
+	```
+3. 撰写文章：打开刚刚生成的文件，撰写文章内容。
+
+4. 预览:
+	```bash
+	# ./op preview
+  	```
+   打开浏览器输入地址 http://localhost:8080/ 预览博客内容，按 `Ctrl + C` 停止预览。
+   在撰写文章过程中，预览可以一直运行，OpooPress 会自动发现博客内容的变化，并自动编译，保存文章后刷新浏览器即可看见新内容。
+
+5. 配置发布信息：在 /path/to/opoopress/site/config.yml 配置以下内容
+	```
+	deploy_server: my_vps
+	my_vps: {"url": "scp://my.vps.ip/var/www/html", "user": "ssh_username"}
+	```
+   不必指定密码，在发布过程中会提示输入。
+ 
+6. 发布博客到主机
+	```bash
+	# ./op deploy
+  	```
+   发布过程会提示是否信任主机的 public key，以及提示输入 SSH 用户的密码。
+  
+
+# 三、OpooPress 命令一览
+   
+命令格式通常是 `op command [site] [options]`，各个参数意义如下：
+
+1. 参数 `command`: 必要参数。用于指定要执行的 OpooPress 命令。目前支持的命令包括 
+	* `init`/`install`：安装并初始化网站/博客，可指定 locale，如果不指定，取系统默认值
+	* `generate`/`build`：生成静态网站
+	* `preview`：预览博客。启动一个 Web 服务器，并监控站点文件变化，变化时自动重新生成
+	* `deploy`：发布站点到指定的服务器或者本地目录
+	* `clean`：清理站点模板缓存和临时文件
+	* `newpage`：创建新页面
+	* `newpost`：创建新文章
+	* `wordpress`：从 WordPress 导入文章和页面
+	* `sass`：编译 SASS
+   
+   各个命令的详细用法及参数可以运行 `op command -h` 查看，例如 `op wordpress -h`。
+
+2. 参数 `site`: 可选参数。该参数指定站点的名称（亦即目录名），默认值为 `site`。
+  
+  OpooPress 支持多博客（多站点），每个博客都是 `/path/to/opoopress/` 下的一个目录，通过给 `install`/`init` 命令传递 site 参数，可以安装（初始化）这多个博客。例如通过 `./op install en` 创建一个名为 `en` 的博客，并通过 `./op install cn` 创建一个名为 `cn` 的博客，它们的内容将分别存放在 `/path/to/opoopress/en/` 和 `/path/to/opoopress/cn/` 目录。
+ 
+3. 其它参数/选项
+
+   通常是以一个 `-` 开头的参数，不同的 `command` 对应的参数/选项各不相同，可运行 `op command -h` 查看。
+
+   例如 `./op install en -l en_US` 可创建一个名为 `en` 的英文博客，`./op install cn -l zh_CN` 可创建一个名为 `cn` 的中文博客。
+
+
+
+
+
+
