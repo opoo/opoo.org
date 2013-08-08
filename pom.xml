@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>org.opoo.press</groupId>
 			<artifactId>opoopress-core</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${opoopress.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -43,7 +43,7 @@
 			<plugin>
 				<groupId>org.opoo.press.maven.plugins</groupId>
 				<artifactId>opoopress-maven-plugin</artifactId>
-				<version>1.0-SNAPSHOT</version>
+				<version>${opoopress.version}</version>
 				 <!-- FOR DEVELOPER -->
 				 <!-- 
 					You can add common-logging config files in src/main/resources folder, 
@@ -145,6 +145,6 @@
 		<maven.test.skip>true</maven.test.skip>
 		<project.build.sourceVersion>1.6</project.build.sourceVersion>
         <project.build.targetVersion>1.6</project.build.targetVersion>
-        <opoopress.version>1.0-SNAPSHOT</opoopress.version>
+        <opoopress.version>1.0.1-SNAPSHOT</opoopress.version>
 	</properties>
 </project>
