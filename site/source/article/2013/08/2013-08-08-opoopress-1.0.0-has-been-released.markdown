@@ -1,0 +1,50 @@
+---
+layout: post
+title: OpooPress 1.0.0 正式发布
+date: '2013-08-08 12:30'
+comments: true
+published: true
+keywords: "OpooPress, Blog, static site/blog generator, open source"
+categories: [opoopress]
+url: '/opoopress-1.0.0-has-been-released/'
+---
+
+OpooPress 静态博客生成器 1.0.0 正式发布了！
+
+从该正式版开始，OpooPress 可能只发行 Maven 版，而不再提供 Standalone 版。
+
+该软件包已经发布到了 [Maven Central 库](http://search.maven.org/)，groupId 为 [org.opoo.press](http://central.maven.org/maven2/org/opoo/press/)，可通过以下三种方式使用该软件包。
+
+1. 在 `pom.xml` 中引入该插件
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.opoo.press.maven.plugins</groupId>
+			<artifactId>opoopress-maven-plugin</artifactId>
+			<version>1.0.0</version>
+		</plugin>
+	...
+	</plugins>
+...
+</build>
+```
+然后运行 `mvn op:install`
+
+2. 下载已定义的 `pom.xml`
+```
+mkdir myblog
+cd myblog
+wget http://www.opoopress.com/downloads/pom.xml
+mvn op:install
+```
+
+3. 从 GitHub 克隆二次开发库 [opoopress-site](https://github.com/opoopress/opoopress-site) (推荐)
+```
+git clone https://github.com/opoopress/opoopress-site.git
+cd opoopress-site
+mvn package
+mvn op:install
+```
+
+更多细节，请阅读 [OpooPress 安装文档](http://www.opoopress.com/zh/docs/installation/)。
