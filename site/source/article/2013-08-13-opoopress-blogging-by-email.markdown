@@ -11,6 +11,13 @@ categories: [opoopress]
 ---
 现在，通过 OpooPress Mailet 软件包，我们可以轻松地使用邮件来发表 OpooPress 文章了。这极大的增强了 OpooPress 的移动性。
 
+## 基本用法
+只需要向指定的 Email 地址发送邮件即可发表博客文章。邮件格式最好采用**纯文本**，但不是强制的。
+
+邮件的标题就是文章的标题，邮件的内容就是文章的正文，这就是 OpooPress Mailet 最基本的用法。关于自定义文章文件名、发布时间、标签、分类等高级应用请阅读后续章节。
+
+
+## 基本原理
 利用邮件发表博客文章其实是一个比较通用的思路，不仅仅可以用在 OpooPress 这类的静态博客，也可以用在 WordPress 之类的动态博客上。其大致处理流程如下：
 1. 监听指定邮件地址的邮箱，发现新邮件则调用`邮件转博客`程序进行处理；
 	- 对于第三方邮件服务器
@@ -120,20 +127,17 @@ cp target/dependency/*.jar /usr/local/james-2.3.2/apps/james/SAR-INF/lib/
 ```
 2. 修改 Apache James 配置 `/usr/local/james-2.3.2/apps/james/SAR-INF/config.xml`，在 `<spoolmanager><processor name="root">` 节点中插入 OpooPress Mailet 配置
 ```xml
-	<mailet match="OpooPressMatcher=|site1@opoopress.mail.opoo.org|" class="OpooPressMailet">
-		<acceptableSenders>|writer@opoopress.mail.opoo.org|yourname@gmail.com|</acceptableSenders>
+	<mailet match="RecipientIsAndSenderIs=site1@opoopress.mail.opoo.org|writer@opoopress.mail.opoo.org,yourname@gmail.com" class="OpooPressMailet">
 		<site>/home/sites/opoopress-site1/site</site>
 		<command>mvn op:deploy</command>
 	</mailet>
-	<mailet match="OpooPressMatcher=|site2@opoopress.mail.opoo.org|" class="OpooPressMailet">
-		<acceptableSenders>|writer@opoopress.mail.opoo.org|yourname@gmail.com|</acceptableSenders>
+	<mailet match="RecipientIsAndSenderIs=site2@opoopress.mail.opoo.org|writer@opoopress.mail.opoo.org,yourname@gmail.com" class="OpooPressMailet">
 		<site>/home/sites/opoopress-site2/site</site>
 		<command>mvn op:deploy</command>
 	</mailet>
 ```
 每个博客（站点）都由一个 `<mailet/>` 节点来进行配置。 其中
-	- **match 参数**：即 match `=` 后的字符串。邮件接收地址。只有接收地址匹配该字符串时，mailet 才会调用。地址前后使用 `|` 分隔，可配置多个地址，所有地址都必须是当前 Apache James 服务器中有效的账户。
-	- **acceptableSenders**：有效的发送人地址。只有匹配该字符串的发送人发送的邮件才会被 mailet 处理，防止他人向你的邮箱发送邮件导致内容发布到博客。地址前后使用 `|` 分隔，可配置多个地址，可以是任意有效的邮件地址，如果使用当前 Apache James 服务器的账号作为发送人地址，则必须开启 James 的 SMTP 认证（参考前面章节）。
+	- **match 参数**：即 match `=` 后的字符串。邮件接收地址和邮件发送人地址中使用 `|` 分隔，多个地址之间使用 `,` 分隔。只有接收地址和发送地址都匹配时，mailet 才会调用。接收地址都必须是当前 Apache James 服务器中有效的账户。发送地址可以是任意有效的邮件地址，如果使用当前 Apache James 服务器的账号作为发送人地址，则必须开启 James 的 SMTP 认证（参考前面章节）。
 	- **site**：当前 mailet 要处理的 OpooPress 博客（站点）的主目录。
 	- **command**: mailet 将博客文章成功保存后，要执行的命令。
 		- 通常是 `mvn deploy`，会以 **site** 的上级目录作为工作目录（因为 pom.xml 文件位于该目录）。
@@ -149,38 +153,47 @@ cp target/dependency/*.jar /usr/local/james-2.3.2/apps/james/SAR-INF/lib/
 
 #### 四、使用邮件发布博客
 
+本章示例讲解的是 OpooPress Mail 的高级应用，文章开头已经讲过基本用法。
+
 使用**纯文本**格式向指定的邮件地址（如 site1@opoopress.mail.opoo.org）发送文章内容，示例见下图
 ![OpooPress Blogging by Mail Snapshot](/wp-content/uploads/2013/opoopress-blogging-by-mail-snapshots.png)
 
 **邮件标题** 
 
-邮件标题实质上对应于文章的 `name`，这是将要生成的文章源文件的文件名的一部分，也决定了最后生成的文章的 URL（除非在内容里明确指定了 URL）。*非常建议*标题使用纯英文格式，这样可以避免不必要的字符编码解码问题。
+邮件的标题会被解析成文章的`标题`和 `name`。
 
-通过以下一些示例来讲解`邮件标题`、`文章源文件名` 和 `文章 URL` 之间的关系，这里假设当前博客的 `permalink` 格式为 `/article/${'$'}{name}/`，当前日期是`2013年08月13日`：
-- 标题: Hello Mail
+`标题`和 `name` 两个值通过以下规则解析：
+- 如果邮件标题包含分隔符 `|`，则分隔符前的是`标题`，分隔符后的是 `name`。 例如 "世界，你好|hello-world"，"世界，你好|hello world" 或者 "世界，你好|2013-08-13-hello-world.textile"
+- 如果邮件标题没有分隔符，则文章 `标题` 和 `name` 都等于 邮件标题。
+
+在确定 `name` 属性后，`name` 属性会被 [SlugHelper](https://github.com/opoo/opoopress/blob/master/core/src/main/java/org/opoo/press/SlugHelper.java) 处理成 `slug` 形式。这个 `slug` 形式的 `name` 决定了将要生成的文章源文件的文件名，也决定了最后生成的文章的 URL（除非在内容里明确指定了 URL）。
+
+通过以下一些示例来讲解 `name`、`文章源文件名` 和 `文章 URL` 之间的关系，这里假设当前博客的 `permalink` 格式为 `/article/${'$'}{name}/`，当前日期是`2013年08月13日`：
+- Name: Hello Mail
 	- 文件名: 2013-08-13-hello-mail.markdown
 	- 文章 URL:  /article/hello-mail/
-- 标题: 2013-08-13-hello-mail
+- Name: 2013-08-13-hello-mail
 	- 文件名: 2013-08-13-hello-mail.markdown
 	- 文章 URL: /article/hello-mail/
-- 标题: 2013-08-13-hello-mail.textile
+- Name: 2013-08-13-hello-mail.textile
 	- 文件名: 2013-08-13-hello-mail.textile
 	- 文章 URL: /article/hello-mail/
-- 标题: hello-mail.textile
+- Name: hello-mail.textile
 	- 文件名: 2013-08-13-hello-mail.textile
 	- 文章 URL: /article/hello-mail/
 
 **邮件内容**
 
-邮件的内容即文章源文件的内容。其格式完全一致，也必须包含 [YAML front-matter](http://www.opoopress.com/zh/docs/frontmatter/) 的头部和正文两个部分。原本在文本编辑器中如何写文章，这里就怎么写。
-
-唯一不同点在于 front-matter 头部的 `date` 变量不是必须的（在文本编辑器中直接写文章时是必须的），OpooPress Mailet 在将邮件内容保存为文章源文件时，会判断该属性，如果不存在则会自动添加该属性。
+邮件的内容即文章源文件的内容，其格式遵循 OpooPress 源文件格式：
+- 可以包含 [YAML front-matter](http://www.opoopress.com/zh/docs/frontmatter/) 的头部，如果不包含，则 OpooPress Mailet 会自动添加头部信息。
+- 如果头部不包含 `title` 变量，则使用上一步骤中解析出的标题。如果包含，则忽略从邮件标题解析出的标题。
+- 如果头部不包含 `date` 变量，则使用邮件标题中解析中的时间或者当前时间。
 
 上面图示的邮件发布后的效果见 <http://demo.opoo.org/demo/>。
 
 **邮件回复**
 
-OpooPress Mailet 运行过程情况会通过邮件回复给发件地址人，邮件的内容是：发生异常时的异常堆栈信息，成功执行命令时的输出，执行过程中的日志信息等。示例如下：
+OpooPress Mailet 运行过程情况会通过邮件回复给发件地址人，邮件的内容是：发生异常时的异常堆栈信息，成功执行命令时的输出，执行过程中的日志信息等，邮件的附件是该文章的源文件。示例如下：
 ```
 File writen: /home/sites/mysite/site/source/article/2013-08-13-this-is-a-post-publish-by-email.markdown
 Execute command: mvn op:deploy
