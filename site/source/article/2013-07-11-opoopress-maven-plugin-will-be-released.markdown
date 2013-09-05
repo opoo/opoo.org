@@ -15,7 +15,7 @@ Maven Plugin 版是笔者觉得目前最便捷的发布和部署方式了。目�
 
 使用该插件，安装、配置、部署 OpooPress 博客系统将变得非常简单。
 
-1. 第一步：先安装 [Java](http://www.oracle.com/technetwork/java/) 1.6 和 [Maven](http://maven.apache.org/download.cgi#Installation) 2.2.1 以上版本。
+1. 第一步：先安装 [Java](http://www.oracle.com/technetwork/java/) 1.6 (JDK) 和 [Maven](http://maven.apache.org/download.cgi#Installation) 2.2.1 以上版本。
 
 2. 第二步：安装、配置 OpooPress 博客系统
 
