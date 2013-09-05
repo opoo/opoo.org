@@ -145,6 +145,6 @@
 		<maven.test.skip>true</maven.test.skip>
 		<project.build.sourceVersion>1.6</project.build.sourceVersion>
         <project.build.targetVersion>1.6</project.build.targetVersion>
-        <opoopress.version>1.0.1-SNAPSHOT</opoopress.version>
+        <opoopress.version>1.0.1</opoopress.version>
 	</properties>
 </project>
