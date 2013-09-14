@@ -1,0 +1,76 @@
+---
+layout: post
+title: OpooPress 1.0.1 版本发布
+date: '2013-09-06 18:30'
+comments: true
+published: true
+keywords: "OpooPress, static blog generator, open source"
+categories: [opoopress]
+url: '/opoopress-1.0.1-has-been-released/'
+---
+
+OpooPress 静态博客生成器 1.0.1 版本发布了！
+
+## 一、版本说明
+
+1. 修改了固定链接样式的定义方式和解析方式。
+	- `config.yml` 中 `permalink` 可以使用以下变量来定义：
+		- 时间变量：year, month, day, hour, minute, second 
+		- 文章名称：name
+		- 文章文件路径：pathToFile
+		- 文章文件名称：fileName
+		- 文章 front-matter 头部所定义的所有变量
+	- `permalink` 的默认值为 `/article/${'$'}{year}/${'$'}{month}/${'$'}{name}/`，生成的 URL 如 `/article/2013/09/helle-world/`。
+	- 改用 FreeMarker 模板来解析并生成所需的 URL。
+
+2. 修改了新文章和新页面文件存储路径的定义方式和解析方式
+	- `config.yml` 中 `new_post` 和 `new_page` 可以使用以下变量来定义：
+		- 时间变量：year, month, day, hour, minute, second 
+		- 文章或页面名称：name
+		- 文章或页面标题：title
+		- 发布时间：date
+		- 文件格式：format - *亦即文件的后缀名，默认值是 `markdown`*
+	- `new_post` 的默认值为 `article/${'$'}{year}-${'$'}{month}-${'$'}{day}-${'$'}{name}.${'$'}{format}`，生成的文章文件路径如 `/article/2013-09-05-helle-world.markdown`。
+	- `new_page` 的默认值为 `${'$'}{name}.${'$'}{format}`，会在 `source` 根目录中生成如 `about.markdown` 的新页面文件。
+	- 改用 FreeMarker 模板来解析并生成文件存储路径。
+
+3. 修正了按需执行处理程序中一个错误的逻辑判断。
+
+
+## 二、使用说明
+
+该软件包可在 [Maven Central 库](http://search.maven.org/) 下载，groupId 为 [org.opoo.press](http://central.maven.org/maven2/org/opoo/press/)，可通过以下三种方式使用该软件包。
+
+1. 在 `pom.xml` 中引入该插件
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.opoo.press.maven.plugins</groupId>
+			<artifactId>opoopress-maven-plugin</artifactId>
+			<version>1.0.1</version>
+		</plugin>
+	...
+	</plugins>
+...
+</build>
+```
+然后运行 `mvn op:install`
+
+2. 下载已定义的 `pom.xml`
+```
+mkdir myblog
+cd myblog
+wget http://www.opoopress.com/downloads/pom.xml
+mvn op:install
+```
+
+3. 从 GitHub 克隆二次开发库 [opoopress-site](https://github.com/opoopress/opoopress-site) (推荐)
+```
+git clone https://github.com/opoopress/opoopress-site.git
+cd opoopress-site
+mvn package
+mvn op:install
+```
+
+更多细节，请阅读 [OpooPress 安装文档](http://www.opoopress.com/zh/docs/installation/)。
