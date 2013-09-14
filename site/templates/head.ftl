@@ -16,16 +16,17 @@
 <#if description??>
   <meta name="description" content="${description}">
 </#if>
-  <#if page.keywords??><meta name="keywords" content="${ page.keywords }"></#if>
+  <#if page.keywords??><meta name="keywords" content="${ page.keywords }"><#elseif site.keywords??><meta name="keywords" content="${ site.keywords }"></#if>
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="OpooPressSiteRoot" content="${ root_url }">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="canonical" href="${ canonical }"> -->
+  <meta name="Generator" content="OpooPress-${site.OpooPressVersion}">
+  <#-- <link rel="canonical" href="${ canonical }"> -->
   <link href="${ root_url }/favicon.ico" rel="icon">
   <link href="${ root_url }/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic|PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <#-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
   <link href="${ site.subscribe_rss }" rel="alternate" title="${site.title}" type="application/atom+xml">
   <script language="JavaScript">
   <!--
