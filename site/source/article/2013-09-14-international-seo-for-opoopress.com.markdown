@@ -22,6 +22,8 @@ url: '/international-seo-for-opoopress.com/'
 
 	# zh
 	RewriteCond %{HTTP:Accept-Language} ^zh [NC]
+	RewriteCond %{REQUEST_URI} !^/zh/
+	RewriteCond %{REQUEST_URI} !^/en/
 	RewriteCond %{REQUEST_URI} !^/icons/
 	RewriteCond %{REQUEST_URI} !^/error/
 	RewriteCond /var/www/html/%{REQUEST_FILENAME} !-f
@@ -29,6 +31,8 @@ url: '/international-seo-for-opoopress.com/'
 	RewriteRule ^/(.*)$ /zh/$1 [L,R=301]
 
 	# others
+	RewriteCond %{REQUEST_URI} !^/zh/
+	RewriteCond %{REQUEST_URI} !^/en/
 	RewriteCond %{REQUEST_URI} !^/icons/
 	RewriteCond %{REQUEST_URI} !^/error/
 	RewriteCond /var/www/html/%{REQUEST_FILENAME} !-f
@@ -64,6 +68,8 @@ url: '/international-seo-for-opoopress.com/'
 	RewriteRule ^/$ /zh/ [L,R=301]
 
 	# others
+	RewriteCond %{REQUEST_URI} !^/zh/
+	RewriteCond %{REQUEST_URI} !^/en/
 	RewriteCond %{REQUEST_URI} !^/icons/
 	RewriteCond %{REQUEST_URI} !^/error/
 	RewriteCond /var/www/html/%{REQUEST_FILENAME} !-f
