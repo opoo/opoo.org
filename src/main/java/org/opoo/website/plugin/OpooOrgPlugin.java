@@ -28,7 +28,7 @@ public class OpooOrgPlugin implements Plugin{
 		@Override
 		public void postRead(Site site) {
 			super.postRead(site);
-			String version = Plugin.class.getPackage().getSpecificationVersion();
+			String version = Site.class.getPackage().getSpecificationVersion();
 			site.set("OpooPressVersion", version);
 		}
 
