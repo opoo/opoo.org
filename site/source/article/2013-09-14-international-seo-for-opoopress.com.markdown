@@ -11,9 +11,10 @@ tags: ["OpooPress", "SEO"]
 url: '/international-seo-for-opoopress.com/'
 ---
 
-为了使得 [OpooPress](http://press.opoo.org/) 有更广的受众面，也为了展示该博客的一些特性（比如子目录），所以[网站](http://press.opoo.org/)准备了两种语言的版本，中文站在 <http://www.opoopress.com/zh/>，英文站在 <http://www.opoopress.com/en/>。 
+为了使得 OpooPress 有更广的受众面，也为了展示该博客的一些特性（比如子目录），所以其网站准备了两种语言的版本，中文站在 <http://www.opoopress.com/zh/>，英文站在 <http://www.opoopress.com/en/>。 
 
 之前为了获得更好的用户体验，在 Apache rewrite 规则中加入了如下规则（*注意，现在觉得这种配置可能是错误的*）：
+<!--more-->
 
 	# root
 	RewriteCond %{HTTP:Accept-Language} ^zh [NC]
@@ -62,6 +63,24 @@ url: '/international-seo-for-opoopress.com/'
 **站点地图：rel="alternate" hreflang="x"**
 
 可以使用站点地图来向 Google 提供 rel="alternate" hreflang="x"。见 [sitemap.xml](http://www.opoopress.com/sitemap.xml)。
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9' xmlns:xhtml="http://www.w3.org/1999/xhtml">
+	<url>
+	    <loc>http://www.opoopress.com/zh/</loc>
+		<xhtml:link rel="alternate" hreflang="zh" href="http://www.opoopress.com/zh/"/>
+		<xhtml:link rel="alternate" hreflang="en" href="http://www.opoopress.com/en/"/>
+		<xhtml:link rel="alternate" hreflang="x-default" href="http://www.opoopress.com/en/"/>
+    </url>
+    <url>
+	    <loc>http://www.opoopress.com/en/</loc>
+		<xhtml:link rel="alternate" hreflang="zh" href="http://www.opoopress.com/zh/"/>
+		<xhtml:link rel="alternate" hreflang="en" href="http://www.opoopress.com/en/"/>
+		<xhtml:link rel="alternate" hreflang="x-default" href="http://www.opoopress.com/en/"/>
+    </url>
+</urlset>
+
+```
 
 **Apache rewrite 规则**
 	# root
