@@ -12,10 +12,9 @@ url: '/international-seo-for-opoopress.com/'
 ---
 
 为了使得 OpooPress 有更广的受众面，也为了展示该博客的一些特性（比如子目录），所以其网站准备了两种语言的版本，中文站在 <http://www.opoopress.com/zh/>，英文站在 <http://www.opoopress.com/en/>。 
-
-之前为了获得更好的用户体验，在 Apache rewrite 规则中加入了如下规则（*注意，现在觉得这种配置可能是错误的*）：
 <!--more-->
 
+之前为了获得更好的用户体验，在 Apache rewrite 规则中加入了如下规则（*注意，现在觉得这种配置可能是错误的*）：
 	# root
 	RewriteCond %{HTTP:Accept-Language} ^zh [NC]
 	RewriteRule ^/$ /zh/ [L,R=301]

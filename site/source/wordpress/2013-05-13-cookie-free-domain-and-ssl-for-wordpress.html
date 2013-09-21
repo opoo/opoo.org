@@ -7,7 +7,7 @@ date: '2013-05-13 00:15:54'
 link: http://opoo.org/cookie-free-domain-and-ssl-for-wordpress/
 post_id: 323
 url: '/cookie-free-domain-and-ssl-for-wordpress/'
-excerpt: "<p>最近在配置 WordPress 的过程中，笔者希望可以做到以下几点：<ol>	<li><span style='line-height: 14px;'>使用 cookie-free 域来访问静态文件，主要是 css，js，图片等，大多位于 wp-content 目录。</span></li>	<li><span style='line-height: 14px;'>给网站配置 SSL 证书，使得网站既可以通过 HTTP 访问，也可以通过 HTTPS 访问。</span></li>	<li><span style='line-height: 14px;'>在通过 HTTPS   访问网站时，不应该出现网页中既包含安全内容也包含不安全内容（及混合内容）的警告，即此时所有引用资源都应该是 HTTPS 协议访问的。</span></li>	<li>不希望通过目录级配置文件 .htaccess 文件来实现 WordPress 的固定链接，因为启用 .htaccess 会降低 Apache 的性能。</li></ol>下面具体说明如何达到这些目标。<h1>一、cookie-free 域的选择</h1><a title='关于 cookie-free domains' href='http://opoo.org/cookie-free-domains/'>有关 cookie-free domains, 请参考上一篇文章</a>。<p>要达到第一点要求，必须在主域之外，使用第二个域作为 cookie-free 域。<p>要达到第二点和第三点要求，该 cookie-free 域：a）必须能通过 HTTPS 访问；b）不能直接修改 WordPress 源文件中静态资源为 http://cookie-free.domain/...，写死之后在 HTTPS 访问时会出现混合内容警告。"
+excerpt: "<p>最近在配置 WordPress 的过程中，笔者希望可以做到以下几点：<ol>	<li><span style='line-height: 14px;'>使用 cookie-free 域来访问静态文件，主要是 css，js，图片等，大多位于 wp-content 目录。</span></li>	<li><span style='line-height: 14px;'>给网站配置 SSL 证书，使得网站既可以通过 HTTP 访问，也可以通过 HTTPS 访问。</span></li>	<li><span style='line-height: 14px;'>在通过 HTTPS   访问网站时，不应该出现网页中既包含安全内容也包含不安全内容（及混合内容）的警告，即此时所有引用资源都应该是 HTTPS 协议访问的。</span></li>	<li>不希望通过目录级配置文件 .htaccess 文件来实现 WordPress 的固定链接，因为启用 .htaccess 会降低 Apache 的性能。</li></ol>下面具体说明如何达到这些目标。"
 categories: [tech]
 tags: [Apache, cookie-free, SSL, WordPress]
 description: "本文重要介绍：为 WordPress 配置 cookie-free 域；为 WordPress 配置 SSL 证书；修改相应的配置文件使得 WordPress 可以同时通过 HTTP 和 HTTPS 访问，并且在 HTTPS 访问时不出现混合内容的警告。"

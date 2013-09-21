@@ -13,7 +13,8 @@ OpooPress 静态博客生成器 1.0.0 正式发布了！
 
 从该正式版开始，OpooPress 可能只发行 Maven 版，而不再提供 Standalone 版。
 
-该软件包已经发布到了 [Maven Central 库](http://search.maven.org/)，groupId 为 [org.opoo.press](http://central.maven.org/maven2/org/opoo/press/)，可通过以下三种方式使用该软件包。
+该软件包已经发布到了 [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Corg.opoo.press)，groupId 为 [org.opoo.press](http://central.maven.org/maven2/org/opoo/press/)，可通过以下三种方式使用该软件包。
+<!--more-->
 
 1. 在 `pom.xml` 中引入该插件
 ```xml

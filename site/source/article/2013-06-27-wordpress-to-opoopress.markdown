@@ -14,11 +14,13 @@ description: '本站博客系统由 WordPress 更换成 OpooPress——一个基
 
 OpooPress 是博主自行开发的一个静态博客生成器，使用 [Java](http://www.oracle.com/technetwork/java/index.html) 语言和 [FreeMarker](http://www.freemarker.org/) 模板开发 `生成器` 部分，默认带一个支持 CSS3 响应式设计的主题。
 
+<!--more-->
+
 OpooPress 在开发过程中，仔细研究了 [Jekyll](http://jekyllrb.com) 和 [Octopress](http://octopress.org/)，代码参考了 Jekyll 的 Ruby 源代码，主题则主要来自于 Octopress。最初的本意只是为不熟悉 Ruby 的开发者提供一个 Java 版本的 Octopress，也与 Octopress 作者 Brandon Mathis 沟通过。但在后来的开发过程中发现这不仅仅是两个编程语言间的翻译，还涉及到 Java 体系与 Ruby 体系之间的转换，两种体系的设计架构、代码组织和可利用的包都是不同的，比如需要纯 Java 版的 `SASS/Compass` 编译器就很难。
 
 OpooPress 的源文件格式与 Jekyll/Octopress 的相同，每个文件带有一个 [YAML front matter](http://jekyllrb.com/docs/frontmatter/) 的头部，正文内容可以使用 HTML 或者 Markdown 语法格式，可以穿插 FreeMarker 模板代码，将来的插件可能使用这种机制完成。OpooPress 的页面布局也暂时与 Octopress 相似，一个好处就是可以直接使用 Octopress 主题的样式单。
 
-<!--more-->
+
 
 * 生成器
     * standalone 版：一个基于普通命令行的独立发行版本，只要装有 Java 即可以使用，跨平台。执行命令就像这样 `press install`，`press build` 和 `press deploy`。目前支持的发布协议主要是文件系统和 `SSH/SCP`，也是最常用的，满足最基本的需求。

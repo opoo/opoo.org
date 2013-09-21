@@ -14,7 +14,7 @@ tags: [opoopress, Maven, GitHub Pages]
 
 OpooPress 已经支持将生成的静态网站发布到 GitHub Pages。
 
-执行命令 `$ mvn op:deploy` 即可。
+执行命令 `mvn op:deploy` 即可。
 
 详情请阅读 [OpooPress 的这篇文档](http://www.opoopress.com/zh/docs/github-pages/)。
 

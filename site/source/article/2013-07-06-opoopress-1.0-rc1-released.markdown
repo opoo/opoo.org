@@ -16,7 +16,7 @@ OpooPress RC1 版本发布。这是第一个预发行版本，只包含一个 st
 &rarr; [转到 OpooPress.com 开始下载](http://www.opoopress.com/zh/download/)
 
 要快速体验 OpooPress，请下载精简包。精简包自带一个已经编译好的 CSS 样式单，不包含编译 SASS 所需要的 Jar 文件，`op sass` 命令无法执行。如果要修改 SASS 样式单，请下载完整包。
-
+<!--more-->
 
 # 〇、先决条件
 

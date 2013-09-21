@@ -7,6 +7,8 @@ published: true
 keywords: "OpooPress, static blog generator, open source"
 categories: [opoopress]
 url: '/opoopress-1.0.1-has-been-released/'
+excerpt: "OpooPress 静态博客生成器 1.0.1 版本发布了。本文主要介绍该版本的发行说明（包括功能增强说明及 BUG 修正说明）以及使用说明。"
+description: "OpooPress 静态博客生成器 1.0.1 版本发布了。本文主要介绍该版本的发行说明（包括功能增强说明及 BUG 修正说明）以及使用说明。"
 ---
 
 OpooPress 静态博客生成器 1.0.1 版本发布了！

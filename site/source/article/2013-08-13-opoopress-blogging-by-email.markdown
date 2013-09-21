@@ -15,7 +15,7 @@ categories: [opoopress]
 只需要向指定的 Email 地址发送邮件即可发表博客文章。邮件格式最好采用**纯文本**，但不是强制的。
 
 邮件的标题就是文章的标题，邮件的内容就是文章的正文，这就是 OpooPress Mailet 最基本的用法。关于自定义文章文件名、发布时间、标签、分类等高级应用请阅读后续章节。
-
+<!--more-->
 
 ## 基本原理
 利用邮件发表博客文章其实是一个比较通用的思路，不仅仅可以用在 OpooPress 这类的静态博客，也可以用在 WordPress 之类的动态博客上。其大致处理流程如下：
@@ -32,8 +32,6 @@ categories: [opoopress]
 		- 调用静态博客引擎生成网站；
 		- 调用静态博客引擎发布网站。
 3. 将处理过程和结果信息自动回复邮件给发送者。
-
-<!--more-->
 
 ## OpooPress Mailet
 OpooPress Mailet 是使用 [Apache Mailet API](http://james.apache.org/mailet/api/index.html) 编写的邮件处理程序，只能运行在 [Apache James Server](http://james.apache.org/server/index.html)上，所以必须自己搭建邮件服务器。
