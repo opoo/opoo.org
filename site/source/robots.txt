@@ -2,6 +2,10 @@
 layout: nil
 ---
 User-agent: *
-Disallow: 
+Disallow: /sitemap.xml
+Disallow: /tag/
+Disallow: /category/
+Disallow: /joqs/apidocs/
+Disallow: /atom.xml
 
 Sitemap: ${site.url}${root_url}/sitemap.xml 
