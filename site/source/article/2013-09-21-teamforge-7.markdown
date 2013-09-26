@@ -4,15 +4,14 @@ title: TeamForge 7
 date: '2013-09-21 21:58'
 comments: true
 published: true
-keywords: "TeamForge, CollabNet, 项目管理软件"
-description: "本文简单介绍项目管理软件 TeamForge 7 的想用情况以安装说明。"
+description: "本文简单介绍著名的软件项目管理工具 TeamForge 7：如何下载安装，以及如何在线注册试用和使用等。"
 categories: ["tech"]
 tags: ["TeamForge"]
 url: '/teamforge-7/'
-excerpt: "CollabNet TeamForge 7 发布已经有一段时间了，这是一个综合型的项目管理软件，同时也是一个商业软件。本文主要讲讲如何试用 TeamForge 7。"
+excerpt: "CollabNet TeamForge 7 发布已经有一段时间了，这是一个综合型的软件项目管理工具，同时也是一个商业软件。本文主要讲讲如何试用 TeamForge 7。"
 ---
 
-[CollabNet TeamForge 7](http://www.collab.net/cn/products/teamforge) 发布已经有一段时间了，这是一个综合型的项目管理软件，同时也是一个商业软件。有兴趣的读者可以了解关于 [CollabNet TeamForge 6.1](/teamforge/) 的简介。
+[CollabNet TeamForge 7](http://www.collab.net/cn/products/teamforge) 发布已经有一段时间了，这是一个综合型的软件项目管理工具，同时也是一个商业软件。有兴趣的读者可以了解本站关于 [CollabNet TeamForge 6.1](/teamforge/) 的简介。
 
 在 TeamForge 产品首页可以了解其特性，相信对该软件感兴趣的读者一定已经知道 TeamForge 为何物了，本文不再赘述。
 
@@ -20,7 +19,7 @@ excerpt: "CollabNet TeamForge 7 发布已经有一段时间了，这是一个综
 
 ## 一、下载安装 TeamForge 7
 
-在 TeamForge 7 之前的版本中，只要我们有一个 CollanNet 网站的账号，我们就可以下载 VMware 版或者 Linux 安装版的包，有的版本还提供 Windows 的安装包。
+在 TeamForge 7 之前的版本中，只要我们有一个 CollabNet 网站的账号，我们就可以下载 VMware 版或者 Linux 安装版的包，有的版本还提供 Windows 的安装包。
 
 VMware 版是一个已经安装好 TeamForge 软件的 VMware 镜像，操作系统为 CentOS，只需要在本地安装 VMware Player 软件，就可以启动该虚拟机，可以有若干天试用期，这是个体验 TeamForge 的好方法。
 
@@ -39,18 +38,18 @@ Linux 安装版则仅仅是个安装器，如 CentOS 版的 yum 库定义，下�
 好吧，废话到此结束。我们直接跳过上述步骤，讲讲如何安装该产品并进行试用。
 
 1. 准备 CentOS 6 系统，虚拟机物理机均可，需要符合其[系统需求](http://help.collab.net/topic/sysadmin-700/reference/sysreqs-teamforge-vm.html)，需要能访问网络。
-2. 复制以下内容到 `collabnet.repo`，并复制到 CentOS 系统的 `/etc/yum.repos.d/` 目录下。
+2. 将以下内容保存为文件 `collabnet-7.0.0.0.repo`，并复制该文件到 CentOS 系统的 `/etc/yum.repos.d/` 目录。
 ```
 [CollabNet]
 name=collabnet
-baseurl=http://packages.collab.net/6.1.1.0/redhat/5Server/$basearch
+baseurl=http://packages.collab.net/7.0.0.0/redhat/$releasever/$basearch
 gpgkey=http://packages.collab.net/RPM-GPG-KEY-collabnet
 enabled=1
 gpgcheck=0
 ```
 3. 运行 `yum clean all`, `yum install teamforge` 即可，详情请阅读 [Install CollabNet TeamForge 7.0 on Red Hat/CentOS](http://help.collab.net/topic/sysadmin-700/action/redhat_teamforge-install.html)。
 
-可见，我们的核心问题就是这个 yum 库文件，一旦获取了该文件，其它问题都可以按照 [帮助文档](http://help.collab.net/topic/sysadmin-700/action/teamforge-admin.html) 一步步解决。
+可见，关键就是这个 yum 库定义文件，一旦获取了该文件，其它问题都可以按照 [帮助文档](http://help.collab.net/topic/sysadmin-700/action/teamforge-admin.html) 一步步解决。
 
 ## 二、在线试用 TeamForge 7
 
