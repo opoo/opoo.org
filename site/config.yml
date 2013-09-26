@@ -131,6 +131,8 @@ default_asides: [about.ftl, recent_posts.ftl, recent_comments.ftl, github.ftl, d
 # 普通页面侧边栏包含的模板，未设置使用 default_asides
 # page_asides:
 
+source_base_path: https://raw.github.com/opoo/opoo.org/master/site/source
+
 # ----------------------- #
 #   3rd Party Settings    #
 # ----------------------- #
@@ -142,11 +144,11 @@ github_show_profile_link: false
 github_skip_forks: true
 
 # Twitter
-twitter_user:
-twitter_tweet_button: false
+twitter_user: alexlincn
+twitter_tweet_button: true
 
 # Google +1
-google_plus_one: false
+google_plus_one: true
 google_plus_one_size: medium
 
 # Google Plus Profile
