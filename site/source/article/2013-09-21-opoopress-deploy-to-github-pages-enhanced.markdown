@@ -6,7 +6,7 @@ comments: true
 published: true
 keywords: "GitHub Pages, git, opoopress-wagon-github, opoopress-wagon-git"
 description: "本文介绍 OpooPress 的两个自定义 wagon，以及将 OpooPress 博客发布到 GitHub Pages 的三种方式。"
-categories: ["OpooPress"]
+categories: ["website"]
 tags: ["OpooPress", "github-pages"]
 url: '/opoopress-deploy-to-github-pages-enhanced/'
 excerpt: "在即将发布的 1.0.2 版本的 OpooPress 中，发布到 GitHub Pages 的功能将得到增强。该版本将原来插件中定义的 wagon 独立成 opoopress-wagon-github 包，并定义了一个底层使用 git 命令行的 wagon。"

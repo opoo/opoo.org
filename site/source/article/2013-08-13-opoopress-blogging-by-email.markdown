@@ -7,7 +7,8 @@ published: true
 description: "通过 OpooPress Mailet，可以使用邮件发表 OpooPress 博客。"
 url: '/opoopress-blogging-by-email/'
 keywords: "OpooPress, Blog, static site/blog generator, open source"
-categories: [opoopress]
+categories: [website]
+tags: [opoopress, Mailet, VPS]
 ---
 现在，通过 OpooPress Mailet 软件包，我们可以轻松地使用邮件来发表 OpooPress 文章了。这极大的增强了 OpooPress 的移动性。
 

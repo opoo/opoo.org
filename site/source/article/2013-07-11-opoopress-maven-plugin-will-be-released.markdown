@@ -7,7 +7,7 @@ published: true
 keywords: "OpooPress, Blog, static site/blog generator"
 description: "安装配置 OpooPress 最快捷的方式—— “Maven Plugin 版”即将发布，本文预览该版本用法。"
 url: /opoopress-maven-plugin-will-be-released/
-categories: [opoopress]
+categories: [website]
 tags: [opoopress, Maven]
 ---
 

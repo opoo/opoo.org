@@ -5,7 +5,7 @@ date: '2013-09-21 21:58'
 comments: true
 published: true
 description: "本文简单介绍著名的软件项目管理工具 TeamForge 7：如何下载安装，以及如何在线注册试用和使用等。"
-categories: ["tech"]
+categories: ["software"]
 tags: ["TeamForge"]
 url: '/teamforge-7/'
 excerpt: "CollabNet TeamForge 7 发布已经有一段时间了，这是一个综合型的软件项目管理工具，同时也是一个商业软件。本文主要讲讲如何试用 TeamForge 7。"

@@ -6,7 +6,8 @@ comments: true
 published: true
 keywords: "OpooPress, Blog, static site/blog generator, open source"
 description: "公开当前博客及 OpooPress 网站的源代码。"
-categories: [opoopress]
+categories: [website]
+tags: ["opensource"]
 url: '/the-source-of-opoo.org-and-opoopress.com/'
 ---
 

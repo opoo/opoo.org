@@ -7,8 +7,8 @@ published: true
 keywords: "OpooPress, Blog, static site/blog generator"
 description: "OpooPress 1.0 RC1 版本发布。这是第一个预发行版本，只包含一个 standalone 的包，功能基本完整，唯文档不全。"
 url: /opoopress-1.0-rc1-released/
-categories: ['others']
-tags: ['opoopress']
+categories: ['website']
+tags: ['opoopress', opensource]
 ---
 
 OpooPress RC1 版本发布。这是第一个预发行版本，只包含一个 standalone 的包，功能基本完整，唯文档不全。

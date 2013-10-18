@@ -5,7 +5,8 @@ date: '2013-08-08 12:30'
 comments: true
 published: true
 keywords: "OpooPress, Blog, static site/blog generator, open source"
-categories: [opoopress]
+categories: [website]
+tags: [opoopress, opensource]
 url: '/opoopress-1.0.0-has-been-released/'
 ---
 

@@ -3,8 +3,8 @@ layout: post
 title: '博客系统由 WordPress 更换成 OpooPress'
 date: '2013-06-28 20:55'
 comments: true
-categories: ['others']
-tags: ['opoopress']
+categories: ['website']
+tags: ['opoopress', wordpress]
 url: '/wordpress-to-opoopress/'
 keywords: 'OpooPress, WordPress, 博客迁移'
 description: '本站博客系统由 WordPress 更换成 OpooPress——一个基于 Java 的静态博客生成器。'

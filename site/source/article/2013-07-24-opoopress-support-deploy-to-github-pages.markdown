@@ -8,7 +8,7 @@ published: true
 keywords: "OpooPress, Blog, static site/blog generator, Maven, GitHub Pages"
 description: "OpooPress 已经支持将生成的静态网站发布到 GitHub Pages。"
 url: /opoopress-support-deploy-to-github-pages/
-categories: [opoopress]
+categories: [website]
 tags: [opoopress, Maven, GitHub Pages]
 ---
 

@@ -7,7 +7,7 @@ published: true
 keywords: "OpooPress, OpooPress vs Octopress"
 description: "关于 OpooPress 的一些比较好的特性简单介绍。并与 Octopress 的生成速度进行简单对比。"
 url: /why-i-develop-opoopress/
-categories: ['others']
+categories: ['website']
 tags: ['opoopress']
 ---
 

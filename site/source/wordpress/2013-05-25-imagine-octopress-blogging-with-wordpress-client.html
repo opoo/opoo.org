@@ -8,7 +8,7 @@ link: http://opoo.org/imagine-octopress-blogging-with-wordpress-client/
 post_id: 342
 url: '/imagine-octopress-blogging-with-wordpress-client/'
 excerpt: "<p>本文只是一种构想，笔者认为是可行的，只是没有时间，也没有精力去实现它。<p>标题所提到的两个博客系统，代表着两类博客系统：<p>1. WordPress： 即 <a href='http://wordpress.org/' target='_blank'>WordPress</a> 博客系统，动态博客系统的代表。<p>2. Octopress： 通过静态博客生成器（Static blog generator）生成静态博客的典型代表，博客文章、页面等最终以静态页面的形式输出。还有许多其它的静态博客生成器，例如：<a href='http://jekyllrb.com/' target='_blank'>Jekyll</a> (Ruby)，<a href='http://ruhoh.com/' target='_blank'>ruhoh</a> (Ruby)，<a href='http://pelican.readthedocs.org/' target='_blank'>Pelican</a> (Python)，<a href='http://jbake.org/' target='_blank'>JBake</a> (Java)等。"
-categories: [tech]
+categories: [website]
 tags: [Octopress, WordPress]
 description: "本文构想利用 WordPress 客户端发布和管理 Octopress 博客及其它静态博客系统。"
 keywords: "WordPress, Octopress, WordPress XML-RPC, Jekyll, ruhoh, Pelican, JBake"
@@ -24,11 +24,11 @@ keywords: "WordPress, Octopress, WordPress XML-RPC, Jekyll, ruhoh, Pelican, JBak
 <!--more-->
 <h1>一、WordPress or Octopress</h1>
 <h2>1. 客户端</h2>
-WordPress 的优点很多，我特别喜欢就是其丰富的客户端，在 Windows 下可以使用 Windows Live Writer 来发布文章，在手机上也可以使用基于 Android 或者 iOS 的 WordPress 客户端，可以方便的管理文章、评论等。
+<p>WordPress 的优点很多，我特别喜欢就是其丰富的客户端，在 Windows 下可以使用 Windows Live Writer 来发布文章，在手机上也可以使用基于 Android 或者 iOS 的 WordPress 客户端，可以方便的管理文章、评论等。
 
 <p>这点上静态博客生成器（如Octopress）就比较劣势了。这些系统都需要安装一个构建环境，来将博客源文件转化成静态博客文件。通常，这个构建环境需要安装在本地，显然这在手机上暂时是很难实现的，这就限制了发布文章的终端。当然，经过笔者的摸索，也的确实现了<a title="多终端远程发布 Octopress 博客" href="http://opoo.org/octopress-remote-blogging/">一种可以通过多种终端发布 Octopress 的方式</a>，但过程是比较复杂的，需要极好的耐心和一定的技术。
 <h2>2. 运行效率</h2>
-WordPress 运行时需要 Web 服务器、PHP 运行环境、MySQL 数据库，内容动态解析。而 Octopress 之类的博客运行时仅仅需要 Web 服务器处理静态内容，因此具有更好的运行效率。
+<p>WordPress 运行时需要 Web 服务器、PHP 运行环境、MySQL 数据库，内容动态解析。而 Octopress 之类的博客运行时仅仅需要 Web 服务器处理静态内容，因此具有更好的运行效率。
 
 <p>静态博客生成器主要的消耗在发布文章时“页面生成”过程，而这个过程每次发布仅仅是“一次性”的。
 
@@ -36,7 +36,7 @@ WordPress 运行时需要 Web 服务器、PHP 运行环境、MySQL 数据库，�
 
 <p>可能正是基于效率上的考虑，一些极客们才会选择静态博客吧。
 <h1>二、利用 WordPress 客户端发布 Octopress 博客（静态博客）</h1>
-如果能结合 WordPress 操作上的简单方便和静态博客的高效，我们就能得到一个比较完美的博客解决方案。
+<p>如果能结合 WordPress 操作上的简单方便和静态博客的高效，我们就能得到一个比较完美的博客解决方案。
 
 <p>笔者的构想就是直接利用 WordPress 的客户端来发布静态博客。
 
