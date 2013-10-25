@@ -5,7 +5,7 @@ date: '2013-10-21 11:49'
 comments: true
 published: true 
 categories: [website]
-tags: [Theme, front-end-optimization, web-fonts, cookie-free]
+tags: [front-end-optimization, Theme, web-fonts, cookie-free]
 url: '/about-front-end/'
 excerpt: "<p>最近部署了个新的博客主题，并花了些时间来做前端优化，在这过程中有不少收获，也遇到不少问题。现就部分笔者比较感兴趣的点拿出来记录一下。</p><p>本文主要涉及内容为 <b>Web 前端优化</b> 和 <b>Web Fonts</b>。</p>"
 ---
