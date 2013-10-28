@@ -28,24 +28,32 @@ application: <your-app-id>
 version: <version>
 runtime: python27
 api_version: 1
+threadsafe: yes
 
-default_expiration: "2d"
+default_expiration: "10d"
 
 handlers:
 - url: /
   static_files: index.html
   upload: index.html
 
+- url: /(.*)/
+  static_files: \1/index.html
+  upload: (.*)/index.html
+
+- url: /app.yaml
+  static_files: index.html
+  upload: index.html
+
 - url: /(.*)
   static_files: \1
-  upload: (.*) 
+  upload: (.*)
 ```
 注意替换 `your-app-id` 为你的应用的 id，`version` 仅仅是一个标识，你可以随意设置，在 GAE 中将当前版本设置成默认即可。绑定泛域名可以访问所有版本，[参考这篇文章](/google-app-engine/)。
 
 关于 `app.yaml` 更详细的内容请阅读官方文档[《Python 应用程序配置》](https://developers.google.com/appengine/docs/python/config/appconfig?hl=zh-cn)。
 
-
-将这个文件放在 OpooPress 的生成目录中（如 D:\myblog\target\public\site）或者静态资源目录中
+将 `app.yaml` 放在 OpooPress 的生成目录中（如 D:\myblog\target\public\site）或者静态资源目录中
 （如 D:\myblog\site\assets，会自动复制到站点生成目录），就可以将生成目录变成一个 GAE 的应用。
 
 ## 通过 Google App Engine Launcher 发布
@@ -117,7 +125,7 @@ Google App Engine 最近增加了一个叫着 `Push-to-Deploy` 的功能，
 
 ## 已知问题
 
-这是一个部署在 GAE 上的 OpooPress 站点：<a href="http://http://opstatic.web.wondor.com/" rel="nofollow" target="_blank">http://opstatic.web.wondor.com/</a>
+这是一个部署在 GAE 上的 OpooPress 站点：<a href="http://opstatic.web.wondor.com/" rel="nofollow" target="_blank">http://opstatic.web.wondor.com/</a>
 
 当前已知的问题是，通常意义上的目录默认页面 `index.html` 对于 GAE 来说是无效的，因为它没有目录这个概念。所以访问 `/about/` 时并不能直接访问到 `/about/index.html` 而引发 404 错误。
 当然在 `app.yaml` 中明确的映射这个 url 是可以解决问题的，但是对于以 `/` 结尾的固定链接来说，不可能一个个在映射里写明。所以目前看来，解决办法有 2 个，一是写出一个满足条件的 URL 映射，
