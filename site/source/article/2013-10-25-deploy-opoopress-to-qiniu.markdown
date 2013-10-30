@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 将 OpooPress 发布到七牛云存储
+title: 将 OpooPress 静态博客部署到七牛云存储
 date: '2013-10-25 16:29'
 comments: true
 published: true
@@ -67,4 +67,4 @@ url: '/deploy-opoopress-to-qiniu/'
 		> D:\qrsync\qrsync.exe /root/myblog/myblog-qiniu.conf
 		```
 
-这是部署在七牛上的 OpooPress 站点: <a href="http://opstatic.u.qiniudn.com/" rel="nofollow" target="_blank">http://opstatic.u.qiniudn.com</a>
+这是部署在七牛上的 OpooPress 站点: <a href="http://opoopress.u.qiniudn.com/" rel="nofollow" target="_blank">http://opoopress.u.qiniudn.com</a>

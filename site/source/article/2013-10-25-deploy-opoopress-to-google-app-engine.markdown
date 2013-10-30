@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 将 OpooPress 发布到 Google App Engine(GAE)
+title: 将 OpooPress 静态博客部署到 Google App Engine(GAE)
 date: '2013-10-25 17:56'
 comments: true
 published: true
@@ -125,7 +125,7 @@ Google App Engine 最近增加了一个叫着 `Push-to-Deploy` 的功能，
 
 ## 已知问题
 
-这是一个部署在 GAE 上的 OpooPress 站点：<a href="http://opstatic.web.wondor.com/" rel="nofollow" target="_blank">http://opstatic.web.wondor.com/</a>
+这是一个部署在 GAE 上的 OpooPress 站点：<a href="http://opoopress.web.wondor.com/" rel="nofollow" target="_blank">http://opoopress.web.wondor.com/</a>
 
 当前已知的问题是，通常意义上的目录默认页面 `index.html` 对于 GAE 来说是无效的，因为它没有目录这个概念。所以访问 `/about/` 时并不能直接访问到 `/about/index.html` 而引发 404 错误。
 当然在 `app.yaml` 中明确的映射这个 url 是可以解决问题的，但是对于以 `/` 结尾的固定链接来说，不可能一个个在映射里写明。所以目前看来，解决办法有 2 个，一是写出一个满足条件的 URL 映射，
