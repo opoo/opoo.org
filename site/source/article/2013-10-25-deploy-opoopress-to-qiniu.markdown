@@ -64,7 +64,7 @@ url: '/deploy-opoopress-to-qiniu/'
 		```
 	- Windows
 		```
-		> D:\qrsync\qrsync.exe /root/myblog/myblog-qiniu.conf
+		> D:\qrsync\qrsync.exe D:\myblog\myblog-qiniu.conf
 		```
 
 这是部署在七牛上的 OpooPress 站点: <a href="http://opoopress.u.qiniudn.com/" rel="nofollow" target="_blank">http://opoopress.u.qiniudn.com</a>
