@@ -39,7 +39,7 @@ keywords: "Google App Engine, GAE, Google Apps"
 无论部署 Python 应用还是 Java 应用，都需要先设置 <code>applicaiton-id</code> 和版本信息，这些配置 Python 应用在 <code>app.yaml</code> 文件中，Java 应用在 <code>WEB-INF/appengine-web.xml</code> 文件中。</li>
 	<li>关于版本：
 部署 Google App Engine 应用时，可为每一次上传指定一个版本（Version），也可为相同的应用指定相同的版本不同的应用指定不同的版本。各个版本可同时运行，但只能设置其中一个版本为默认版本。版本并不要求一定是数字，例如您可以设置版本为“1”，“2”，“3”，也可以设置博客应用版本为“blog”，相册应用的版本为“pic”等，如<a href="#p1">图1</a>：
-<a id="p1" name="p1"></a><a href="http://www.opoo.org/wp-content/uploads/2012/05/wondor.gae_.versions.png"><img class="alignnone size-full wp-image-98" title="Wondor.com GAE Application Versions" alt="" src="//www.opoo.org/wp-content/uploads/2012/05/wondor.gae_.versions.png" width="526" height="149" /></a><center><strong>图1</strong></center>如果应用有版本1、2、3，其中版本3是默认版本，则通过1.&lt;your-application-id&gt;.appspot.com和2.&lt;your-application-id&gt;.appspot.com可分别访问版本1和版本2，通过3.&lt;your-application-id&gt;.appspot.com和&lt;your-application-id&gt;.appspot.com都可以访问版本3。</li>
+<a id="p1" name="p1"></a><a href="/wp-content/uploads/2012/05/wondor.gae_.versions.png"><img class="alignnone size-full wp-image-98" title="Wondor.com GAE Application Versions" alt="" src="/wp-content/uploads/2012/05/wondor.gae_.versions.png" width="526" height="149" /></a><center><strong>图1</strong></center>如果应用有版本1、2、3，其中版本3是默认版本，则通过1.&lt;your-application-id&gt;.appspot.com和2.&lt;your-application-id&gt;.appspot.com可分别访问版本1和版本2，通过3.&lt;your-application-id&gt;.appspot.com和&lt;your-application-id&gt;.appspot.com都可以访问版本3。</li>
 	<li>关于Java应用
 Java应用可以使用插件 <a href="http://code.google.com/p/maven-gae-plugin/" target="_blank">maven-gae-plugin</a> 和 <a href="https://developers.google.com/appengine/docs/java/tools/eclipse?hl=zh-CN">Eclipse插件</a>。
 上传Java应用时可能会遇到jar包太大（&gt;10M）无法上传的问题，如下：
@@ -71,7 +71,7 @@ Java应用可以使用插件 <a href="http://code.google.com/p/maven-gae-plugin
 	<li>博客系统：<s>http://blog.wondor.com/</s> 或者 <s>http://blog.web.wondor.com/</s></li>
 	<li>相册：<s>http://pic.web.wondor.com/</s></li>
 	<li>Java应用：<a title="Java应用" href="http://java.web.wondor.com/" target="_blank" rel="nofollow"> http://java.web.wondor.com/</a> [<a title="GAE Java系统属性" href="http://java.web.wondor.com/s1.jsp" target="_blank" rel="nofollow">Java JVM系统属性</a>]
-<a id="p2" name="p2"></a><a href="http://www.opoo.org/wp-content/uploads/2012/05/wondor.domain.for_.gae_.png"><img class="alignnone  wp-image-100" title="Wondor.com Domain Settings for Google Apps" alt="" src="//www.opoo.org/wp-content/uploads/2012/05/wondor.domain.for_.gae_.png" width="625" height="248" />
+<a id="p2" name="p2"></a><a href="/wp-content/uploads/2012/05/wondor.domain.for_.gae_.png"><img class="alignnone  wp-image-100" title="Wondor.com Domain Settings for Google Apps" alt="" src="/wp-content/uploads/2012/05/wondor.domain.for_.gae_.png" width="625" height="248" />
 </a><center><strong>图2</strong></center></li>
 </ul>
 <p>以后在 Google App Engine应用中每多增加一个版本，都不必再调整 Google Apps 的域名设置，也不必增加 DNS 服务的解析地址了，通过 &lt;version&gt;.web.wondor.com 即可访问。

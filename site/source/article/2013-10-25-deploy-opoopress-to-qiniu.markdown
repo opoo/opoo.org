@@ -31,7 +31,7 @@ url: '/deploy-opoopress-to-qiniu/'
 
 本文不介绍如何安装 OpooPress 静态博客，以及如何通过命令生成静态网站，相关知识请参考 [OpooPress 文档](http://www.opoopress.com/zh/download/)。这里只介绍如何将生成好的静态博客发布到七牛云存储。
 
-1. 在使用七牛云存储之前，需要[注册成为七牛用户](https://portal.qiniu.com/signup?code=3l8tdavesmwk2)，
+1. 在使用七牛云存储之前，需要[注册成为七牛用户](http://portal.qiniu.com/signup?code=1jfjbktdd1u)，
 然后[取得 AccessKey 和 SecretKey](https://portal.qiniu.com/setting/key)。
   
 1. [下载 qrsync 工具](http://docs.qiniu.com/tools/v6/qrsync.html)。根据操作系统下载特定的包，并解压。

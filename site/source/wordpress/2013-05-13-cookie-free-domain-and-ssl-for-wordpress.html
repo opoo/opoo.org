@@ -7,7 +7,7 @@ date: '2013-05-13 00:15:54'
 link: http://opoo.org/cookie-free-domain-and-ssl-for-wordpress/
 post_id: 323
 url: '/cookie-free-domain-and-ssl-for-wordpress/'
-excerpt: "<p>最近在配置 WordPress 的过程中，笔者希望可以做到以下几点：<ol>	<li><span style='line-height: 14px;'>使用 cookie-free 域来访问静态文件，主要是 css，js，图片等，大多位于 wp-content 目录。</span></li>	<li><span style='line-height: 14px;'>给网站配置 SSL 证书，使得网站既可以通过 HTTP 访问，也可以通过 HTTPS 访问。</span></li>	<li><span style='line-height: 14px;'>在通过 HTTPS   访问网站时，不应该出现网页中既包含安全内容也包含不安全内容（及混合内容）的警告，即此时所有引用资源都应该是 HTTPS 协议访问的。</span></li>	<li>不希望通过目录级配置文件 .htaccess 文件来实现 WordPress 的固定链接，因为启用 .htaccess 会降低 Apache 的性能。</li></ol>下面具体说明如何达到这些目标。"
+excerpt: "<p>最近在配置 WordPress 的过程中，笔者希望可以做到以下几点：<ol>	<li>使用 cookie-free 域来访问静态文件，主要是 css，js，图片等，大多位于 wp-content 目录。</li>	<li>给网站配置 SSL 证书，使得网站既可以通过 HTTP 访问，也可以通过 HTTPS 访问。</li>	<li>在通过 HTTPS   访问网站时，不应该出现网页中既包含安全内容也包含不安全内容（及混合内容）的警告，即此时所有引用资源都应该是 HTTPS 协议访问的。</li>	<li>不希望通过目录级配置文件 .htaccess 文件来实现 WordPress 的固定链接，因为启用 .htaccess 会降低 Apache 的性能。</li></ol>下面具体说明如何达到这些目标。"
 categories: [website]
 tags: [cookie-free, Apache, SSL, WordPress]
 description: "本文重要介绍：为 WordPress 配置 cookie-free 域；为 WordPress 配置 SSL 证书；修改相应的配置文件使得 WordPress 可以同时通过 HTTP 和 HTTPS 访问，并且在 HTTPS 访问时不出现混合内容的警告。"
@@ -15,9 +15,9 @@ keywords: "WordPress, SSL, cookie-free domains, Apache"
 ---
 <p>最近在配置 WordPress 的过程中，笔者希望可以做到以下几点：
 <ol>
-	<li><span style="line-height: 14px;">使用 cookie-free 域来访问静态文件，主要是 css，js，图片等，大多位于 wp-content 目录。</span></li>
-	<li><span style="line-height: 14px;">给网站配置 SSL 证书，使得网站既可以通过 HTTP 访问，也可以通过 HTTPS 访问。</span></li>
-	<li><span style="line-height: 14px;">在通过 HTTPS   访问网站时，不应该出现网页中既包含安全内容也包含不安全内容（及混合内容）的警告，即此时所有引用资源都应该是 HTTPS 协议访问的。</span></li>
+	<li>使用 cookie-free 域来访问静态文件，主要是 css，js，图片等，大多位于 wp-content 目录。</li>
+	<li>给网站配置 SSL 证书，使得网站既可以通过 HTTP 访问，也可以通过 HTTPS 访问。</li>
+	<li>在通过 HTTPS   访问网站时，不应该出现网页中既包含安全内容也包含不安全内容（及混合内容）的警告，即此时所有引用资源都应该是 HTTPS 协议访问的。</li>
 	<li>不希望通过目录级配置文件 .htaccess 文件来实现 WordPress 的固定链接，因为启用 .htaccess 会降低 Apache 的性能。</li>
 </ol>
 下面具体说明如何达到这些目标。
@@ -30,11 +30,11 @@ keywords: "WordPress, SSL, cookie-free domains, Apache"
 <!--more-->
 关于a)：笔者选择 opoo.org 作为主域，www.opoo.org 作为 cookie-free 域，因为笔者申请的 StartSSL 的证书只支持这两个域，如果读者有其它支持 HTTPS 的域，也可以选择来做 cookie-free 的域。
 
-<p>关于b)：笔者主要对 wp-content 目录下的内容做 cookie-free 处理。<span style="line-height: 1.714285714; font-size: 1rem;">修改 </span><code style="line-height: 1.714285714;">wp-config.php</code><span style="line-height: 1.714285714; font-size: 1rem;"> 文件，添加以下一行</span>
+<p>关于b)：笔者主要对 wp-content 目录下的内容做 cookie-free 处理。修改 <code>wp-config.php</code> 文件，添加以下一行
 <pre class="brush:php">define('WP_CONTENT_URL', 'http://www.opoo.org/wp-content');</pre>
 <strong>好处：</strong>
 <ol>
-	<li><span style="line-height: 14px;">在通过 HTTPS 协议访问主域时，WordPress 会自动将 WP_CONTENT_URL 也变成 https 协议，即变成 <code><strong>https</strong>://www.opoo.org/wp-content</code>;</span></li>
+	<li>在通过 HTTPS 协议访问主域时，WordPress 会自动将 WP_CONTENT_URL 也变成 https 协议，即变成 <code><strong>https</strong>://www.opoo.org/wp-content</code>;</li>
 	<li>WordPress 大部分的静态内容都在这个目录下，包括文章上传的图片、主题、插件等。这样，一个 WordPress 的大部分静态资源都已经 cookie-free 了。</li>
 </ol>
 <strong>坏处：</strong>
@@ -43,7 +43,7 @@ keywords: "WordPress, SSL, cookie-free domains, Apache"
 
 <p>主题、插件目录中除了静态文件，还有部分 php 文件。这些 php 文件在调用时 url 也变成了 http://www.opoo.org/wp-content/.../x.php 的形式，如果 php 文件运行时需要主域的 cookie，就会出错。
 
-<p>笔者目前发现<span style="line-height: 14px;">语法高亮插件 Syntax Highlighter ComPress 就有这个问题，它在后台管理时通过 cookie-free 域访问了一个 php 文件，由于拿不到 Cookie 信息，该 php 直接返回一个错误信息。</span>
+<p>笔者目前发现语法高亮插件 Syntax Highlighter ComPress 就有这个问题，它在后台管理时通过 cookie-free 域访问了一个 php 文件，由于拿不到 Cookie 信息，该 php 直接返回一个错误信息。
 
 <p>解决这个问题的办法是通过 Rewrite 规则重写，将所有的 <strong>php 文件</strong>或者 <strong>非 wp-content 目录</strong>下的文件的访问都转发回主域。
 <pre class="brush:plain"># cookie-free 域下所有的 php 访问转发回主域
@@ -111,7 +111,9 @@ Listen 443
 <h2>3. HTTPS 访问时的混合内容警告及其它</h2>
 a) 混合内容警告
 
-<p>如果网站是通过 HTTPS 访问的，而网页中引用了其它 HTTP 协议访问的资源时，就会出现混合内容的警告，在谷歌浏览器下显示成这样：<a href="http://www.opoo.org/wp-content/uploads/2013/05/ssl.mixed_.content.png"><img class="alignnone size-full wp-image-335" alt="ssl.mixed.content" src="//www.opoo.org/wp-content/uploads/2013/05/ssl.mixed_.content.png" width="135" height="23" /></a>，点开小三角可以看见一段描述“但是，此网页中包含其他不安全的资源”。而引用资源也全部是 https 时，则显示成这样：<a href="http://www.opoo.org/wp-content/uploads/2013/05/ssl.good_.png"><img class="alignnone size-full wp-image-336" alt="ssl.good" src="//www.opoo.org/wp-content/uploads/2013/05/ssl.good_.png" width="128" height="23" /></a>。
+<p>如果网站是通过 HTTPS 访问的，而网页中引用了其它 HTTP 协议访问的资源时，就会出现混合内容的警告，在谷歌浏览器下显示成这样：
+<a href="/wp-content/uploads/2013/05/ssl.mixed_.content.png"><img class="alignnone size-full wp-image-335" alt="ssl.mixed.content" src="/wp-content/uploads/2013/05/ssl.mixed_.content.png" width="135" height="23" /></a>
+点开小三角可以看见一段描述“但是，此网页中包含其他不安全的资源”。而引用资源也全部是 https 时，则显示成这样：<a href="/wp-content/uploads/2013/05/ssl.good_.png"><img class="alignnone size-full wp-image-336" alt="ssl.good" src="/wp-content/uploads/2013/05/ssl.good_.png" width="128" height="23" /></a>
 
 <p>混合内容在 IE 下会导致浏览器直接弹出一个警告框“本页不但包含安全的内容，也包含不安全的内容。是否显示不安全的内容？”，必须选择是才能访问。
 

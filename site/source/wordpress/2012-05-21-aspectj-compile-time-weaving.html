@@ -207,7 +207,7 @@ public aspect SampleAspect{
 <p>然后通过 mvn 编译
 <pre>mvn test-compile</pre>
 编译后查看 target\classes 目录中的字节码文件，可以发现，SampleAspect.aj 也被编译成了 java 字节码。在编译过程中的输出信息可以看出切点织入情况：
-<pre>[INFO] Join point 'method-execution(int org.opoo.samples.aspectj.SampleServiceImpl.add(int, int))' in Type 'org.opoo.samples.aspectj.SampleServiceImpl' (SampleServiceImpl.java:23) advised by around advice from 'org.opoo.samples.aspectj.SampleAspect' (SampleAspect.aj:30)
+<pre class="brush:plain">[INFO] Join point 'method-execution(int org.opoo.samples.aspectj.SampleServiceImpl.add(int, int))' in Type 'org.opoo.samples.aspectj.SampleServiceImpl' (SampleServiceImpl.java:23) advised by around advice from 'org.opoo.samples.aspectj.SampleAspect' (SampleAspect.aj:30)
 [INFO] Join point 'method-execution(int org.opoo.samples.aspectj.SampleServiceImpl.add(int, int))' in Type 'org.opoo.samples.aspectj.SampleServiceImpl' (SampleServiceImpl.java:23) advised by after advice from 'org.opoo.samples.aspectj.SampleAspect' (SampleAspect.aj:41)
 [INFO] Join point 'method-execution(java.lang.String org.opoo.samples.aspectj.SampleServiceImpl.getPassword(java.lang.String))' in Type 'org.opoo.samples.aspectj.SampleServiceImpl' (SampleServiceImpl.java:31) advised by after advice from 'org.opoo.samples.aspectj.SampleAspect' (SampleAspect.aj:41)
 [INFO] Join point 'method-execution(java.lang.String org.opoo.samples.aspectj.SampleServiceImpl.getPassword(java.lang.String))' in Type 'org.opoo.samples.aspectj.SampleServiceImpl' (SampleServiceImpl.java:31) advised by before advice from 'org.opoo.samples.aspectj.SampleAspect' (SampleAspect.aj:54)</pre>
@@ -217,7 +217,7 @@ public aspect SampleAspect{
 
 <p>为了有个更直观的印象，我们可以反编译类 SampleServiceImpl 来看看字节码中的切面织入情况。这里我们使用 <a title="JAD Download" href="http://www.varaneckas.com/jad/" target="_blank">jad</a> 作为反编译工具，命令如下（在项目根目录即 pom.xml 文件所在目录执行）：
 <pre>d:\path-to-jad\jad.exe -sjava -o -r -ff -d target\src target\classes\**\*.class</pre>
-查看 target\src 目录反编译出的 <a title="SampleServiceImpl反编译后的Java代码" href="http://www.opoo.org/wp-content/uploads/aspectj-sample/SampleServiceImpl.java" target="_blank">SampleServiceImpl.java</a> 文件，部分代码如下：
+查看 target\src 目录反编译出的 <a title="SampleServiceImpl反编译后的Java代码" href="/wp-content/uploads/aspectj-sample/SampleServiceImpl.java" target="_blank">SampleServiceImpl.java</a> 文件，部分代码如下：
 <pre class="brush:java">public class SampleServiceImpl implements SampleService
 {
     public int add(int x, int y)
@@ -238,17 +238,19 @@ public aspect SampleAspect{
         return k;
     }
     //...</pre>
-可以看出，字节码中已经织入了我们所定义的切面。
+<p>可以看出，字节码中已经织入了我们所定义的切面。
 
 <p><strong>编译时织入总结</strong>
-优点：
+
+<p>优点：
 <ol>
 	<li> 由于将切面直接编译进了字节码，所以运行时不再需要动态创建代理对象，节约了内存呢和 CPU 消耗；</li>
 	<li> 通过AspectJ，方法被织入了切面后，方法上的 Annotation 还是有效的，因为对象类型没有变。而动态代理可能会以代理类替代原类型，也就失去了 Annotation。</li>
 </ol>
-缺点：
+
+<p>缺点：
 <ol>
 	<li>编写 aspect 文件有一定的难度；</li>
-	<li>编译过程稍显复杂（借助工具可简化：Eclipse AJDT, maven aspectj插件等）。</li>
+	<li>编译过程稍显复杂（借助工具可简化：Eclipse AJDT, Maven AspectJ 插件等）。</li>
 </ol>
 <strong><a title="Download AspectJ sample from SourceForge.net" href="https://sourceforge.net/projects/opoo/files/samples/aspectj-sample.zip/download" target="_blank">完整示例代码下载</a></strong>

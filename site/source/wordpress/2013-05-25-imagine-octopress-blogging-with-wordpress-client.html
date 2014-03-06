@@ -40,7 +40,7 @@ keywords: "WordPress, Octopress, WordPress XML-RPC, Jekyll, ruhoh, Pelican, JBak
 
 <p>笔者的构想就是直接利用 WordPress 的客户端来发布静态博客。
 
-<p><span style="line-height: 1.714285714; font-size: 1rem;">WordPress 使用了 </span><a style="line-height: 1.714285714; font-size: 1rem;" title="http://www.xmlrpc.com/" href="http://www.xmlrpc.com/" target="_blank">XML-RPC</a><span style="line-height: 1.714285714; font-size: 1rem;"> （XML远程过程调用）接口，目前支持 </span><a style="line-height: 1.714285714; font-size: 1rem;" title="http://www.blogger.com/developers/api/" href="http://www.blogger.com/developers/api/">Blogger API</a><span style="line-height: 1.714285714; font-size: 1rem;">，</span><a style="line-height: 1.714285714; font-size: 1rem;" title="http://www.xmlrpc.com/metaWeblogApi" href="http://www.xmlrpc.com/metaWeblogApi">metaWeblog API</a><span style="line-height: 1.714285714; font-size: 1rem;">，以及 </span><a style="line-height: 1.714285714; font-size: 1rem;" title="http://www.sixapart.com/developers/xmlrpc/movable_type_api/" href="http://www.sixapart.com/developers/xmlrpc/movable_type_api/">Movable Type API</a><span style="line-height: 1.714285714; font-size: 1rem;">.。并且在 Movable Type API 的基础上做了一些扩展，形成了一个新的 API，叫着 </span><a title="http://codex.wordpress.org/XML-RPC_WordPress_API" href="http://codex.wordpress.org/XML-RPC_WordPress_API">WordPress API</a>。
+<p>WordPress 使用了 <a title="http://www.xmlrpc.com/" href="http://www.xmlrpc.com/" target="_blank">XML-RPC</a> （XML远程过程调用）接口，目前支持 <a title="http://www.blogger.com/developers/api/" href="http://www.blogger.com/developers/api/">Blogger API</a>，<a title="http://www.xmlrpc.com/metaWeblogApi" href="http://www.xmlrpc.com/metaWeblogApi">metaWeblog API</a>，以及 <a  title="http://www.sixapart.com/developers/xmlrpc/movable_type_api/" href="http://www.sixapart.com/developers/xmlrpc/movable_type_api/">Movable Type API</a>.。并且在 Movable Type API 的基础上做了一些扩展，形成了一个新的 API，叫着 <a title="http://codex.wordpress.org/XML-RPC_WordPress_API" href="http://codex.wordpress.org/XML-RPC_WordPress_API">WordPress API</a>。
 
 <p>WordPress 的客户端（PC，Android版，iOS版）基本都是根据这些 API 规范来开发的，所有的调用都通过 XML-RPC 进行的，其服务端文件是 xmlrpc.php。在浏览器中直接调用会返回
 <pre>XML-RPC server accepts POST requests only.</pre>
@@ -84,7 +84,7 @@ struct content
         string type</pre>
 在 XML-RPC Server 中，wp.newPost 方法的大致处理流程如下：
 <ul>
-	<li><span style="line-height: 14px;">保存参数中与 Octopress 兼容的属性到新文件 ${'$'}OCTOPRESS_HOME/source/_posts/${'$'}{post_date}-${'$'}{post-name}.markdown</span></li>
+	<li>保存参数中与 Octopress 兼容的属性到新文件 ${'$'}OCTOPRESS_HOME/source/_posts/${'$'}{post_date}-${'$'}{post-name}.markdown</li>
 	<li>生成 post_id</li>
 	<li>将 post_id 和其它不兼容的属性持久化存储到文件或者数据库中</li>
 	<li>调用 <code>Octopress</code> 的 rake deploy 指令生成静态博客内容并发布</li>
@@ -107,7 +107,7 @@ int post_id
 array fields: Optional. List of field or meta-field names to include in response.</pre>
 在 XML-RPC Server 中，wp.getPost 方法的大致处理流程如下
 <ul>
-	<li><span style="line-height: 14px;">根据 post_id 从持久化对象（文件或者数据库）中查找文章信息</span></li>
+	<li>根据 post_id 从持久化对象（文件或者数据库）中查找文章信息</li>
 	<li>根据文章信息定位到文章的 markdown 文件</li>
 	<li>组合文章信息和 markdown 文件的内容，生成 WordPress 客户端所需格式的数据，返回给客户端。</li>
 </ul>
@@ -145,4 +145,4 @@ array fields: Optional. List of field or meta-field names to include in response
 	<li>客户端即进入了博客的管理界面</li>
 	<li>(待续)</li>
 </ol>
-<p style="text-align: center;"><a href="http://www.opoo.org/wp-content/uploads/2013/05/wordpress.for_.android.mainui.png"><img class="aligncenter size-full wp-image-343" alt="wordpress.for.android.mainui" src="//www.opoo.org/wp-content/uploads/2013/05/wordpress.for_.android.mainui.png" width="485" height="760" /></a></p>
+<p style="text-align: center;"><a href="/wp-content/uploads/2013/05/wordpress.for_.android.mainui.png"><img class="aligncenter size-full wp-image-343" alt="wordpress.for.android.mainui" src="/wp-content/uploads/2013/05/wordpress.for_.android.mainui.png" width="485" height="760" /></a></p>

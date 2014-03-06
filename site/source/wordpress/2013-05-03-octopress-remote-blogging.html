@@ -170,7 +170,7 @@ Python 版本 ≥ 2.4 (including Python 3.x)</pre>
 #cd pyinotify
 #python setup.py install</pre>
 <h2>5. 编写 octowatcher 程序</h2>
-<span style="line-height: 1.714285714; font-size: 1rem;">安装完 Pyinotify 后我们写一个 Python 脚本来监听 </span><code style="line-height: 1.714285714;">Octopress</code><span style="line-height: 1.714285714; font-size: 1rem;"> 相应目录的变化，这个脚本笔者称之为 octowatcher。这个是笔者<strong>自定义工作流程的核心</strong>部分。</span>
+安装完 Pyinotify 后我们写一个 Python 脚本来监听 <code>Octopress</code> 相应目录的变化，这个脚本笔者称之为 octowatcher。这个是笔者<strong>自定义工作流程的核心</strong>部分。
 
 <p>脚本路径 /root/octowatcher.py
 <pre class="brush:py">#!/usr/bin/python
@@ -318,7 +318,7 @@ Successfully generated site: source -&gt; public</pre>
 <h2>6. 检查 Linux 服务</h2>
 通过 shutdown -r now 重启操作系统，然后通过 ps -aux 查看系统进程中有没有 Dropbox 和 octowatcher 进程。
 
-<p><a href="http://www.opoo.org/wp-content/uploads/2013/05/octopress.buildserver.process.list_.png"><img class="alignnone size-medium wp-image-271" alt="octopress.buildserver.process.list" src="//www.opoo.org/wp-content/uploads/2013/05/octopress.buildserver.process.list_-300x58.png" width="300" height="58" /></a>
+<p><a href="/wp-content/uploads/2013/05/octopress.buildserver.process.list_.png"><img class="alignnone size-medium wp-image-271" alt="octopress.buildserver.process.list" src="/wp-content/uploads/2013/05/octopress.buildserver.process.list_-300x58.png" width="300" height="58" /></a>
 
 <p>也可以通过 service dropboxd status 和 service octowatcher status 查看服务状态。
 <h1>五、撰写环境（远程客户端）</h1>
@@ -326,13 +326,13 @@ Successfully generated site: source -&gt; public</pre>
 
 <p>在手机上安装 Dropbox 客户端，登录打开 octopress_source 目录，在 _posts 目录中编写文章，写完后修改一下 trigger.txt。然后查看服务器上的文件是不是更新了。
 
-<p><a href="http://www.opoo.org/wp-content/uploads/2013/05/Screenshot_dropbox.png"><img class="alignnone size-medium wp-image-272" alt="Screenshot_dropbox" src="//www.opoo.org/wp-content/uploads/2013/05/Screenshot_dropbox-180x300.png" width="180" height="300" /></a>
+<p><a href="/wp-content/uploads/2013/05/Screenshot_dropbox.png"><img class="alignnone size-medium wp-image-272" alt="Screenshot_dropbox" src="/wp-content/uploads/2013/05/Screenshot_dropbox-180x300.png" width="180" height="300" /></a>
 <h1>六、实例</h1>
 笔者是在一台 VPS 安装配置了 <code>Octopress</code> 的构建环境，配置了 Dropbox 和 octowatcher 服务。并修改 _config.yml 使 destination 属性直接指向了 Apache 的 DocumentRoot 中的一个子目录 /var/www/html/octo。
 
 <p>示例见 <a href="http://www.alexcn.com/" target="_blank">http://www.alexcn.com/</a> 。
 
-<p>文中提到的各个脚本<a href="http://www.opoo.org/wp-content/uploads/2013/05/dropbox-octowatcher.zip">打包下载</a>。
+<p>文中提到的各个脚本<a href="/wp-content/uploads/2013/05/dropbox-octowatcher.zip">打包下载</a>。
 <ul>
 	<li>/etc/init.d/dropboxd</li>
 	<li>/etc/init.d/octowatcher</li>

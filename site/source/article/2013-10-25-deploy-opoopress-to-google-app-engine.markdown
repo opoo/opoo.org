@@ -63,7 +63,7 @@ handlers:
 
 ![Google App Engine Launcher Snapshot](//opoo.org/wp-content/uploads/2013/google-app-engine-launcher.png)
 
-打开菜单 File -> Add Existing Application...，选择 OpooPress 博客的生成目录，即可将博客站点添加进来。之后就可以点击 `Run` 按钮运行站点，进行阅览，或者直接点击 `Deploy` 按钮将博客站点发布到 GAE 上。
+打开菜单 File -> Add Existing Application...，选择 OpooPress 博客的生成目录（例如 `D:\myblog\target\public\site`），即可将博客站点添加进来。之后就可以点击 `Run` 按钮运行站点，进行阅览，或者直接点击 `Deploy` 按钮将博客站点发布到 GAE 上。
 
 ## 通过 Git 客户端发布
 

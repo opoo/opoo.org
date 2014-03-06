@@ -7,7 +7,7 @@ date: '2013-04-19 00:09:37'
 link: http://opoo.org/how-to-deploy-multiple-websites-on-godaddy-economy-hosting/
 post_id: 248
 url: '/how-to-deploy-multiple-websites-on-godaddy-economy-hosting/'
-excerpt: "<p>Economy 型主机是 Godaddy 最便宜的主机，最近的优惠价格是首年 12 美金，送一个免费域名。<p><span style='line-height: 1.714285714; font-size: 1rem;'>这个类型的基本配置是无限带宽，100GB空间，10个数据库，1个站点。</span><p>这篇文章将主要讨论这<strong>1个站点</strong>有关的内容。"
+excerpt: "<p>Economy 型主机是 Godaddy 最便宜的主机，最近的优惠价格是首年 12 美金，送一个免费域名。<p>这个类型的基本配置是无限带宽，100GB空间，10个数据库，1个站点。<p>这篇文章将主要讨论这<strong>1个站点</strong>有关的内容。"
 categories: [website]
 tags: [economy, Godaddy, web host]
 description: "本文主要描述 Godaddy Economy 型主机如何通过 htaccess 文件实现部署多个站点。"
@@ -15,7 +15,7 @@ keywords: "Godaddy Economy, Web Hosting, htaccess, Apache Rewrite"
 ---
 <p>Economy 型主机是 Godaddy 最便宜的主机，最近的优惠价格是首年 12 美金，送一个免费域名。
 
-<p><span style="line-height: 1.714285714; font-size: 1rem;">这个类型的基本配置是无限带宽，100GB空间，10个数据库，1个站点。</span>
+<p>这个类型的基本配置是无限带宽，100GB空间，10个数据库，1个站点。
 
 <p>这篇文章将主要讨论这<strong>1个站点</strong>有关的内容。
 
@@ -35,8 +35,8 @@ keywords: "Godaddy Economy, Web Hosting, htaccess, Apache Rewrite"
 </ul>
 我们可以利用在 <code>.htaccess</code> 文件中使用 rewrite 指令达到这个目的。
 <ol>
-	<li><span style="line-height: 1.714285714; font-size: 1rem;">在主机管理界面中选择 Hosted D</span><span style="line-height: 1.714285714; font-size: 1rem;">omains，添加 a.com, b.com 都指向空间的根目录（实际上也只能指向根目录）。</span></li>
-	<li><span style="line-height: 1.714285714; font-size: 1rem;">在您自己的域名管理中，将 a.com, b.com 的 A 记录都指向空间提供的 IP 地址（在 Hosting 管理页面的右边栏 “Server Details” 可以看到这个 “IP ADDRESS”）。如果还要绑定子域名，在这里一块儿都添加了吧。可以设置 www.a.com 的 CNAME 到 a.com。</span></li>
+	<li>在主机管理界面中选择 Hosted Domains，添加 a.com, b.com 都指向空间的根目录（实际上也只能指向根目录）。</li>
+	<li>在您自己的域名管理中，将 a.com, b.com 的 A 记录都指向空间提供的 IP 地址（在 Hosting 管理页面的右边栏 “Server Details” 可以看到这个 “IP ADDRESS”）。如果还要绑定子域名，在这里一块儿都添加了吧。可以设置 www.a.com 的 CNAME 到 a.com。</li>
 	<li>在网站的根目录下创建 <code>.htaccess</code> 文件，内容如下：
 <pre class="brush:text">&lt;IfModule mod_rewrite.c&gt;
    RewriteEngine on
@@ -71,7 +71,7 @@ keywords: "Godaddy Economy, Web Hosting, htaccess, Apache Rewrite"
 
 <p>对于有“洁癖”的人来说不是一个好消息，就拿我们的例子来说，假设存在文件 /a/index.txt，那么我们希望的访问方式是 http://a.com/index.txt，这没有问题，但实际上通过 http://a.com/a/index.txt 也能访问同一个文件。
 
-<p>这是因为 http://a.com/ 实际上是指向 WEB 根目录（/）的，而 a/ 是 WEB 根目录中的一个子目录，从重新规则 <code style="line-height: 1.714285714;">RewriteCond %{REQUEST_URI} !^/a/</code><span style="line-height: 1.714285714; font-size: 1rem;">可以看出重写时排出了这个目录，所以上述的 URL 是可访问的。</span>
+<p>这是因为 http://a.com/ 实际上是指向 WEB 根目录（/）的，而 a/ 是 WEB 根目录中的一个子目录，从重新规则 <code style="line-height: 1.714285714;">RewriteCond %{REQUEST_URI} !^/a/</code>可以看出重写时排出了这个目录，所以上述的 URL 是可访问的。
 
 <p>为什么在重新规则中必须排出对 /a/ 目录的重写呢？因为 .htaccess 对当前目录及其所有下级目录都是有效的，如果 /a/ 进行了重写，那么在访问 /a/index.txt 时，根据 /a/ 上级目录 / 中的 .htaccess 的规则，重写 (.*) 到 /a/${'$'}1 即 /a/index.txt -&gt; /a/a/index.txt，然后依次类推  /a/a/index.txt  -&gt; /a/a/a/index.txt -&gt; ... ，将形成一个嵌套死循环。
 
