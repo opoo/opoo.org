@@ -1,8 +1,4 @@
-<section>
-  <h1>关于作者</h1>
-  <ul id="about_section">
-	<li>GitHub: <a href="https://github.com/opoo" target="_blank">@opoo</a></li>
-	<li>Twitter: <a href="https://twitter.com/alexlincn" target="_blank">@alexlincn</a></li>
-	<li>Email: opoo#users.sf.net</li>
-  </ul>
-</section>
+<div class="tp-about-author tp-box">
+	<div class="header">主题</div>
+    <p>当前博客由 <a href="http://www.opoopress.com/" target="_blank">OpooPress 静态博客生成器</a> 生成，并使用了自定义的主题。</p>
+</div>

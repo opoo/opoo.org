@@ -1,7 +1,5 @@
-<section>
-  <h1><@i18n.msg "Recent Posts"/></h1>
-  <ul id="recent_posts">
-  
+<div class="tp-box-content">
+    <div class="tp-box"><h3><@i18n.msg "Recent Posts"/></h3>
     <#if (site.posts?size <= site.recent_posts)>
 	  <#assign recent_posts = site.posts >
 	<#else>
@@ -9,9 +7,14 @@
     </#if>
   
     <#list recent_posts as post>
-      <li class="post">
+
+    <div class="sidebar-link">
         <a href="${ root_url }${ post.url }">${titlecase(post.title)}</a>
-      </li>
+        <div class="source">
+        <time datetime="${post.date?datetime?iso_local}">${post.date?string("yyyy-MM-dd")}</time>
+        </div>
+    </div>
     </#list>
-  </ul>
-</section>
+    </div>            
+</div>
+

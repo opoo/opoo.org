@@ -5,6 +5,7 @@ User-agent: *
 Disallow: /sitemap.xml
 Disallow: /tag/
 Disallow: /category/
+Disallow: /archives/
 Disallow: /joqs/apidocs/
 Disallow: /atom.xml
 

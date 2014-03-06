@@ -1,6 +1,7 @@
 <#if site.disqus_short_name??>
-<section>
-  <h2><@i18n.msg "Recent Comments"/></h2>
+<div class="tp-box-content">
+    <div class="tp-box">
+    <h3><@i18n.msg "Recent Comments"/></h3>
   <script language="JavaScript">
   <!--
 	var is_https = ('https:' == document.location.protocol);
@@ -8,6 +9,10 @@
 	var rcw_script = '<scr' + 'ipt type="text/javascript" src="' + rcw_script_src + '"></scr' + 'ipt>';
 	document.writeln(rcw_script);
   //-->
-  </script>
-</section>
+  </script>	
+	    <div>
+            <a href="${root_url}/comments/"><@s "More Comments..."/></a>
+        </div>
+    </div>
+</div>
 </#if>

@@ -67,6 +67,12 @@ email:
 
 # 如果发布到子目录如 http://site.com/project 则设置 'root: /project'
 root: /
+#logo_root: '//static.opoo.org/logo'
+#theme_root: '//static.opoo.org/themes/tp'
+#default_theme_root: '//static.opoo.org/themes/default'
+logo_root: '//dn-opstatic.qbox.me/logo'
+theme_root: '//dn-opstatic.qbox.me/themes/tp'
+default_theme_root: '//dn-opstatic.qbox.me/themes/default'
 
 # 固定链接支持的变量 ：
 # 		post 的 front-matter 头部变量 ，以及 ${year}, ${month}, ${day}, ${hour}, ${minute}, ${second}, ${name}, ${pathToFile}, ${fileName} 
@@ -75,6 +81,7 @@ permalink: /${name}/
 # permalink_label_feed: "&#9875; 固定链接"
 
 # 新建文章的文件全路径（相对于 source 目录），支持变量 : {year}, ${month}, ${day}, ${hour}, ${minute}, ${second}, ${name}, ${title}, ${date}
+#new_post: ../../site/source/article/${year}-${month}-${day}-${name}.markdown
 new_post: article/${year}-${month}-${day}-${name}.markdown
 
 # 新建页面的文件全路径（相对于 source 目录），支持变量  : ${year}, ${month}, ${day}, ${hour}, ${minute}, ${second}, ${name}, ${title}, ${date}
@@ -85,7 +92,8 @@ category_dir: /category
 
 # 分类目录名称与标题对照关系。通常名称用于组成 URL，小写切不含空格，标题则用于显示。
 # 未在此处指定的分类 OpooPress 会自行处理。
-category_names: {"opoopress": "OpooPress", "tech": "技术", tech.java: "Java", tech.maven: "Maven", "uncategorized": "未分类", "others":"杂项"}
+#category_names: {"opoopress": "OpooPress", "tech": "技术", tech.java: "Java", tech.maven: "Maven", "uncategorized": "未分类", "others":"杂项"}
+category_names: {website: 网站建设, tech: 编程开发, tech.java: Java, tech.maven: Maven, software: 软件应用, cloud: 云服务, weblog: 网络日志} 
 
 # Category title prefix.
 category_title_prefix: "分类: "
@@ -94,13 +102,27 @@ category_title_prefix: "分类: "
 tag_dir: /tag
 
 # 标签名称与标题对照关系。通常名称用于组成 URL，小写切不含空格，标题则用于显示。
-tag_names: {"opoopress": "OpooPress", "blog": "博客", "opensource": "开源", "plugins": "插件"}
+tag_names: 
+  "opoopress": "OpooPress"
+  "blog": "博客"
+  "opensource": "开源"
+  "plugins": "插件"
+  wordpress: WordPress
+  "front-end-optimization": "前端优化"
+  "web-fonts": "Web Fonts"
+  qiniudn: 七牛云存储
+  "social-sharing": 社会化分享
+  duoshuo: 多说
+  "cloud-storage": 云存储
 
 # 标签标题前缀
 tag_title_prefix: "标签："
 
 # 首页每页显示的文章数
-paginate: 10          		
+paginate: 10
+
+# 使用 Ajax load 的最大页数，超过该页数，将使用分页工具栏
+max_ajax_load_pages: 10
 
 # 要显示的最新文章数
 recent_posts: 7
@@ -118,14 +140,17 @@ excerpt_separator: "<!--more-->"
 titlecase: true
 
 # 主导航菜单
-navs: {"文章": "/", "归档": "/archives/", "开源": "/opensource/", "关于": "/about/"}
+#navs: {"文章": "/", "归档": "/archives/", "开源": "/opensource/", "关于": "/about/"}
+
+# 页面导航
+nav_pages: {"项目": "/opensource/", "关于": "/about/"}
 
 # 侧边栏默认包含的模板数组。
 # 被设置的模板片段应该位于  [模板路径]/asides 目录，例如 site/templates/asides 或者 site/source/_templates/asides.
-default_asides: [about.ftl, recent_posts.ftl, recent_comments.ftl, github.ftl, delicious.ftl, pinboard.ftl, googleplus.ftl, categories.ftl, tags.ftl]
+default_asides: [recent_posts.ftl, recent_comments.ftl, github.ftl, delicious.ftl, pinboard.ftl, googleplus.ftl, categories.ftl, tags.ftl]
 
 # 首页侧边栏包含的模板，未设置使用 default_asides
-# blog_index_asides:
+blog_index_asides: [about.ftl, github.ftl, delicious.ftl, pinboard.ftl, googleplus.ftl, categories.ftl, tags.ftl]
 # 文章页面侧边栏包含的模板，未设置使用 default_asides
 # post_asides:
 # 普通页面侧边栏包含的模板，未设置使用 default_asides
@@ -138,7 +163,7 @@ source_base_path: https://raw.github.com/opoo/opoo.org/master/site/source
 # ----------------------- #
 
 # Github repositories
-github_user:
+github_user: 
 github_repo_count: 0
 github_show_profile_link: false
 github_skip_forks: true
@@ -161,7 +186,7 @@ pinboard_user:
 pinboard_count: 3
 
 # Delicious
-delicious_user: 
+delicious_user:
 delicious_count: 3
 
 # Disqus Comments
@@ -173,7 +198,7 @@ google_analytics_tracking_id: "UA-30835382-1"
 google_analytics_tracking_domain: "none"
 
 # Facebook Like
-facebook_like: false
+facebook_like: true
 
 
 # ----------------------- #
@@ -213,6 +238,10 @@ generators:
 # SlugHelper
 slugHelper: org.opoo.press.slug.ChineseToPinyinSlugHelper
 
+relatedPostsFinder: org.opoo.press.impl.CosineSimilarityRelatedPostsFinder
+org.opoo.press.impl.CosineSimilarityRelatedPostsFinder.categories.rate: 1.2
+org.opoo.press.impl.CosineSimilarityRelatedPostsFinder.tags.rate: 1.0
+
 
 # ----------------------- #
 #   Code Block Settings   #
@@ -228,6 +257,5 @@ highlighter: "org.opoo.press.highlighter.SyntaxHighlighter"
 # ----------------------- #
 
 # auto_import_templates:{"ns" : "template_name.ftl", "ns2" : "template2_name.ftl"}
-# auto_include_templates: ["global_template1.ftl", "global_template2.ftl"]
-
+auto_include_templates: ["macros.ftl"]
 

@@ -1,15 +1,17 @@
 <#macro defaultLayout><#include "head.ftl">
-<body<#if page.body_id??> id="${page.body_id}</#if><#if page.sidebar?? && (page.sidebar?string == "false")> class="no-sidebar"</#if><#if ( (page.sidebar)?? && (page.sidebar?string == "collapse")) || ( (site.sidebar)?? && (site.sidebar?string == "collapse"))> class="collapse-sidebar sidebar-footer"</#if>>
-  <!--[if lt IE 9]><script src="${ root_url }/javascripts/unsupported-browser.js"></script><![endif]-->
-  <header role="banner"><#include "header.ftl"></header>
-  <nav role="navigation"><#include "navigation.ftl"></nav>
-  <div id="main">
-    <div id="content">
-      <#nested>
-    </div>
+ <body>
+  <div class="bg-container">
+    <span id="mobile_menu_link"><@i18n.msg "Menu"/></span>
+    <div class="container">
+  	  <#include "navbar.ftl">
+  	  <div id="content-wrapper">
+  	   	<#nested>
+  	  	<#include "footer.ftl">
+  	  </div>
+  	</div>
   </div>
-  <footer role="contentinfo"><#include "footer.ftl"></footer>
+  <#-- facebook like <div id="fb-root"></div> -->
   <#include "after_footer.ftl">
-</body>
+ </body>
 </html>
 </#macro>

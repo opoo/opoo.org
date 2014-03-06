@@ -1,0 +1,47 @@
+---
+layout: default
+pagetype: index
+url: '/comments/'
+---
+<div class="sidebar-wrapper clearfix">
+	<div class="pane content-pane main-body clearfix">
+		<#-- <h1 class="pane-header">博客</h1> -->
+		<#-- 
+		<div style="color: #999">
+			description
+		</div>
+		<br />
+
+		<form id="search-form" action="/search" method="GET">
+			<div class="input-append">
+				<input id="search-text" type="text" name="q" placeholder="Search for articles..." class="tp-search-full small-input" />
+				<button class="btn tp-search-submit" type="submit">Go!</button>
+			</div>
+		</form>
+		 -->
+
+		<ul id="algo-tabs" class="nav nav-tabs" style="margin-bottom: 0px; padding-top: 8px;">
+			<li class=""><a href="${root_url}/">近期文章</a></li>    
+			<li class="active"><a href="${root_url}/comments/">近期评论</a></li>    
+		</ul>
+		
+		<div>
+			<script language="JavaScript">
+			  <!--
+				var is_https = ('https:' == document.location.protocol);
+				var rcw_script_src = (is_https ? 'https:' : 'http:') + '//${site.disqus_short_name}.disqus.com/recent_comments_widget.js?num_items=15&excerpt_length=200&hide_avatars=' + (is_https ? '1' : '0&avatar_size=32');
+				var rcw_script = '<scr' + 'ipt type="text/javascript" src="' + rcw_script_src + '"></scr' + 'ipt>';
+				document.writeln(rcw_script);
+			  //-->
+			  </script>	
+			<div>
+				<!-- page -->
+			</div>
+		</div>
+	</div>
+
+	<!-- sidebar -->
+	<div id="sidebar" class="pane sidebar">
+		<#include "asides/blog_index_asides.ftl">
+	</div>
+</div>

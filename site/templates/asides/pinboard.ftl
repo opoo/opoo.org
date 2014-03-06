@@ -1,9 +1,11 @@
 <#if site.pinboard_user??>
-<section>
-  <h1>My Pinboard</h1>
-  <ul id="pinboard_linkroll">Fetching linkroll...</ul>
-  <p><a href="http://pinboard.in/u:${ site.pinboard_user }">My Pinboard Bookmarks &raquo;</a></p>
-</section>
+<div class="tp-box-content">
+    <div class="tp-box">
+    <h3>My Pinboard</h3>
+    <ul id="pinboard_linkroll">Fetching linkroll...</ul>
+    <p><a href="http://pinboard.in/u:${ site.pinboard_user }">My Pinboard Bookmarks &raquo;</a></p>
+    </div>
+</div>
 <script type="text/javascript">
   var linkroll = 'pinboard_linkroll'; //id target for pinboard list
   var pinboard_user = "${ site.pinboard_user }"; //id target for pinboard list
