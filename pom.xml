@@ -112,6 +112,7 @@
     	</profile>
 	</profiles>
 
+	<!--
 	<repositories>
 		<repository>
 			<id>sonatype-nexus-snapshots</id>
@@ -139,12 +140,15 @@
 			</snapshots>
 		</pluginRepository>
   	</pluginRepositories>
+	-->
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.skip>true</maven.test.skip>
 		<project.build.sourceVersion>1.6</project.build.sourceVersion>
         <project.build.targetVersion>1.6</project.build.targetVersion>
-        <opoopress.version>1.0.2-SNAPSHOT</opoopress.version>
+        <opoopress.version>1.0.3</opoopress.version>
+		<op.sass.compile.skip>true</op.sass.compile.skip>
+		<site>site</site>
 	</properties>
 </project>
