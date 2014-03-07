@@ -232,7 +232,8 @@ generators:
   - org.opoo.press.generator.CategoryGenerator
   - org.opoo.press.generator.TagGenerator
   
-# siteFilters:
+siteFilters: 
+  - org.opoo.website.plugin.ImgFinder
 #  - org.opoo.press.filter.SampleSiteFilter
 
 # SlugHelper
