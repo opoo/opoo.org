@@ -1,0 +1,83 @@
+---
+layout: post
+title: HTML5 Video
+date: '2014-03-13 12:55'
+comments: true
+published: true
+categories: [weblog]
+tags: [Video]
+url: '/html5-video/'
+snapshot: /wp-content/uploads/2014/game-of-thrones-160x160.jpg
+---
+
+<!-- 800 124 -->
+<a href="//upload.wikimedia.org/wikipedia/commons/2/2e/Game_of_Thrones_2011_logo.svg" target="_blank"><img alt="Game of Thrones" src="//upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Game_of_Thrones_2011_logo.svg/800px-Game_of_Thrones_2011_logo.svg.png" width="600" height="93" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Game_of_Thrones_2011_logo.svg/1200px-Game_of_Thrones_2011_logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Game_of_Thrones_2011_logo.svg/1600px-Game_of_Thrones_2011_logo.svg.png 2x" /></a>
+
+《权力的游戏》（英文：Game of Thrones）是一部中世纪史诗奇幻题材的电视连续剧。该剧以美国作家乔治·R·R·马丁的奇幻巨作《冰与火之歌》系列为基础改编创作，由大卫·贝尼奥夫和丹尼尔·威斯（D. B. Weiss）编剧、HBO有线电视联播网推出。小说和电视剧都非常精彩，是笔者最喜欢的影视、小说作品之一。
+
+[电视剧《权力的游戏》](http://www.hbo.com/#/game-of-thrones/index.html)第四季将于美国时间2014年4月6日开播。先来看看预告片。
+
+<!--more-->
+
+<p><video width='640' height='360' preload='none' controls poster='/wp-content/uploads/2014/s-4-trailer-1-640.jpg'>
+<source src='/wp-content/uploads/2014/game-of-thrones-season-4-trailer-1.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/></video></p>
+
+
+另一部值得期待的电影是[《Sin City 2: A Dame to Kill For》](http://sincity-2.com/)，将于2014年8月22日上映，估计在国内影院是看不到了！还是先看看海报和预告片吧。
+
+![Sin City 2: A Dame to Kill For poster](/wp-content/uploads/2014/sin-city-2-poster.jpg)
+
+![Sin City 2: A Dame to Kill For poster](/wp-content/uploads/2014/Sin_City_A_Dame_to_Kill_For.jpg)
+
+
+《Sin City 2》预告片
+
+<p><video width='640' height='360' preload='none' controls poster='/wp-content/uploads/2014/sin-city-a-dame-to-kill-for-640x360.jpg'>
+<source src='/wp-content/uploads/2014/sin-city-a-dame-to-kill-for-official-trailer-1-2014.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
+</video></p>
+
+
+## 是不是跑题了？
+—— *闹太套！*
+
+本文中的视频正是使用了 HTML5 Video 的标签格式，Chrome 支持该格式。
+```html
+<video width='640' height='360' preload='none' controls poster='http://domain/path/to/poster.jpg'>
+<source src='http://domain/path/to/video.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
+</video>
+```
+
+对于不支持 HTML5 Video 标签的浏览器（例如老版本的 IE），OpooPress 通过 JavaScript 使用 [JW Player](http://www.jwplayer.com/) 控件来替换 Video 标签，使得视频可以正常播放。
+
+```js
+var flashplayerlocation = i.rootUrl + "/assets/jwplayer/player.swf";
+var flashplayerskin = i.rootUrl + "/assets/jwplayer/glow/glow.xml";
+$('video').each(function(i, video){
+	video = $(video);
+	//Modernizr and swfobject are required
+	if (!Modernizr.video.h264 && swfobject.getFlashPlayerVersion() || window.location.hash.indexOf("flash-test") !== -1){
+		//.map() not work in IE8
+		//video.children('source[src$=mp4]').first().map(i, function(source){
+		var xx =  video.children('source[src$=mp4]').first();
+		var src = xx.attr('src'),
+		id = 'video_'+Math.round(1 + Math.random()*(100000)),
+		width = video.attr('width'),
+		height = parseInt(video.attr('height'), 10) + 30;
+		video.after('<div class="flash-video"><div><div id='+id+'>');
+		swfobject.embedSWF(flashplayerlocation, id, width, height + 30, "9.0.0",  
+			{ file : src, image : video.attr('poster'), skin : flashplayerskin } , 
+			{ movie : src, wmode : "opaque", allowfullscreen : "true" });
+		video.remove();
+	}
+});
+```
+这段脚本在文件 opoopress.min.js 中，脚本经过了压缩。
+
+类似功能可参考 GitHub 中的项目 html5media。
+
+## 提示
+
+点击本文开头的 [Game of Thrones 图标](//upload.wikimedia.org/wikipedia/commons/2/2e/Game_of_Thrones_2011_logo.svg)可以打开一个 SVG 格式的矢量图，支持无限缩放。当然，不是所有浏览器都支持。如下图，不支持SVG格式的浏览器会显示一个“叉”。
+
+![OpooPress logo - SVG](//static.opoo.org/oplogo/opoopress.svg)
+
