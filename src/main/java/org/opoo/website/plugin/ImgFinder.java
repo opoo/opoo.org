@@ -28,6 +28,13 @@ public class ImgFinder extends SiteFilterAdapter implements SiteFilter {
 	 */
 	@Override
 	public void postConvertPost(Site site, Post post) {
+		String snapshot = (String) post.get("snapshot");
+		if(StringUtils.isNotBlank(snapshot)){
+			System.out.println("文章【" + post.getTitle() + "】使用 Snapshot 作为第一张图：" + snapshot);
+			post.set("first_img_src", snapshot);
+			return;
+		}
+
 		//String htmlStr = findHtmlStr(post.getContent());
 		String firstImgStr = getFirstImgStr(post.getContent());
 		
