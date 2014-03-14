@@ -8,6 +8,7 @@ description: "OpooPress 作为一个静态博客，可部署的环境非常之�
 categories: [website]
 tags: [OpooPress, qiniudn]
 url: '/deploy-opoopress-to-qiniu/'
+snapshot: '/wp-content/uploads/2014/qiniu-100x100.png'
 ---
 [OpooPress](http://www.opoopress.com/) 作为一个静态博客，可部署的环境非常之广。本文就讲讲如何将 OpooPress 生成的静态博客部署到七牛云存储。
 <!--more-->

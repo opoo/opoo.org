@@ -8,12 +8,13 @@ categories: [weblog]
 tags: [Video]
 url: '/html5-video/'
 snapshot: /wp-content/uploads/2014/game-of-thrones-160x160.jpg
+excerpt: "<p><a href='/html5-video/'><img alt='Game of Thrones' src='/wp-content/uploads/2014/800px-Game_of_Thrones_2011_logo.svg.png' width='534' height='83'></a></p><p>《权力的游戏》（Game of Thrones）是一部中世纪史诗奇幻题材的电视连续剧。该剧以美国作家乔治·R·R·马丁的奇幻巨作《冰与火之歌》系列为基础改编创作，由大卫·贝尼奥夫和丹尼尔·威斯（D. B. Weiss）编剧、HBO有线电视联播网推出。小说和电视剧都非常精彩，是笔者最喜欢的影视、小说作品之一。</p><p>电视剧《权力的游戏》第四季将于美国时间2014年4月6日开播。先来看看预告片。</p>"
 ---
 
 <!-- 800 124 -->
-<a href="//upload.wikimedia.org/wikipedia/commons/2/2e/Game_of_Thrones_2011_logo.svg" target="_blank"><img alt="Game of Thrones" src="//upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Game_of_Thrones_2011_logo.svg/800px-Game_of_Thrones_2011_logo.svg.png" width="600" height="93" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Game_of_Thrones_2011_logo.svg/1200px-Game_of_Thrones_2011_logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Game_of_Thrones_2011_logo.svg/1600px-Game_of_Thrones_2011_logo.svg.png 2x" /></a>
+<a href="//upload.wikimedia.org/wikipedia/commons/2/2e/Game_of_Thrones_2011_logo.svg" target="_blank"><img alt="Game of Thrones" src="/wp-content/uploads/2014/800px-Game_of_Thrones_2011_logo.svg.png" width="600" height="93" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Game_of_Thrones_2011_logo.svg/1200px-Game_of_Thrones_2011_logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Game_of_Thrones_2011_logo.svg/1600px-Game_of_Thrones_2011_logo.svg.png 2x" /></a>
 
-《权力的游戏》（英文：Game of Thrones）是一部中世纪史诗奇幻题材的电视连续剧。该剧以美国作家乔治·R·R·马丁的奇幻巨作《冰与火之歌》系列为基础改编创作，由大卫·贝尼奥夫和丹尼尔·威斯（D. B. Weiss）编剧、HBO有线电视联播网推出。小说和电视剧都非常精彩，是笔者最喜欢的影视、小说作品之一。
+《权力的游戏》（Game of Thrones）是一部中世纪史诗奇幻题材的电视连续剧。该剧以美国作家乔治·R·R·马丁的奇幻巨作《冰与火之歌》系列为基础改编创作，由大卫·贝尼奥夫和丹尼尔·威斯（D. B. Weiss）编剧、HBO有线电视联播网推出。小说和电视剧都非常精彩，是笔者最喜欢的影视、小说作品之一。
 
 [电视剧《权力的游戏》](http://www.hbo.com/#/game-of-thrones/index.html)第四季将于美国时间2014年4月6日开播。先来看看预告片。
 
