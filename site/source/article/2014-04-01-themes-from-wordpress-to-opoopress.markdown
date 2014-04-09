@@ -9,7 +9,7 @@ excerpt: 本文以示例的形式展示如何将 WordPress 博客的主题转成
 categories: [website]
 tags: [WordPress, OpooPress]
 url: '/themes-from-wordpress-to-opoopress/'
-snapshot: http://s.w.org/about/images/logos/wordpress-logo-simplified-rgb.png
+snapshot: //s.w.org/about/images/logos/wordpress-logo-simplified-rgb.png
 ---
 
 缺乏丰富的主题的确是目前 OpooPress 的一个大问题，一个优秀的主题往往是集创意、设计、编码等天赋和技能于一体，是非常不容易的。
