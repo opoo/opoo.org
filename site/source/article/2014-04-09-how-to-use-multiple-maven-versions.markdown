@@ -21,14 +21,14 @@ snapshot: /wp-content/uploads/2014/maventxt_logo_205.png
 1. 下载 Maven 并解压，分别解压到 `C:\Program Files\apache-maven-2.2.1\` 和 `C:\Program Files\apache-maven-3.1.0\` 目录。
 1. 创建目录 `C:\Program Files\apache-maven\`
 1. 在目录 `C:\Program Files\apache-maven\` 中创建批处理文件 `m2.bat`，内容如下
-	```
+	```text
 	@setlocal
 	@set M2_HOME=C:\Program Files\apache-maven-2.2.1
 	@"%M2_HOME%\bin\mvn.bat" %*
 	@endlocal
 	```
 1. 在目录 `C:\Program Files\apache-maven\` 中创建批处理文件 `m3.bat`，内容如下
-	```bat
+	```text
 	@setlocal
 	@set M2_HOME=C:\Program Files\apache-maven-3.1.0
 	@"%M2_HOME%\bin\mvn.bat" %*
@@ -38,6 +38,7 @@ snapshot: /wp-content/uploads/2014/maventxt_logo_205.png
 
 此时调用 `m2 xxx`  即可使用 Mavne 2，调用 `m3 xxx` 即可使用 Maven 3。也可以根据需求安装更多的 Maven 版本，并定义更多的批处理文件，调用时使用对应的批处理名称即可。
 
+Maven 2
 ```
 D:\>m2 -version
 Apache Maven 2.2.1 (r801777; 2009-08-07 03:16:01+0800)
@@ -47,6 +48,7 @@ Default locale: zh_CN, platform encoding: GBK
 OS name: "windows 2003" version: "5.2" arch: "x86" Family: "windows"
 ```
 
+Maven 3
 ```
 D:\>m3 -version
 Apache Maven 3.1.0 (893ca28a1da9d5f51ac03827af98bb730128f9f2; 2013-06-28 10:15:32+0800)
