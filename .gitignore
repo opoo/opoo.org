@@ -26,6 +26,7 @@ baidu_verify_*.html
 google1f9a70cb3389*.html
 
 **/stylesheets/screen.css
+site/assets/assets
 
 # External tool builders
 .externalToolBuilders/
