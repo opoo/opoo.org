@@ -69,7 +69,7 @@ Collection<File> files = org.apache.commons.io.FileUtils.listFiles(dir, null, tr
 ```
 
 
-经过运行时间对比，Java 7 NIO.2 方式遍历文件是最快的，其次是通过 `java.io.File` 的 `listFiles()` 方法。
+经过运行时间对比，[Java 7 NIO.2](http://docs.oracle.com/javase/tutorial/essential/io/fileio.html) 方式遍历文件是最快的，其次是通过 `java.io.File` 的 `listFiles()` 方法。
 
 其实这个结果也是预料中的：
 1. Java 7 肯定有性能上的改进，NIO.2 的性能应该好于之前的 IO 处理类
@@ -84,4 +84,6 @@ Collection<File> files = org.apache.commons.io.FileUtils.listFiles(dir, null, tr
    ```
    运行结果如下：
    ![File walk test output](/wp-content/uploads/2014/file-walk-test-output.png)
-1. 相关知识参考官方文档: [Walking the File Tree](http://docs.oracle.com/javase/tutorial/essential/io/walk.html)
+1. 参考: 
+    - [Walking the File Tree](http://docs.oracle.com/javase/tutorial/essential/io/walk.html)
+    - [Pro Java 7 NIO.2](http://www.amazon.com/Pro-Java-NIO-2-Experts-Voice/dp/1430240113)
