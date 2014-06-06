@@ -85,3 +85,10 @@ CRITICAL createdb -E UNICODE -O ctfuser -U ctfuser ctfdb failed with exit code 1
 ```shell
 /etc/init.d/collabnet start
 ```
+
+## 其它
+此时，你就拥有了一个能够免费试用30天的功能强大的 TeamForge。
+
+如果你有充足的理由，在30天后坚持要继续使用的话：
+1. 请购买正版。
+1. 或者，请留意 `saturn_common.jar` 文件，有问题可与我联系。
