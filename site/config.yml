@@ -90,7 +90,7 @@ new_page: ${name}.markdown
 # 分类所在的目录
 category_dir: /category
 
-# 分类目录名称与标题对照关系。通常名称用于组成 URL，小写切不含空格，标题则用于显示。
+# 分类目录名称与标题对照关系。通常名称用于组成 URL，小写且不含空格，标题则用于显示。
 # 未在此处指定的分类 OpooPress 会自行处理。
 #category_names: {"opoopress": "OpooPress", "tech": "技术", tech.java: "Java", tech.maven: "Maven", "uncategorized": "未分类", "others":"杂项"}
 category_names: {website: 网站建设, tech: 编程开发, tech.java: Java, tech.maven: Maven, software: 软件应用, cloud: 云服务, weblog: 网络日志} 
@@ -101,19 +101,20 @@ category_title_prefix: "分类: "
 # 标签所在的目录
 tag_dir: /tag
 
-# 标签名称与标题对照关系。通常名称用于组成 URL，小写切不含空格，标题则用于显示。
+# 标签名称与标题对照关系。通常名称用于组成 URL，小写且不含空格，标题则用于显示。
 tag_names: 
-  "opoopress": "OpooPress"
-  "blog": "博客"
-  "opensource": "开源"
-  "plugins": "插件"
-  wordpress: WordPress
-  "front-end-optimization": "前端优化"
+  "opoopress": OpooPress
+  "blog": 博客
+  "opensource": 开源
+  "plugins": 插件
+  "wordpress": WordPress
+  "front-end-optimization": 前端优化
   "web-fonts": "Web Fonts"
-  qiniudn: 七牛云存储
+  "qiniudn": 七牛云存储
   "social-sharing": 社会化分享
-  duoshuo: 多说
+  "duoshuo": 多说
   "cloud-storage": 云存储
+  "proxyreverse": 反向代理
 
 # 标签标题前缀
 tag_title_prefix: "标签："
