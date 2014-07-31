@@ -73,7 +73,7 @@ $ git push origin gitcafe-pages
 
 ## 创意用法 {#creative}
 
-OpooPress 用户 [RenAd3](https://github.com/lawzizhuang/) 提供了一个很有创意的用法：由于 GitHub Pages 和 GitCafe Pages 都支持绑定域名，一个在国外访问快，一个在国内访问快，所以 RenAd3 将 OpooPress 同时发布到了 GitHub Pages 和 GitCafe Pages，在通过 DNSPod 之类的智能 DNS 解析服务，将国外流量执向 GitHub Pages，国内流量则指向 GitCafe　Pages，实现了某种程度的　CDN。
+OpooPress 用户 [RenAd3](https://github.com/lawzizhuang/) 提供了一个很有创意的用法：由于 GitHub Pages 和 GitCafe Pages 都支持绑定域名，一个在国外访问快，一个在国内访问快，所以 RenAd3 将 OpooPress 同时发布到了 GitHub Pages 和 GitCafe Pages，再通过 DNSPod 之类的智能 DNS 解析服务，将国外流量执向 GitHub Pages，国内流量则指向 GitCafe Pages，实现了某种程度的　CDN。
 
 真是生命不息，折腾不止啊！
 
