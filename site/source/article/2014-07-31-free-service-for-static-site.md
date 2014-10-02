@@ -24,14 +24,14 @@ snapshot: '//static.opoo.org/oplogo/220x220.png'
 <tr>
 	<td><a href="http://www.opoopress.com/zh/docs/github-pages/" target="_blank">GitHub Pages</a></td>
 	<td>支持</td>
-	<td>不限</td>
+	<td>1GB</td>
 	<td>Git</td>
 	<td>静态网站或 Jekyll 站点</td>
 </tr>
 <tr>
 	<td><a href="/2014/deploy-opoopress-to-gitcafe-pages/">GitCafe Pages</a></td>
 	<td>支持</td>
-	<td>不限</td>
+	<td>512MB</td>
 	<td>Git</td>
 	<td>静态网站或 Jekyll 站点</td>
 </tr>
