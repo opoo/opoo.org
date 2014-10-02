@@ -32,7 +32,7 @@ VMware vSphere Hypervisor 是可供小型企业或个人免费使用的虚拟化
 ### 先决条件
 - 准备 Linux 系统，笔者使用的是 CentOS 6.2。
 - 确保 Linux 中安装了 `syslinux` 软件包， VMware ESXi 5.5 需要使用 syslinux 版本 3.86 来制作启动 U 盘。笔者直接使用 `yum install syslinux` 来安装 syslinux 软件包，其版本其实是 4.x，这将导致一个问题，在后面会详述。
-- 确保 Linux 中包含格式化 fat32 (mkfs.vfat 命令) 的软件，需要 `dosfstools` 软件包，在 CentOS 中执行 `yum install dosfstools` 即可。
+- 确保 Linux 中包含格式化 fat32 (mkfs.vfat 命令) 的软件，需要 `dosfstools` 软件包，在 CentOS 中执行 `yum install dosfstools` 即可安装。
 
 
 ### 步骤
@@ -121,7 +121,7 @@ umount /esxi_cdrom
 
 硬件配置必须满足最低条件，否则安装过程会终止。最基本的需求是，必须 4GB 以上内存，必须有一个以上 ESXi 默认支持的网卡。详见官方文档[硬件需求][hardware-requirements]章节。
 
-比如，台式机上常用的网卡 Realtek 8168, Realtek 8169, Realtek 8139 等就在默认不支持的行列（据说在 ESXi 5.5 之前的版本中是包含这些驱动的），即 VMware ESXi 的默认安装包中不包含这些网卡的驱动，在安装过程中也就找不到相应的网卡。
+比如，台式机上常用的网卡 Realtek 8168, Realtek 8169, Realtek 8139 等就在默认不支持的行列（据说在 ESXi 5.5 之前的版本中是包含这些驱动的），即 VMware ESXi 5.5 的默认安装包中不包含这些网卡的驱动，在安装过程中也就找不到相应的网卡。
 
 此时，我们就需要定制自己的 ISO，将相应的网卡驱动打进自己的 ISO 包中。
 
