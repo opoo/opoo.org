@@ -22,6 +22,8 @@
   <link href="${root_url}${page.url}" rel="canonical" />
   <#if (paginator.next)??><link href="${root_url}${paginator.next.url}" rel="next" /></#if>
   <#if (paginator.previous)??><link href="${root_url}${paginator.previous.url}" rel="prev" /></#if>
+  <#if (page.previous.url)??><link rel="next" href="${root_url}${page.previous.url}" title="${page.previous.title}"/></#if>
+  <#if (page.next.url)??><link rel="prev" href="${root_url}${page.next.url}" title="${page.next.title}"/></#if>
 
   <#-- web font -->
   <#-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic|PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
