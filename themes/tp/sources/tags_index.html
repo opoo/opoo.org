@@ -1,0 +1,18 @@
+---
+layout: page
+title: 标签
+footer: false
+comments: false
+sidebar: false
+likebar: false
+profile: false
+asides: [recent_posts.ftl, recent_comments.ftl, github.ftl, delicious.ftl, pinboard.ftl, googleplus.ftl, categories.ftl]
+url: /tag/
+render: true
+---
+
+<ul id="tags22" style="padding-left:20px;" class="nav">
+<#list site.tags as tag>
+	<li  style="width:100%"><a href="${root_url}${tag.url!'#'}">${tag.name}<span class="badge pull-right">${tag.pagesSize}</span></a></li>
+</#list>
+</ul>

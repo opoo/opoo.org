@@ -1,0 +1,24 @@
+---
+layout: page
+title: tag_template
+footer: false
+sidebar: true
+
+tag_template_post_tag: true
+category_template_post_category: true
+
+#title_prefix
+#permalink
+#output_dir
+#paginate
+
+render: true
+
+profile: false
+likebar: false
+comments: false
+pagetype: categories
+---
+
+<#assign posts = page.metaTag.pages>
+<#include "/archive_post.ftl">

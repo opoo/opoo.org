@@ -1,0 +1,61 @@
+theme: tp
+
+
+# Github repositories
+github_user: opoo
+github_repo_count: 0
+github_show_profile_link: false
+github_skip_forks: true
+
+# Twitter
+twitter_user: alexlincn
+twitter_tweet_button: true
+
+# Google +1
+google_plus_one: true
+google_plus_one_size: medium
+
+# Google Plus Profile
+# Hidden: No visible button, just add author information to search results
+googleplus_user:
+googleplus_hidden: false
+
+# Pinboard
+pinboard_user:
+pinboard_count: 3
+
+# Delicious
+delicious_user:
+delicious_count: 3
+
+# Disqus Comments
+disqus_short_name: opoo
+disqus_show_comment_count: true
+
+# Google Analytics
+#google_analytics_tracking_id: "UA-30835382-1"
+new_google_analytics_tracking_id: "UA-30835382-1"
+google_analytics_tracking_domain: "none"
+
+# Facebook Like
+facebook_like: true
+
+# Subscribe RSS address.
+subscribe_rss: 'http://opoo.org/atom.xml'
+# email:
+
+# theme 所需的各种路径，覆盖 theme.yml 中的默认值
+#logo_root: '//static.opoo.org/logo'
+#theme_root: '//static.opoo.org/themes/tp'
+#default_theme_root: '//static.opoo.org/themes/default'
+logo_root: '//dn-opstatic.qbox.me/logo'
+theme_root: '//dn-opstatic.qbox.me/themes/tp'
+default_theme_root: '//dn-opstatic.qbox.me/themes/default'
+
+#source_base_path: 'https://raw.github.com/opoo/opoo.org/master/posts'
+favicon: '//dn-opstatic.qbox.me/logo/favicon.ico'
+
+https_url: https://opoo.org
+site_title_suffix: ' - 关注计算机软件与互联网'
+
+nav_pages: {"项目": "/opensource/", "关于": "/about/"}

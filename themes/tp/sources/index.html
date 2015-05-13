@@ -1,0 +1,98 @@
+---
+layout: default
+pagetype: index
+render: true
+pagination:
+  size: 10
+  collection: post
+  #permalink:
+  #title_suffix_format: ' - Page ${pageNumber}'
+---
+<#assign index = true>
+<div class="sidebar-wrapper clearfix">
+	<div class="pane content-pane main-body clearfix">
+		<#-- <h1 class="pane-header">博客</h1> -->
+		<#-- 
+		<div style="color: #999">
+			description
+		</div>
+		<br />
+
+		<form id="search-form" action="/search" method="GET">
+			<div class="input-append">
+				<input id="search-text" type="text" name="q" placeholder="Search for articles..." class="tp-search-full small-input" />
+				<button class="btn tp-search-submit" type="submit">Go!</button>
+			</div>
+		</form>
+		-->
+
+		<ul id="algo-tabs" class="nav nav-tabs" style="margin-bottom: 0px; padding-top: 8px;">
+			<li class="active"><a href="${root_url}/">近期文章</a></li>    
+			<li class=""><a href="${root_url}/comments/">近期评论</a></li>    
+		</ul>
+		
+		<div>
+			<ul class="tp-list tp-article-list -load-more-list">
+
+<#list paginator.posts as post>
+<li class="mb clearfix blog">
+	<#-- post image -->
+	<#--         
+	<div class="mb_media tp-article-image">
+		<img src="snapshot-100x100.png" width="100" height="100"/>
+    </div> 
+	-->
+	<#if post.snapshot??>
+	<div class="mb_media tp-article-image">
+		<img src="${post.snapshot}" width="100" height="100"/>
+    </div> 
+	</#if>
+	
+    <div class="tp-article-details mb_body">
+		<#include "article_profile.ftl">
+
+        <div class="clearfix">
+            <h3><a class="item-title" href="${root_url}${post.url}">${titlecase(post.title)}</a></h3>
+            <span class="preview">
+			${post.excerpt}
+			<#if (post.excerpted)>
+			<p><a href="${root_url}${post.url}"><b>...</b></a></p>
+			</#if>
+			</span>
+        </div>
+    </div>
+</li>
+</#list>
+
+			</ul>
+
+			<div>
+				<#-- 
+				<div class="-load-more-section more-section" id="more-section">
+					<span class="default-load-more"></span>
+					<a id="more-items" class="-load-more more-items" href="#">Load More</a>
+					
+				</div>
+				-->
+				
+				<#-- 大于一定页数则使用分页工具栏 -->
+				<#if (site.posts?size > site.paginate * site.max_ajax_load_pages)>
+					<#include "custom/pagination.ftl">
+				<#else>
+					<#if (paginator.next)??>
+					<div class="-load-more-section more-section" id="more-section">
+						<span class="default-load-more"></span>
+						<a id="more-items" class="-load-more more-items" href="${root_url}${paginator.next.url}">更多</a>
+					</div>
+					</#if>
+
+				</#if>
+			</div>
+		</div>
+	</div>
+
+	<!-- sidebar -->
+	<div id="sidebar" class="pane sidebar">
+		<#include "asides/blog_index_asides.ftl">
+	</div>
+</div>

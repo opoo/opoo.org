@@ -10,7 +10,7 @@
 ```bash
 # git clone https://github.com/opoo/opoo.org.git
 # cd opoo.org
-# mvn package op:preview
+# mvn op:preview
 ```
 ### Step 3:
 打开浏览器，访问 http://localhost:8080。

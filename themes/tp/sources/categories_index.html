@@ -1,0 +1,30 @@
+---
+layout: page
+title: 分类
+footer: false
+comments: false
+sidebar: false
+likebar: false
+profile: false
+asides: [recent_posts.ftl, recent_comments.ftl, github.ftl, delicious.ftl, pinboard.ftl, googleplus.ftl, tags.ftl]
+url: /category/
+render: true
+---
+
+<#if site.categories?? &&  (site.categories?size > 0)>
+
+
+<div id="blog-archives">
+<ul style="padding-left:20px;" class="nav">
+<#list site.categories as category>
+	<#if !(category.parent)??>
+	<#--
+	<li class="category"><a href="${root_url}${category.url}">${category.name}</a> (${category.pagesSize})</li>
+	<@subcategory parent=category level=1/>
+	-->
+	<@showCategoryItem category=category level=0/>
+	</#if>
+</#list>
+  </ul>
+ </div>
+</#if>

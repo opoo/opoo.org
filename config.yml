@@ -1,0 +1,198 @@
+# OpooPress 站点配置文件
+
+# ----------------------- #
+#      基本属性            #
+# ----------------------- #
+
+# 站点标题
+title: Opoo.org
+
+# 站点附标题
+subtitle: 学而记之，谓之志。
+
+# 作者，您的姓名
+author: Alex Lin
+
+# 站点描述，通常用作页面的 description 属性值
+description: "Opoo.org 是一个专注于计算机软件、编程语言、项目管理、开源产品、互联网科技等的原创 IT 技术博客。"
+
+# 站点关键字，通常用作页面的 keywords 属性值
+keywords: "OpooPress, 编程, 开源, java, joqs, WordPress, flex, maven, docbook, sourceforge, openshift"
+
+# 地区及语言，参考 java.util.Locale
+# http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html
+locale: zh_CN
+
+
+# ----------------------- #
+#      URL                #
+# ----------------------- #
+
+# 站点的 url
+url: http://opoo.org
+
+# 站点的根目录。
+# 如果要发布站点到子目录，如 'http://yoursite.com/blogs'，则设置 root 的值为 '/blogs'.
+# 注意，不需要在子目录后面加 '/'。
+# 默认值 ''
+# root: ''
+
+# URL在网页上是否需要编码
+# 使用中文URL(中文文件名）时，需要设置该属性为 true。
+# 默认值 false
+url_encode: false
+
+# 将URL对象的文件写入文件系统时，是否需要解码
+# 如果URL被编码过，需要设置该属性为 true。
+# 默认值 false
+url_decode: false
+
+# 文章的固定链接格式
+# 该属性支持文章头部 front-matter 所有变量，以及 ${year}, ${month}, ${day}, ${hour},${minute}, ${second},
+# ${name}, ${pathToFile}, ${fileName} 等变量。
+# 默认值 '/article/${year}/${month}/${name}.html'
+# permalink_post: '/article/${year}/${month}/${name}.html'
+permalink_post: /${name}/
+
+# 其它 Layout 的固定链接格式.
+# 该属性支持源文件头部 front-matter 所有变量，以及 ${year}, ${month}, ${day}, ${hour},${minute}, ${second},
+# ${name}, ${pathToFile}, ${fileName} 等变量。
+# 该配置无默认值，格式为：
+# permalink_<LAYOUT>: <YOUR PERMALINK FORMAT>
+# 例如为 doc 这个自定义的 layout 配置固定链接：
+# permalink_doc: '/docs/${version}/${name}.html'
+
+
+# ----------------------- #
+#   目录结构               #
+# ----------------------- #
+# 默认站点目录结构
+#(.)
+# |
+# +- pom.xml
+# |
+# +- config.yml
+# |
+# +- assets/
+# |
+# +- pages/
+# |
+# +- posts/
+# |
+# +- plugins/
+# |
+# +- themes/
+#     |
+#     +- default/
+#     |    |
+#     |    +- theme.yml
+#     |    |
+#     |    +- ...
+#     |
+#     +- another-theme/
+
+# 静态资源所在的目录，用于放置网站的静态资源（图片、css、js文件等）。
+# 默认值 [assets]
+# asset_dirs: [assets]
+
+# 站点源文件(文章，页面等)目录，用于放置内容。
+# 默认值 [pages, posts]
+# source_dirs: [pages, posts]
+
+# 插件所在的目录
+# 默认值 'plugins'
+# plugin_dir: plugins
+
+# 生成的站点的输出目录
+# 默认值 'target/public'
+# dest_dir: target/public
+
+# 工作目录，站点生成过程使用的目录
+# 默认值 'target/work'
+# work_dir: target/work
+
+
+# ----------------------- #
+#    内容                  #
+# ----------------------- #
+
+# 新文章的文件路径及文件名格式。
+# 通常，需要同时在主题配置文件(theme.yml)中设置属性`new_post_template`，用于指定新文章的内容模板。
+#
+# 支持变量: ${year}, ${month}, ${day}, ${hour}, ${minute}, ${second}, ${name}, ${title}, ${date}, ${format}
+# 其中 format 默认值  'markdown'。
+#
+# 该属性默认值 'posts/${year}-${month}-${day}-${name}.${format}'
+# new_post: 'posts/${year}-${month}-${day}-${name}.${format}'
+
+# 新页面文件的路径及文件名格式。
+# 通常，需要同时在主题配置文件(theme.yml)中设置属性`new_page_template`，用于指定新文章的内容模板。
+#
+# 支持变量: ${year}, ${month}, ${day}, ${hour}, ${minute}, ${second}, ${name}, ${title}, ${date}, ${format}
+# 其中 format 默认值  'markdown'
+#
+# 该属性默认值 'pages/${name}.${format}'
+# new_page: 'pages/${name}.${format}'
+
+# 创建其它 Layout 时的新文件路径及文件名格式。
+# new_<LAYOUT>: <FORMAT>
+# 通常，需要同时在主题配置文件(theme.yml)中设置属性`new_<LAYOUT>_template`，用于指定新文件的内容模板。
+#
+# 支持变量: ${year}, ${month}, ${day}, ${hour}, ${minute}, ${second}, ${name}, ${title}, ${date}, ${format}
+# 其中 format 默认值  'markdown'
+#
+# 例如： new_doc: 'pages/docs/${name}.md'
+
+# 是否将标题单词首字母大写
+# 默认值 false
+#titlecase: false
+
+# 摘要在文章中的分隔标识
+# 默认值 '<!--more-->'
+# excerpt_separator: '<!--more-->'
+
+
+# ----------------------- #
+#   分页和限制             #
+# ----------------------- #
+
+# 默认的分页页面大小，各个需要分页的页面还可以在模板中自定义大小。
+# paginate: 10
+
+# 最近文章数量，默认值 5
+# 对博客类网站有效
+recent_posts: 7
+
+# 相关文章数量，默认值 5
+# 对博客类网站有效
+# related_posts: 5
+
+
+# ----------------------- #
+#   日期格式                #
+# ----------------------- #
+
+# 默认格式 'yyyy-MM-dd'(参考java日期格式)
+# 可指定特殊值 'ordinal'，相当于 'MMM d yyyy'格式，输出如 '四月 15 2013'。
+# 可指定 "yyyy年MM月dd日"，参考 http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html.
+date_format: "ordinal"
+
+# 时间格式，参考 http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html.
+# time_format: 'HH:mm:ss'
+
+
+# ----------------------- #
+#   Deployment Settings   #
+# ----------------------- #
+
+# 发布信息。
+# 可将站点同时发布到多个库(服务器)。
+# 每个库的属性可参考 Maven pom 中的 distributionManagement 配置和 settings 的 server 配置。
+# 参考 http://maven.apache.org/pom.html#Distribution_Management
+# deploy:
+# - {id: server1, url: 'scp://server1.com/var/www/html'}
+# - {id: server2, url: 'scp://server2.com/var/www/html'}
+# - {id: local, url: 'file://D:/www'}
+
+deploy:
+- {id: opoo_org, url: '${opoo_org_deply_url}'}

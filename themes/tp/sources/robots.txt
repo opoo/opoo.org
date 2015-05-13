@@ -1,0 +1,13 @@
+---
+layout: nil
+render: true
+---
+User-agent: *
+Disallow: /sitemap.xml
+Disallow: /tag/
+Disallow: /category/
+Disallow: /archives/
+Disallow: /joqs/apidocs/
+Disallow: /atom.xml
+
+Sitemap: ${site.url}${root_url}/sitemap.xml 
