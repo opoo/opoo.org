@@ -20,15 +20,15 @@ keywords: "WordPress, SSL, cookie-free domains, Apache"
 	<li>在通过 HTTPS   访问网站时，不应该出现网页中既包含安全内容也包含不安全内容（及混合内容）的警告，即此时所有引用资源都应该是 HTTPS 协议访问的。</li>
 	<li>不希望通过目录级配置文件 .htaccess 文件来实现 WordPress 的固定链接，因为启用 .htaccess 会降低 Apache 的性能。</li>
 </ol>
-下面具体说明如何达到这些目标。
+<p>下面具体说明如何达到这些目标。
 <h1>一、cookie-free 域的选择</h1>
-<a title="关于 cookie-free domains" href="/cookie-free-domains/">有关 cookie-free domains，请参考上一篇文章</a>。
+<p><a title="关于 cookie-free domains" href="/cookie-free-domains/">有关 cookie-free domains，请参考上一篇文章</a>。
 
 <p>要达到第一点要求，必须在主域之外，使用第二个域作为 cookie-free 域。
 
 <p>要达到第二点和第三点要求，该 cookie-free 域：a）必须能通过 HTTPS 访问；b）不能直接修改 WordPress 源文件中静态资源为 http://cookie-free.domain/...，写死之后在 HTTPS 访问时会出现混合内容警告。
 <!--more-->
-关于a)：笔者选择 opoo.org 作为主域，www.opoo.org 作为 cookie-free 域，因为笔者申请的 StartSSL 的证书只支持这两个域，如果读者有其它支持 HTTPS 的域，也可以选择来做 cookie-free 的域。
+<p>关于a)：笔者选择 opoo.org 作为主域，www.opoo.org 作为 cookie-free 域，因为笔者申请的 StartSSL 的证书只支持这两个域，如果读者有其它支持 HTTPS 的域，也可以选择来做 cookie-free 的域。
 
 <p>关于b)：笔者主要对 wp-content 目录下的内容做 cookie-free 处理。修改 <code>wp-config.php</code> 文件，添加以下一行
 <pre class="brush:php">define('WP_CONTENT_URL', 'http://www.opoo.org/wp-content');</pre>
@@ -55,13 +55,13 @@ RewriteRule ^(.*)${'$'} http://opoo.org${'$'}1 [L,R=301]
 RewriteCond %{HTTP_HOST} ^www.opoo.org${'$'} [NC]
 RewriteCond %{REQUEST_URI} !^/wp-content/
 RewriteRule ^(.*)${'$'} http://opoo.org${'$'}1 [L,R=301]</pre>
-另外也需要在 ssl.conf 中配置，将以上内容中的 http 换成 https 即可。
+<p>另外也需要在 ssl.conf 中配置，将以上内容中的 http 换成 https 即可。
 
 <p>如果读者是超级完美主义者，想将 wp-includes 目录下的静态文件也 cookie-free，那么就要修改 WordPress 源文件。建议修改时判断一下，以保证能同时在 HTTP 和 HTTPS 下访问。
 <pre class="brush:php">${'$'}url = (is_ssl() ? "https" : "http") . "://www.opoo.org/wp-includes/.../css.css"</pre>
 最后，将已有文章中的图片的 url 替换成 cookie-free domain，执行以下 SQL 语句
 <pre class="brush:sql">update wp_posts set post_content=replace(post_content, 'http://opoo.org/wp-content/uploads', 'http://www.opoo.org/wp-content/uploads') where post_content like '%http://opoo.org/wp-content/uploads%';</pre>
-这样修改后文章中的所有文章都指向了 http 开头的 cookie-free 域，在 HTTPS 访问主域会出现混合内容警告信息，可建一个插件解决这个问题。插件主要代码如下：
+<p>这样修改后文章中的所有文章都指向了 http 开头的 cookie-free 域，在 HTTPS 访问主域会出现混合内容警告信息，可建一个插件解决这个问题。插件主要代码如下：
 <pre class="brush:php">function my_content_manipulator(${'$'}content){
 	if( is_ssl() ){
 		${'$'}content = str_replace('http://www.opoo.org/wp-content/uploads', 'https://www.opoo.org/wp-content/uploads', ${'$'}content);
@@ -69,10 +69,10 @@ RewriteRule ^(.*)${'$'} http://opoo.org${'$'}1 [L,R=301]</pre>
 	return ${'$'}content;
 }
 add_filter('the_content', 'my_content_manipulator');</pre>
-通过 HTTPS 访问时，文章在显示之前会被插件替换其中图片 url 的协议。
+<p>通过 HTTPS 访问时，文章在显示之前会被插件替换其中图片 url 的协议。
 <h1>二、配置 SSL</h1>
 <h2>1. 申请 SSL 证书</h2>
-要实现通过 HTTPS 访问网站，需要购买一个用于 WEB 服务器的 SSL 证书，也可在 StartSSL 免费申请。
+<p>要实现通过 HTTPS 访问网站，需要购买一个用于 WEB 服务器的 SSL 证书，也可在 StartSSL 免费申请。
 
 <p>如果仅用于测试，也可以通过 openssl 之类的软件生成一个自签名的证书。自签名的证书在访问时会显示网站不受信任，在谷歌浏览器地址栏里有显示一个叉，别的浏览器也会有相应提示。
 
@@ -99,7 +99,7 @@ Listen 443
     CustomLog logs/ssl_request_log \
         "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 &lt;/VirtualHost&gt;</pre>
-这是为 Apache 配置 SSL 最核心的部分。
+<p>这是为 Apache 配置 SSL 最核心的部分。
 
 <p>必须为 Apache 安装 mod_ssl 模块。CentOS 通过 <code>yum install mod_ssl</code> 即可安装该模块，并在 <code>/etc/httpd/conf.d/</code> 下生成配置文件 ssl.conf，修改其内容即可。
 
@@ -125,7 +125,7 @@ a) 混合内容警告
 
 <p>（完美主义强迫症患者 - -! ）
 <h1>三、不使用 .htaccess 文件</h1>
-Apache 目录级的配置文件 .htaccess 会降低 Apache 的性能，尽管很小。
+<p>Apache 目录级的配置文件 .htaccess 会降低 Apache 的性能，尽管很小。
 
 <p>Apache 配置 <code>AllowOverride None</code> 时会忽略目录级的配置文件。
 

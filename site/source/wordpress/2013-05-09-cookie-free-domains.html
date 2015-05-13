@@ -19,7 +19,7 @@ keywords: "cookie-free domains, rootdomain, subdomain, Cookie污染"
 
 <p><a href="http://developer.yahoo.com/yslow/" target="_blank">Yahoo yslow</a> 可以对网页性能进行评级，其中一个指标就是 “Use cookie-free domains”，描述如下：
 <pre>When the browser requests a static image and sends cookies with the request, the server ignores the cookies. These cookies are unnecessary network traffic. To workaround this problem, make sure that static components are requested with cookie-free requests by creating a subdomain and hosting them there.</pre>
-大意是当浏览器请求一个静态图片并发送 Cookie 时，服务器会忽略 Cookie。Cookie 根本就没必要通过网络传输。为了解决这个问题，应当创建一个子域并将静态内存放在上面，以确保静态内容都是通过 cookie-free 的方式访问的。
+<p>大意是当浏览器请求一个静态图片并发送 Cookie 时，服务器会忽略 Cookie。Cookie 根本就没必要通过网络传输。为了解决这个问题，应当创建一个子域并将静态内存放在上面，以确保静态内容都是通过 cookie-free 的方式访问的。
 
 <!--more-->
 
@@ -33,7 +33,7 @@ keywords: "cookie-free domains, rootdomain, subdomain, Cookie污染"
 	<li>cookie.domain = ".opoo.org" 该 Cookie 可以发给域 opoo.org 及其下所有子域，包括 www.opoo.org, static.opoo.org 等</li>
 	<li>cookie.domain = "www.opoo.org" 该 Cookie 只能发给域 www.opoo.org, 不能发给域 opoo.org 及 static.opoo.org 等</li>
 </ul>
-由此可以看出，裸域的 Cookie 会不会污染到子域，主要就在于设置 Cookie 的 domain 属性值前面的那个“.”。前缀点（leading dot, leading period, dot prefix, whatever..）大致相当于泛域名匹配吧。
+<p>由此可以看出，裸域的 Cookie 会不会污染到子域，主要就在于设置 Cookie 的 domain 属性值前面的那个“.”。前缀点（leading dot, leading period, dot prefix, whatever..）大致相当于泛域名匹配吧。
 
 <p>关于这个“点”，<a href="http://tools.ietf.org/html/rfc6265" target="_blank">RFC 6265</a> 和 <a href="http://tools.ietf.org/html/rfc2109" target="_blank">RFC 2109</a> 描述不完全一致，有兴趣的读者可以翻看原文。
 
@@ -56,7 +56,7 @@ keywords: "cookie-free domains, rootdomain, subdomain, Cookie污染"
    Domain attribute of "example.com" or of "foo.example.com" from
    foo.example.com, but the user agent will not accept a cookie with a
    Domain attribute of "bar.example.com" or of "baz.foo.example.com".</pre>
-看这意思难道是说有没有前缀“点”，Cookie 都会传给子域？没太读懂。
+<p>看这意思难道是说有没有前缀“点”，Cookie 都会传给子域？没太读懂。
 
 <p>但实际测试的效果跟我前面描述是一致的，即不带“点”的只能传给本域，不能传给子域。
 

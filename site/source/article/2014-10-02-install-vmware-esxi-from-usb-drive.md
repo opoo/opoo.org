@@ -2,12 +2,13 @@
 layout: post
 title: 通过 U 盘安装 VMware ESXi 5.5 的过程及其注意事项
 date: '2014-10-02 13:29'
+updated: '2014-10-11 10:00'
 comments: true
 published: true
 description: "本文记录了安装 VMware ESXi 5.5 的过程，并记录了安装过程中遇到的问题和应该注意的事项。"
 excerpt: "本文记录了安装 VMware ESXi 5.5 的过程，并记录了安装过程中遇到的问题和应该注意的事项。"
 categories: [software]
-tags: [VMware, ESXi, ESXi-Customizer, Realtek, 虚拟化]
+tags: [VMware, vSphere, ESXi, ESXi-Customizer, Realtek, 虚拟化]
 url: '/2014/install-vmware-esxi-from-usb-drive/'
 snapshot: '/wp-content/uploads/2014/esxi.jpg'
 ---
@@ -133,6 +134,80 @@ umount /esxi_cdrom
 3. 打开 ESXi-Customizer，分别选择原始 ESXi 5.5 ISO 文件，网卡驱动 VIB 文件和将要生成的 ISO 保存路径，点击运行即可。如图。
     ![ESXi-Customizer](/wp-content/uploads/2014/ESXi-Customizer_ESXi-5.5.0_r8168.jpg)
 4. 使用新生成的自定义 ISO 文件制作启动盘即可（U 盘，CD， DVD）。如果已经通过前面的步骤制作好了可引导的 U 盘，只需要将新 ISO 包中的所有文件再次复制覆盖到 U 盘即可（**注意：不要覆盖 menu.c32 文件**）。
+
+
+
+
+## Update 2014-10-07
+1. 在 Windows XP/2003 x86 上安装 VMware vSphere Client 5.5 无法连接 ESXi 5.5 服务器的问题。
+
+   出现该问题的原因是新版本 vSphere Cient 中增强了加密强度，而 Windows XP 和 Windows Server 2003 未能达到所需加密强度，64 位的 Windows Server 2003 可以通过安装修复补丁来解决，补丁下载链接 <http://support.microsoft.com/kb/948963>。而对于 32 位的 Windows Server 2003 和 Windows XP 没有相应的补丁，只能升级操作系统，或者采取以下的方式解决：
+
+   通过 SSH 客户端登录到 ESXi 主机（必须先开启主机的 SSH 服务，参考下一条），修改文件 `/etc/vmware/rhttpproxy/config.xml`。在 `vmacore/ssl` 节点插入内容 `<cipherList>ALL</cipherList>`。
+
+   ```xml
+   ...
+   <vmacore>
+       ...
+       <ssl>
+           ...
+           <cipherList>ALL</cipherList>
+           ...
+       </ssl>
+   </vmacore>
+   ...
+   ```
+
+   然后保存修改，执行以下命令重启服务：
+   ```shell
+   /etc/init.d/rhttpproxy restart
+   ```
+   当然，稳妥的做法是在修改文件前先备份。
+
+1. 开启 ESXi 5.5 主机的 SSH 服务。
+   
+   登录 vSphere Client，选择要管理的 ESXi 主机，点击`配置`标签页，在左边的菜单中选择`安全配置文件`。
+   
+   点击 `服务` 的属性按钮，在列表中选择 `SSH`，再点击`选项`按钮，在出来的界面中选择`与主机一起启动或停止`，并点击`启动`按钮立即启动主机的 `SSH` 服务。
+   
+   点击 `防火墙` 的属性按钮，在 `SSH 服务器` 前打勾，这样就在主机防火墙了开启了 SSH 服务的端口。
+
+
+## Update 2014-10-11
+vSphere Client 和 vSphere PowerCLI 可能无法连接到 vCenter Server 5.5，并出现握手错误 
+
+安装在 Windows XP 或 Windows Server 2003 主机上之后，vSphere Client 和 vSphere PowerCLI 可能无法连接到 vCenter Server 5.5，并出现握手错误。vSphere 5.5 使用 Open SSL 库，为安全起见，该库会默认配置为仅接受使用强密码套件的连接。在 Windows XP 或 Windows Server 2003 上，vSphere Client 和 vSphere PowerCLI 不使用强密码套件来连接 vCenter Server。服务器端会出现错误 没有匹配的密码套件 (No matching cipher suite)，并在 vSphere Client 或 vSphere PowerCLI 端出现握手错误。
+
+解决办法：执行下列操作之一。
+
+* 对于 Windows Server 2003 或 64 位 Windows XP，应用适用于您的平台的 Microsoft 修补程序：
+    * x64 平台： [351403_ENU_x64_zip.exe](http://hotfixv4.microsoft.com/Windows%20Server%202003/sp3/Fix192447/3790/free/351403_ENU_x64_zip.exe)
+    * ia64 平台： [351397_ENU_ia64_zip.exe](http://hotfixv4.microsoft.com/Windows%20Server%202003/sp3/Fix192447/3790/free/351397_ENU_ia64_zip.exe)
+    * i386 平台： [351385_ENU_i386_zip.exe](http://hotfixv4.microsoft.com/Windows%20Server%202003/sp3/Fix192447/3790/free/351385_ENU_i386_zip.exe)
+* 对于 Windows XP 32 位、Windows XP 64 位或 Windows Server 2003，请执行下列操作之一。
+
+    在主机上安装 vSphere Client 或 vSphere PowerCLI 之前，将 Windows 操作系统升级到 Windows Vista 或更高版本。
+
+    在 vCenter Server 主机上，通过允许服务器使用弱密码套件进行通信来降低隐含安全性。为此，请在 vCenter Server vpxd.cfg文件中加入以下内容： 
+    ```xml
+    <config> 
+    ... 
+        <vmacore> 
+            ... 
+            <ssl> 
+                ... 
+                <cipherList>ALL</cipherList> 
+            ... 
+            </ssl> 
+        ... 
+        </vmacore> 
+    ... 
+    </config>
+    ```
+
+更多请参考[官方文档](http://www.vmware.com/cn/support/support-resources/pubs/vsphere-esxi-vcenter-server-pubs/vsphere-vcenter-server-55u2-release-notes.html#installupgradeissues)。
+
+
 
 ## 相关资源
 * [VMware vSphere Hypervisor 5.5 下载](https://my.vmware.com/cn/web/vmware/evalcenter?p=free-esxi5&lp=default)
