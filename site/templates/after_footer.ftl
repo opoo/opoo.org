@@ -15,7 +15,8 @@
 <script type="text/javascript" src="${root_url}/javascripts/libs/swfobject-modified.min.js"></script>
 <script type="text/javascript" src="${root_url}/javascripts/libs/opoopress.js"></script>
 -->
-<script type="text/javascript" src="${site.theme_root}/javascripts/opoopress-v20131115.min.js"></script>
+<script type="text/javascript" src="${site.theme_root}/javascripts/opoopress-v2-20140916.min.js?r1435"></script>
+<!-- <script src="/javascripts/opoopress.min.js"></script> -->
 <script type="text/javascript">
 <!--
     window.OpooPress = new OpooPressApp({siteUrl:'${site.url}',rootUrl:'${root_url}',pageUrl:'${page.url}',<#if page.title??>title:'${page.title}',</#if><#if showGitHubRepos??>github:{target:'#gh_repos',user:'${site.github_user}',count:${site.github_repo_count},skip_forks:${site.github_skip_forks?string}},</#if><#if showDeliciousLinks??>delicious:{user:'${site.delicious_user}',count:'${site.delicious_count}'},</#if>socialShare:{<#if twitterShare??>twitterShare:true,twitterAccount:'${site.twitter_user}',twitterUsername:'@${site.twitter_user}',</#if><#if facebookShare??>facebookShare:true,</#if><#if googlePlusShare??>googlePlusShare:true,</#if>dummy:1},needLoadMore:true,refreshRelativeTimes:true,verbose:false},{});

@@ -51,7 +51,7 @@ url: http://opoo.org
 title: Opoo.org
 subtitle: 学而记之，谓之志。
 author: Alex Lin
-simple_search: http://google.com/search
+simple_search: https://google.com/search
 description: 'Opoo.org 是一个专注于计算机软件、编程语言、项目管理、开源产品、互联网科技等的原创 IT 技术博客。'
 keywords: 'OpooPress, 编程, 开源, java, joqs, WordPress, flex, maven, docbook, sourceforge, openshift'
 
@@ -115,6 +115,7 @@ tag_names:
   "duoshuo": 多说
   "cloud-storage": 云存储
   "proxyreverse": 反向代理
+  "static-site": 静态网站
 
 # 标签标题前缀
 tag_title_prefix: "标签："
@@ -195,7 +196,8 @@ disqus_short_name: opoo
 disqus_show_comment_count: true
 
 # Google Analytics
-google_analytics_tracking_id: "UA-30835382-1"
+#google_analytics_tracking_id: "UA-30835382-1"
+new_google_analytics_tracking_id: "UA-30835382-1"
 google_analytics_tracking_domain: "none"
 
 # Facebook Like

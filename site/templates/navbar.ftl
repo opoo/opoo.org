@@ -87,7 +87,7 @@
   <div id="sub-nav">
     <form class="-global-search" id="global-search-form" action="${ site.simple_search }">
         <div id="global-search" class="dropdown">
-            <input type="hidden" name="q" value="site:${ site.url}" />
+            <input type="hidden" name="q" value="site:${ site.url?substring(7)}" />
             <input name="q" class="search-input -tooltip no-jq-placeholder" results="0" placeholder="Search" title="<@s 'Search'/>" type="text"/>
         </div>
     </form>
