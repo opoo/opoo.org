@@ -195,4 +195,4 @@ date_format: "ordinal"
 # - {id: local, url: 'file://D:/www'}
 
 deploy:
-- {id: opoo_org, url: '${opoo_org_deply_url}'}
+- {id: opoo_org, url: '${opoo_org_deploy_url}'}
