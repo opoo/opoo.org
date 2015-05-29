@@ -2,6 +2,7 @@
 layout: post
 title: VMware ESXi 6.0（88SE9230 Raid卡，RTL8111e网卡）安装注意事项
 date: '2015-05-25 13:29'
+updated: '2015-05-26 11:00'
 comments: true
 published: true
 description: "本文介绍在插有 Marvell 88SE9230 Raid 磁盘阵列卡、板载 Realtek RTL8111e 网卡的机器上安装 VMware ESXi 6.0 时的注意事项。"
@@ -24,7 +25,7 @@ snapshot: '/wp-content/uploads/2014/esxi.jpg'
 
     * 下载工具 [ESXi-Customizer](http://www.v-front.de/p/esxi-customizer.html#download)，这个工具专门用于修改 ESXi 的 ISO 包。
     * 下载 [Marvell 88SE9230 驱动](https://vibsdepot.v-front.de/wiki/index.php/Sata-xahci)，下载 VIB 文件即可，这实际上是个[比较通用的 SATA AHCI 驱动包](http://www.v-front.de/2013/11/how-to-make-your-unsupported-sata-ahci.html)。文件名为 `sata-xahci-1.30-1.x86_64.vib`。
-    * 下载 [Realtek RTL8111e 驱动](http://vibsdepot.v-front.de/depot/vft/net51-drivers-1.0/net51-drivers-1.0.0-1vft.510.0.0.799733.x86_64.vib)（右键，另存为，亲测可用），文件名为 `net51-drivers-1.0.0-1vft.510.0.0.799733.x86_64.vib`。另外，[这个驱动](https://vibsdepot.v-front.de/wiki/index.php/Net55-r8168)应该也能用，没有亲自试过。
+    * 下载 [Realtek RTL8111e 驱动](http://vibsdepot.v-front.de/depot/vft/net51-drivers-1.0/net51-drivers-1.0.0-1vft.510.0.0.799733.x86_64.vib)（右键，另存为，亲测可用），文件名为 `net51-drivers-1.0.0-1vft.510.0.0.799733.x86_64.vib`。另外，[这个驱动](https://vibsdepot.v-front.de/wiki/index.php/Net55-r8168)应该也能用，没有亲自试过。[上一篇文章中](/2014/install-vmware-esxi-from-usb-drive/)所使用的 Realtek 8168/8111e 驱动似乎在 ESXi 6.0 中被标记为 obsolete，无法正常使用。
     * 解压并打开 ESXi-Customizer，分 2 步将上面的 2 个 VIB 并入 ISO 文件。第一步，选择 `VMware-VMvisor-Installer-6.0.0-2494585.x86_64.iso`，选择 VIB `sata-xahci-1.30-1.x86_64.vib`，生成新的 ISO；第二步，选择第一步生成的 ISO，选择 VIB `net51-drivers-1.0.0-1vft.510.0.0.799733.x86_64.vib`，生成最终的 ISO。（最好先对第一步生成的 ISO 文件改名）。
 
 3. 写入安装 U 盘。
@@ -34,3 +35,16 @@ snapshot: '/wp-content/uploads/2014/esxi.jpg'
 4. 进行安装。
 
    在目标机器插入 U 盘，在 BIOS 设置 USB Controller 启动，进行安装。
+
+## Update 2015-05-26
+
+为 ESXi 6.0 打补丁
+
+1. [下载补丁](https://esxi-patches.v-front.de/ESXi-6.0.0.html)，使用下载工具直接下载 VIB 文件即可。
+    * `VMware_bootbank_esx-base_6.0.0-0.5.2615704.vib`
+    * `VMware_bootbank_esx-base_6.0.0-0.6.2715440.vib`
+2. 将 ESXi 主机设为维护模式。
+3. 打开 ESXi 主机的 SSH，通过 SSH 客户端登录到 ESXi 主机，执行以下命令安装补丁。
+    * `esxcli software vib install -v "/vmfs/volumes/datastore1/Files/VMware_bootbank_esx-base_6.0.0-0.5.2615704.vib"`
+    * `esxcli software vib install -v "/vmfs/volumes/datastore1/Files/VMware_bootbank_esx-base_6.0.0-0.6.2715440.vib"`
+4. 重启 ESXi 主机，退出维护模式。在 vSphere Client 的关于中可确认 ESXi 内部版本号为 2715440。
