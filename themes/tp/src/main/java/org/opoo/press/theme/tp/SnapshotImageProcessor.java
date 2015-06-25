@@ -44,7 +44,7 @@ public class SnapshotImageProcessor extends ProcessorAdapter{
         Post post = (Post) page;
         String snapshot = post.get(SNAPSHOT_KEY);
         if(StringUtils.isNotBlank(snapshot)) {
-            System.out.println("-- [SnapshotImageProcessor] using snapshot: --" + snapshot);
+            System.out.println("-- [SnapshotImageProcessor] using snapshot: " + snapshot);
             return;
         }
 

@@ -1,8 +1,8 @@
     <table class="tp-like-bar">
         <tbody><tr>
-            <#if page.path?? && site.source_base_path??>
+            <#if page.pathFromBasedirToFile?? && site.source_base_path??>
             <td class="tp-like-cell">
-                <a class="btn -tooltip source-at-github" title="<@s 'View current page source at GitHub.com'/>" href="${site.source_base_path}${page.path}" target="_blank" rel="nofollow"><i class="opoo-github-4">&nbsp;</i>Source</a>
+                <a class="btn -tooltip source-at-github" title="<@s 'View current page source at GitHub.com'/>" href="${site.source_base_path}/${page.pathFromBasedirToFile}" target="_blank" rel="nofollow"><i class="opoo-github-4">&nbsp;</i>Source</a>
             </td>
             </#if>
             <td width="100%" height="45"><hr></td>

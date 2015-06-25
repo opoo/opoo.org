@@ -53,6 +53,7 @@ theme_root: '//dn-opstatic.qbox.me/themes/tp'
 default_theme_root: '//dn-opstatic.qbox.me/themes/default'
 
 #source_base_path: 'https://raw.github.com/opoo/opoo.org/master/posts'
+source_base_path: 'https://raw.githubusercontent.com/opoo/opoo.org/master'
 favicon: '//dn-opstatic.qbox.me/logo/favicon.ico'
 
 https_url: https://opoo.org
