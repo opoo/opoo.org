@@ -30,7 +30,7 @@ delicious_count: 3
 
 # Disqus Comments
 disqus_short_name: opoo
-disqus_show_comment_count: true
+disqus_show_comment_count: false
 
 # Google Analytics
 #google_analytics_tracking_id: "UA-30835382-1"
@@ -45,16 +45,17 @@ subscribe_rss: 'http://opoo.org/atom.xml'
 # email:
 
 # theme 所需的各种路径，覆盖 theme.yml 中的默认值
-#logo_root: '//static.opoo.org/logo'
-#theme_root: '//static.opoo.org/themes/tp'
-#default_theme_root: '//static.opoo.org/themes/default'
-logo_root: '//dn-opstatic.qbox.me/logo'
-theme_root: '//dn-opstatic.qbox.me/themes/tp'
-default_theme_root: '//dn-opstatic.qbox.me/themes/default'
+logo_root: '//static.opoo.org/logo'
+theme_root: '//static.opoo.org/themes/tp'
+default_theme_root: '//static.opoo.org/themes/default'
+#logo_root: '//dn-opstatic.qbox.me/logo'
+#theme_root: '//dn-opstatic.qbox.me/themes/tp'
+#default_theme_root: '//dn-opstatic.qbox.me/themes/default'
 
 #source_base_path: 'https://raw.github.com/opoo/opoo.org/master/posts'
 source_base_path: 'https://raw.githubusercontent.com/opoo/opoo.org/master'
-favicon: '//dn-opstatic.qbox.me/logo/favicon.ico'
+# favicon: '//dn-opstatic.qbox.me/logo/favicon.ico'
+favicon: '//static.opoo.org/logo/favicon.ico'
 
 https_url: https://opoo.org
 site_title_suffix: ' - 关注计算机软件与互联网'

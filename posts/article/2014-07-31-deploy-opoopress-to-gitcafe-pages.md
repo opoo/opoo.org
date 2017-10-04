@@ -63,7 +63,7 @@ $ git push origin gitcafe-pages
 1. 运行 `mvn op:deploy` 发布 OpooPress 即可。
 
 
-这是发布在 GitCafe Pages 的 OpooPress 站点: <a href="http://opoo.gitcafe.com/" rel="nofollow" target="_blank">http://opoo.gitcafe.com/</a>
+这是发布在 GitCafe Pages 的 OpooPress 站点: <a href="http://opoo.gitcafe.io/" rel="nofollow" target="_blank">http://opoo.gitcafe.io/</a>
 
 ## 注意要点 {#notes}
 1. 需要在本地安装 Git 客户端；
