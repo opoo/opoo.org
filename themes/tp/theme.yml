@@ -32,7 +32,8 @@ email:
 
 
 # Navigation menu items.
-nav_pages: {"项目": "/projects/", "关于": "/about/"}
+# nav_pages: {"项目": "/projects/", "关于": "/about/"}
+nav_pages: {"关于": "/about/"}
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in 'templates/asides' folder and add them to the list like 'custom_aside_name.ftl'

@@ -29,7 +29,8 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name: opoo
+# disqus_short_name: opoo
+disqus_short_name:
 disqus_show_comment_count: false
 
 # Google Analytics
@@ -60,4 +61,5 @@ favicon: '//static.opoo.org/logo/favicon.ico'
 https_url: https://opoo.org
 site_title_suffix: ' - 关注计算机软件与互联网'
 
-nav_pages: {"项目": "/opensource/", "关于": "/about/"}
+# nav_pages: {"项目": "/opensource/", "关于": "/about/"}
+nav_pages: {"关于": "/about/"}
