@@ -3,7 +3,7 @@ layout: post
 title: 几种可以免费托管静态网站的服务对比
 date: '2014-07-31 17:29'
 comments: true
-published: true
+published: false
 description: "本文简单对比几种可以免费托管静态网站的服务。"
 categories: [website]
 tags: [静态网站, OpooPress, GitHub Pages, GitCafe Pages, qiniudn, Google App Engine, Opoo Pages]

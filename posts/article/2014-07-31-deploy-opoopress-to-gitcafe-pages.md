@@ -3,7 +3,7 @@ layout: post
 title: 将 OpooPress 静态博客发布到 GitCafe Pages
 date: '2014-07-31 13:29'
 comments: true
-published: true
+published: false
 description: "本文介绍如何将 OpooPress 生成的静态博客发布到 GitCafe Pages，并强调通过 Git 客户端发布博客时的应注意的几个问题。"
 categories: [website]
 tags: [OpooPress, GitCafe, GitCafe Pages]

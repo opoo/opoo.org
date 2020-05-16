@@ -3,7 +3,7 @@ layout: post
 title: 如何同时使用 Maven 2 和 Maven 3
 date: '2014-04-09 11:38'
 comments: true
-published: true
+published: false
 description: 本文介绍如何在同一台机器上使用多个不同版本的 Apache Maven。这个方法也适合类似软件多版本并存的情况，比如 Apache Ant。
 categories: [maven]
 tags: [Maven]
