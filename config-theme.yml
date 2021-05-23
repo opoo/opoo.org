@@ -2,10 +2,10 @@ theme: tp
 
 
 # Github repositories
-github_user: opoo
-github_repo_count: 0
-github_show_profile_link: false
-github_skip_forks: true
+#github_user: opoo
+#github_repo_count: 0
+#github_show_profile_link: false
+#github_skip_forks: true
 
 # Twitter
 twitter_user: alexlincn
