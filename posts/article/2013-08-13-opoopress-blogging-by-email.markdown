@@ -3,7 +3,7 @@ layout: post
 title: 使用邮件发表 OpooPress 博客
 date: '2013-08-13 17:52'
 comments: true
-published: true
+published: false
 description: "通过 OpooPress Mailet，可以使用邮件发表 OpooPress 博客。"
 url: '/opoopress-blogging-by-email/'
 keywords: "OpooPress, Blog, static site/blog generator, open source"

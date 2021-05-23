@@ -3,7 +3,7 @@ layout: post
 title: 将 OpooPress 静态博客部署到七牛云存储
 date: '2013-10-25 16:29'
 comments: true
-published: true
+published: false
 description: "OpooPress 作为一个静态博客，可部署的环境非常之广。本文就讲讲如何将 OpooPress 生成的静态博客部署到七牛云存储。"
 categories: [website]
 tags: [OpooPress, qiniudn]

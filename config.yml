@@ -17,7 +17,7 @@ author: Alex Lin
 description: "Opoo.org 是一个专注于计算机软件、编程语言、项目管理、开源产品、互联网科技等的原创 IT 技术博客。"
 
 # 站点关键字，通常用作页面的 keywords 属性值
-keywords: "OpooPress, 编程, 开源, java, joqs, WordPress, flex, maven, docbook, sourceforge, openshift"
+keywords: "OpooPress, 编程, 开源, java, maven"
 
 # 地区及语言，参考 java.util.Locale
 # http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html

@@ -3,7 +3,7 @@ layout: post
 title: OpooPress 增强了发布到 GitHub Pages 的功能
 date: '2013-09-21 21:08'
 comments: true
-published: true
+published: false
 keywords: "GitHub Pages, git, opoopress-wagon-github, opoopress-wagon-git"
 description: "本文介绍 OpooPress 的两个自定义 wagon，以及将 OpooPress 博客发布到 GitHub Pages 的三种方式。"
 categories: ["website"]

@@ -3,7 +3,7 @@ layout: post
 title: '关于 OpooPress 网站两种语言的 SEO 问题'
 date: '2013-09-14 13:15'
 comments: true
-published: true
+published: false
 keywords: "多语言, SEO, OpooPress, rel-alternate-hreflang-x"
 description: "本文总结与记录一下网站 opoopress.com 的两个语言之间的处理问题，以及在提高用户体验和 SEO 方面努力。"
 categories: ["website"]

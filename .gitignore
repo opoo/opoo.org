@@ -19,7 +19,8 @@ local.properties
 .loadpath
 baidu_verify_*.html
 google1f9a70cb3389*.html
-
+.idea
+*.iml
 
 # External tool builders
 .externalToolBuilders/

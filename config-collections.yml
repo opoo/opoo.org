@@ -31,7 +31,7 @@ collections:
         # metaForCollection: category
         alias: [categories]
         # separator: ","
-        names: {website: 网站建设, tech: 编程开发, tech/java: Java, tech/maven: Maven, software: 软件应用, cloud: 云服务, weblog: 网络日志} 
+        names: {website: 网站建设, tech: 编程开发, tech/java: Java, tech/maven: Maven, software: 软件应用, cloud: 云服务, weblog: 网络日志}
         title_prefix: "分类: "
         # permalink: "/category/${slug}/"
         output_dir: "/category"

@@ -3,7 +3,7 @@ layout: post
 title: OpooPress 博客主题
 date: '2013-10-12 21:59'
 comments: true
-published: true
+published: false
 description: 本文简单介绍 OpooPress 目前所提供的主题，以及各个主题的特点。并提及 OpooPress 在将来会提供主题备份、安装、恢复等功能。
 categories: [weblog]
 tags: [OpooPress, Theme, web-fonts]

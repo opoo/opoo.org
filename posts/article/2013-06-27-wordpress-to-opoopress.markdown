@@ -4,7 +4,8 @@ title: '博客系统由 WordPress 更换成 OpooPress'
 date: '2013-06-28 20:55'
 comments: true
 categories: ['website']
-tags: ['opoopress', wordpress]
+published: false
+tags: ['opoopress']
 url: '/wordpress-to-opoopress/'
 keywords: 'OpooPress, WordPress, 博客迁移'
 description: '本站博客系统由 WordPress 更换成 OpooPress——一个基于 Java 的静态博客生成器。'
@@ -36,6 +37,6 @@ OpooPress 的源文件格式与 Jekyll/Octopress 的相同，每个文件带有�
    
 暂时就写这么多。
 
-OpooPress 的产品网站 [OpooPress.com](http://press.opoo.org/)，文档、帮助将会发布在那里。
+OpooPress 的产品网站 [OpooPress.com](http://opoopress.com/)，文档、帮助将会发布在那里。
 
 一个 beta 版的 stanalone 包将在不久的将来发布，源代码也将提交到 GitHub，敬请关注。

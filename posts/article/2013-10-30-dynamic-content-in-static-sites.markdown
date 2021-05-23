@@ -3,7 +3,7 @@ layout: post
 title: 静态网站中的动态内容
 date: '2013-10-30 19:59'
 comments: true
-published: true
+published: false
 description: "静态（主要指静态 HTML）网站同样可以做得很动态。随着第三方平台越来越多越来越完善，可以集成到静态网站中的动态功能也越来越多。这里就讲讲几种常见的动态功能。"
 categories: [website]
 tags: [Disqus, duoshuo, Google Analytics, social-sharing]

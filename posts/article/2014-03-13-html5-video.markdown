@@ -3,7 +3,7 @@ layout: post
 title: HTML5 Video
 date: '2014-03-13 12:55'
 comments: true
-published: true
+published: false
 categories: [weblog]
 tags: [Video]
 url: '/html5-video/'
@@ -38,8 +38,6 @@ excerpt: "<p><a href='/html5-video/'><img alt='Game of Thrones' src='/wp-content
 </video></p>
 
 
-## 是不是跑题了？
-—— *闹太套！*
 
 本文中的视频正是使用了 HTML5 Video 的标签格式，Chrome 支持该格式。
 ```html
@@ -72,7 +70,6 @@ $('video').each(function(i, video){
 	}
 });
 ```
-这段脚本在文件 opoopress.min.js 中，脚本经过了压缩。
 
 类似功能可参考 GitHub 中的项目 html5media。
 

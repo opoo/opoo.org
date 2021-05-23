@@ -3,7 +3,7 @@ layout: post
 title: "公开当前博客及 OpooPress 网站的源代码"
 date: '2013-07-31 18:16'
 comments: true
-published: true
+published: false
 keywords: "OpooPress, Blog, static site/blog generator, open source"
 description: "公开当前博客及 OpooPress 网站的源代码。"
 categories: [website]

@@ -3,7 +3,7 @@ layout: post
 title: OpooPress 1.0.1 版本发布
 date: '2013-09-06 18:30'
 comments: true
-published: true
+published: false
 keywords: "OpooPress, static blog generator, open source"
 categories: [website]
 tags: [opoopress, opensource]

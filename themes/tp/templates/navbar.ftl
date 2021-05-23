@@ -93,7 +93,7 @@
     </form>
     
     <ul class="action-bar horizontal-list">
-        <#-- <li class="first">·ÖÏí:</li> -->
+        <#-- <li class="first">ï¿½ï¿½ï¿½ï¿½:</li> -->
         <li class="actions-item -tooltip" title="<@s 'OpooPress - a java based static blog generator'/>">
             <a href="http://www.opoopress.com/" target="_blank"><i class="tp-post-type smallmedium opoopress">&nbsp;</i></a>
         </li>
@@ -137,7 +137,8 @@
     <#if isCategories>
     <ul class="navigation">
     	<#list site.categories as category>
-	<li><a href="${root_url}${category.url}"<#if page.url == category.url> class="active"</#if>>${category.name}</a></li>
+            <#if category.url??>
+	<li><a href="${root_url}${category.url}"<#if page.url == category.url> class="active"</#if>>${category.name}</a></li></#if>
 	</#list>
     </ul>
     </#if>

@@ -3,7 +3,7 @@ layout: post
 title: "为什么开发 OpooPress"
 date: '2013-07-02 17:23'
 comments: true
-published: true
+published: false
 keywords: "OpooPress, OpooPress vs Octopress"
 description: "关于 OpooPress 的一些比较好的特性简单介绍。并与 Octopress 的生成速度进行简单对比。"
 url: /why-i-develop-opoopress/

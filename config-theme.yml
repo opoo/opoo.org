@@ -39,7 +39,7 @@ new_google_analytics_tracking_id: "UA-30835382-1"
 google_analytics_tracking_domain: "none"
 
 # Facebook Like
-facebook_like: true
+facebook_like: false
 
 # Subscribe RSS address.
 subscribe_rss: 'http://opoo.org/atom.xml'
