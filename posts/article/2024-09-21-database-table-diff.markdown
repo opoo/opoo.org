@@ -4,14 +4,14 @@ title: 数据库大表数据比对
 date: '2024-09-21 20:00'
 comments: true
 published: true
-description: "本文描述如何对数据库的两个表结构相同的大表进行数据比对，包括纯 SQL 和 JDBC 的实现。"
-excerpt: "本文描述如何对数据库的两个表结构相同的大表进行数据比对，包括纯 SQL 和 JDBC 的实现。"
+description: "本文描述如何对数据库的两个表结构相同的大表进行数据比对，包括纯 SQL 比对和 使用 JDBC 编程实现的比对。"
+excerpt: "日常数据维护中，在对数据表进行复制或者迁移后，通常需要进行比对，以确保复制或着迁移数据的正确性。本文展示两种数据对比方法：SQL比对以及JDBC编程比对。"
 categories: [Java]
 tags: [MySQL, 数据库, 数据比对]
 url: '/2024/database-table-diff/'
 ---
 
-日常数据维护中，在对数据表进行复制或者迁移后，通常需要进行比对，以确保复制或着迁移的正确性。本文展示两种数据对比方法：SQL比对即JDBC编程比对。
+日常数据维护中，在对数据表进行复制或者迁移后，通常需要进行比对，以确保复制或着迁移数据的正确性。本文展示两种数据对比方法：SQL比对以及JDBC编程比对。
 
 ## 一、使用 SQL 实现数据比对
 适合同库不同的表，支持跨 Schema。假设有 a 和 b 两个表：
@@ -39,6 +39,7 @@ where a.id is null
 可同库比对，也可以跨库比对。
 
 1、实施步骤
+
 Step0: 设置3个集合（A表独有主键集合a、B表独有主键集合b、AB表都有但非主键不一致的主键集合ab），一个计数器c（记录完全一致的记录数量），用于记录比对结果。
 
 Step1: 使用**流式查询**获得2个表查询结果的 ResultSet，例如 rs1（a表） 和 rs2（b表）。查询须按主键正序排列。
@@ -121,13 +122,13 @@ class TableDiffTests {
 
         log.debug("id1 = {}, id2 = {}", id1, id2);
         if (id1 == null) {
-            // 只有id1是null，rs2剩下的全是b独有的，包括id2
+            // 只有 id1 是 null，rs2 剩下的全是 b 独有的，包括 id2
             addRemainIds(id2, rs2, result.getIdsOnlyIn2());
             return false;
         }
 
         if (id2 == null) {
-            // 只有id2是null，rs1剩下的全是a独有的，包括id1
+            // 只有 id2 是 null，rs1 剩下的全是 a 独有的，包括 id1
             addRemainIds(id1, rs1, result.getIdsOnlyIn1());
             return false;
         }
@@ -135,11 +136,11 @@ class TableDiffTests {
         // 联合主键可扩展这个方法
         final int compareTo = id1.compareTo(id2);
         if (compareTo < 0) {
-            // id1 还不够大，对不齐，保存并取下一个id1
+            // id1 还不够大，对不齐，记下来，并取下一个 id1
             result.getIdsOnlyIn1().add(id1);
             context.set(null, id2);
         } else if (compareTo > 0) {
-            // id2 还不够大，对不齐，保存并取下一个id2
+            // id2 还不够大，对不齐，记下来，并取下一个 id2
             result.getIdsOnlyIn2().add(id2);
             context.set(id1, null);
         } else {
@@ -173,9 +174,9 @@ class TableDiffTests {
         final String[] names = {"col1", "col2", "col3"};
         for (String name : names) {
             final String val1 = rs1.getString(name);
-            final String var2 = rs2.getString(name);
+            final String val2 = rs2.getString(name);
             if (!Objects.equals(val1, var2)) {
-                log.warn("[{}]的{}字段值不一致：{} <> {}", id, name, val1, var2);
+                log.warn("[{}]的{}字段值不一致：{} <> {}", id, name, val1, val2);
                 return false;
             }
         }
@@ -188,6 +189,11 @@ class TableDiffTests {
         }
 
         return supplier.get();
+    }
+    
+    @FunctionalInterface
+    public interface SqlSupplier<T> {
+        T get() throws SQLException;
     }
 
     @Data
@@ -207,11 +213,7 @@ class TableDiffTests {
             this.id2 = id2;
         }
     }
-
-    @FunctionalInterface
-    public interface SqlSupplier<T> {
-        T get() throws SQLException;
-    }
+    
 }
 
 ```
