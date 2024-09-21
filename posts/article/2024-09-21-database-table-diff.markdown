@@ -175,7 +175,7 @@ class TableDiffTests {
         for (String name : names) {
             final String val1 = rs1.getString(name);
             final String val2 = rs2.getString(name);
-            if (!Objects.equals(val1, var2)) {
+            if (!Objects.equals(val1, val2)) {
                 log.warn("[{}]的{}字段值不一致：{} <> {}", id, name, val1, val2);
                 return false;
             }
